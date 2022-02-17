@@ -1,0 +1,15 @@
+#!name=JD Cookies Module
+#!desc=京东 Cookies 模块配置
+
+[Script]
+# > 获取多账号京东Cookie
+
+获取多账号京东Cookie = type=http-request,pattern=https:\/\/me-api\.jd\.com\/user_new\/info\/GetJDUserInfoUnion,script-path=https://raw.githubusercontent.com/dompling/Script/master/jd/JD_extra_cookie.js
+app京东Cookie = type=http-request,pattern=https:\/\/api\.m\.jd\.com\/openUpgrade,script-path=https://raw.githubusercontent.com/dompling/Script/master/jd/JD_extra_cookie.js
+app京东Wskey = type=http-request,pattern=^https:\/\/api\-dd\.jd\.com\/client\.action\?functionId=getSessionLog,requires-body=1,max-size=0,timeout=1000,script-path=https://raw.githubusercontent.com/dompling/Script/master/jd/JD_extra_cookie.js,script-update-interval=0
+
+# > 京东金融
+获取多账号京东金融Body = type=http-request,pattern=^https?:\/\/ms\.jr\.jd\.com\/gw\/generic\/uc\/newna\/m\/userstat,requires-body=1,max-size=0,script-path=https://raw.githubusercontent.com/dompling/Script/master/jd/jd_jr_cookie.js
+
+[MITM]
+hostname = %APPEND% me-api.jd.com,ms.jr.jd.com,api.m.jd.com,api-dd.jd.com
