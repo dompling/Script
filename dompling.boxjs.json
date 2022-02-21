@@ -1,0 +1,472 @@
+{
+  "id": "dompling.app.sub",
+  "name": "DomplingYaYa 应用订阅",
+  "author": "@DomplingYaYa",
+  "icon": "https://avatars3.githubusercontent.com/u/23498579?s=460&u=1e87605e4abc4e6ecf3edd8b1d730227f54db4d4&v=4",
+  "repo": "https://github.com/dompling/Script",
+  "apps": [
+    {
+      "id": "10010Ck",
+      "name": "中国联通",
+      "keys": ["@YaYa_10010.cookie"],
+      "author": "@dompling",
+      "icons": [
+        "https://raw.githubusercontent.com/Orz-3/mini/master/Alpha/10010.png",
+        "https://raw.githubusercontent.com/Orz-3/mini/master/Color/10010.png"
+      ]
+    },
+    {
+      "id": "xmSports",
+      "name": "多账号运动",
+      "keys": ["@xmSports.token", "@xmSports.minStep", "@xmSports.maxStep"],
+      "author": "@dompling",
+      "settings": [
+        {
+          "id": "@xmSports.minStep",
+          "name": "最小步数",
+          "val": "20000",
+          "type": "text",
+          "placeholder": "最小步数",
+          "desc": "必填"
+        },
+        {
+          "id": "@xmSports.maxStep",
+          "name": "最大步数",
+          "val": "23000",
+          "type": "text",
+          "placeholder": "最大步数",
+          "desc": "必填"
+        }
+      ],
+      "icons": [
+        "https://raw.githubusercontent.com/58xinian/icon/master/xmyd.png",
+        "https://raw.githubusercontent.com/58xinian/icon/master/xmyd.png"
+      ],
+      "scripts": [
+        {
+          "name": "初始账号",
+          "script": "https://raw.githubusercontent.com/dompling/Script/master/xmSportsCookieTask.js"
+        },
+        {
+          "name": "同步设备",
+          "script": "https://raw.githubusercontent.com/dompling/Script/master/xmSports.js"
+        }
+      ]
+    },
+    {
+      "id": "gistBackup",
+      "name": "Gist备份",
+      "keys": ["@gist.token", "@gist.username"],
+      "author": "@dompling",
+      "icons": [
+        "https://raw.githubusercontent.com/Former-Years/icon/master/github-bf.png",
+        "https://raw.githubusercontent.com/Former-Years/icon/master/github-bf.png"
+      ],
+      "descs_html": [
+        "Token的获取方式:",
+        "头像菜单->\n      Settings ->\n      Developer settings ->\n      Personal access tokens ->\n      Generate new token ->\n      在里面找到 gist 勾选提交"
+      ],
+      "scripts": [
+        {
+          "name": "备份 Gist",
+          "script": "https://raw.githubusercontent.com/dompling/Script/master/gist/backup.js"
+        },
+        {
+          "name": "从 Gist 恢复",
+          "script": "https://raw.githubusercontent.com/dompling/Script/master/gist/restore.js"
+        }
+      ],
+      "settings": [
+        {
+          "id": "@gist.username",
+          "name": "用户名",
+          "val": null,
+          "type": "text",
+          "placeholder": "github 用户名",
+          "desc": "必填"
+        },
+        {
+          "id": "@gist.token",
+          "name": "Personal access tokens",
+          "val": null,
+          "type": "text",
+          "placeholder": "github personal access tokens",
+          "desc": "必填"
+        }
+      ]
+    },
+    {
+      "id": "bilibili",
+      "name": "哔哩哔哩关注中心/番剧监控",
+      "keys": ["@bilibili.cookie", "@BiliBiliMonitor.subscriptions"],
+      "icons": [
+        "https://raw.githubusercontent.com/Orz-3/task/master/bilibili.png",
+        "https://raw.githubusercontent.com/Orz-3/task/master/bilibili.png"
+      ],
+      "author": "@dompling",
+      "repo": "https://github.com/dompling/Script/blob/master/BiliBili/bilibili.cookie.js",
+      "script": "https://raw.githubusercontent.com/dompling/Script/master/BiliBiliMonitor/BiliBiliMonitor.js"
+    },
+    {
+      "id": "scriptable",
+      "name": "桌面组件",
+      "keys": ["scriptable"],
+      "icons": [
+        "https://scriptablejs.gitee.io/store/favicon.ico",
+        "https://scriptablejs.gitee.io/store/favicon.ico"
+      ],
+      "author": "@dompling",
+      "repo": ""
+    },
+    {
+      "id": "ql",
+      "name": "青龙同步",
+      "keys": [
+        "@ql.ip",
+        "@ql.client_id",
+        "@ql.client_secret",
+        "@ql.username",
+        "@ql.password",
+        "@ql.env",
+        "@ql.mute",
+        "@ql.is_pwd"
+      ],
+      "settings": [
+        {
+          "id": "@ql.mute",
+          "name": "静音",
+          "val": false,
+          "type": "boolean",
+          "desc": "同步时，不会执行通知提示"
+        },
+        {
+          "id": "@ql.is_pwd",
+          "name": "开启密码登陆",
+          "val": false,
+          "type": "boolean",
+          "desc": "同步时，优先使用密码登陆"
+        },
+        {
+          "id": "@ql.ip",
+          "name": "青龙登陆的域名或IP:端口号",
+          "val": "",
+          "type": "text",
+          "placeholder": "111.21.0.32:5700"
+        },
+        {
+          "id": "@ql.client_id",
+          "name": "应用 Client ID",
+          "val": "",
+          "type": "text"
+        },
+        {
+          "id": "@ql.client_secret",
+          "name": "应用 Client Secret",
+          "val": "",
+          "type": "text"
+        },
+        {
+          "id": "@ql.username",
+          "name": "账号",
+          "val": "",
+          "type": "text"
+        },
+        {
+          "id": "@ql.password",
+          "name": "密码",
+          "val": "",
+          "type": "text"
+        }
+      ],
+      "icons": [
+        "https://raw.githubusercontent.com/dompling/Script/master/image/1.jpeg",
+        "https://raw.githubusercontent.com/dompling/Script/master/image/1.jpeg"
+      ],
+      "author": "@dompling",
+      "repo": "https://github.com/dompling/Script/blob/master/jd/ql_cookie_sync.js",
+      "scripts": [
+        {
+          "name": "青龙同步到BoxJS(京东 Ck)",
+          "script": "https://raw.githubusercontent.com/dompling/Script/master/jd/ql_sync_box.js"
+        },
+        {
+          "name": "BoxJS同步到青龙(京东 Ck)",
+          "script": "https://raw.githubusercontent.com/dompling/Script/master/jd/ql_cookie_sync.js"
+        },
+        {
+          "name": "备份环境变量",
+          "script": "https://raw.githubusercontent.com/dompling/Script/master/jd/ql_env_back.js"
+        },
+        {
+          "name": "恢复备份环境变量",
+          "script": "https://raw.githubusercontent.com/dompling/Script/master/jd/ql_env_upload.js"
+        }
+      ],
+      "descs_html": [
+        "青龙 docker 的安装方式请移步 tg 频道",
+        "青龙 docker 作者仓库：【<a href=\"https://github.com/whyour\">github</a>】",
+        "青龙 docker 频道：【<a href=\"https://t.me/qiongqiya\">电报频道</a>】",
+        "应用client_id,client_secret（openapi）方式；请去 设置->应用 中添加相关参数，优先以 openapi 方式同步"
+      ]
+    },
+    {
+      "id": "JD_Cookies_remark",
+      "name": "登陆助手",
+      "keys": ["CookieIndex", "@jd_ck_remark.remark", "@jd_ck_remark.mute"],
+      "descs_html": [
+        "请勿随意在输入框修改内容，建议通过脚本去获取cookie，若要修改，请按照JSON 格式修改（<a href=\"https://www.bejson.com/json/format\">可使用此JSON校验</a> ，或点击右上角按钮🔘进行校验(如有弹窗提示则为异常JSON)）。",
+        "脚本地址【<a href=\"https://jdsharedresourcescdn.azureedge.net/jdresource/JD_extra_cookie.js\">京东多 CK获取</a>】,并按照此脚本注释进行配置",
+        "可以修改的字段，nickname,mobile",
+        "示例：[{username:\"yaya\",nickname:\"I'm YaYa man\",mobile:\"1234567890\"}]",
+        "可以根据 下标、username、nickname、status 字段检索京东多账号 ck"
+      ],
+      "settings": [
+        {
+          "id": "@jd_ck_remark.mute",
+          "name": "静音",
+          "val": false,
+          "type": "boolean",
+          "desc": "不会执行通知提示"
+        },
+        {
+          "id": "CookieIndex",
+          "name": "默认账号",
+          "val": 0,
+          "type": "text",
+          "autoGrow": false,
+          "rows": 2,
+          "placeholder": "cookie 下标（0）"
+        },
+        {
+          "id": "@jd_ck_remark.keyword",
+          "name": "检索条件",
+          "val": null,
+          "type": "text",
+          "autoGrow": false,
+          "rows": 2,
+          "placeholder": "下标（0）、username、nickname、status 的值"
+        },
+        {
+          "id": "@jd_ck_remark.remark",
+          "name": "CK 备注列表",
+          "val": "",
+          "type": "textarea",
+          "autoGrow": false,
+          "rows": 8,
+          "desc": "CK 备注列表 (JSON 格式)"
+        }
+      ],
+      "icons": [
+        "https://raw.githubusercontent.com/Orz-3/mini/master/jd.png",
+        "https://raw.githubusercontent.com/Orz-3/task/master/jd.png"
+      ],
+      "author": "@dompling",
+      "repo": "https://github.com/dompling/Script/blob/master/jd/jd_cookie_search.js",
+      "script": "https://raw.githubusercontent.com/dompling/Script/master/jd/jd_cookie_search.js"
+    },
+    {
+      "id": "JD_Cookies",
+      "name": "京东账号",
+      "keys": ["CookiesJD", "cks_get_mute"],
+      "descs_html": [
+        "请勿随意在输入框修改内容，建议通过脚本去获取cookie，若要修改，请按照JSON 格式修改（<a href=\"https://www.bejson.com/json/format\">可使用此JSON校验</a> ，或点击右上角按钮🔘进行校验(如有弹窗提示则为异常JSON)）。",
+        "示例：[{\"userName\":\"jd_xxx\",\"cookie\":\"pt_key=AAJ;pt_pin=jd_xxx;\"},{\"userName\":\"jd_66\",\"cookie\":\"pt_key=AAJ;pt_pin=jd_66;\"}]",
+        "脚本地址【<a href=\"https://jdsharedresourcescdn.azureedge.net/jdresource/JD_extra_cookie.js\">京东多 CK获取</a>】,并按照此脚本注释进行配置",
+        "使用方式【<a href=\"https://home.m.jd.com/myJd/newhome.action\">个人中心</a>】获取对应的数据Code",
+        "注1：如与NobyDa的京东cookie重复，建议在此处删除重复的cookie",
+        "注2：删除条件，是用来清除不需要的ck，条件值为京东 ck 的第几个，如第一个：1，第二个：2；多个请使用,分割。删除ck 脚本不会去清理野比的ck，请谨慎使用。删除成功之后，请手动刷新 boxjs"
+      ],
+      "settings": [
+        {
+          "id": "cks_get_mute",
+          "name": "静音获取",
+          "val": false,
+          "type": "boolean",
+          "desc": "更新时，不会执行通知提示"
+        },
+        {
+          "id": "del_condition",
+          "name": "删除条件",
+          "val": "",
+          "type": "text",
+          "desc": "输入的条件,运行一次之后则会清空条件"
+        },
+        {
+          "id": "CookiesJD",
+          "name": "CK 列表",
+          "val": "",
+          "type": "textarea",
+          "autoGrow": false,
+          "rows": 8,
+          "desc": "CK 列表 (JSON 格式)"
+        }
+      ],
+      "icons": [
+        "https://raw.githubusercontent.com/Orz-3/mini/master/jd.png",
+        "https://raw.githubusercontent.com/Orz-3/task/master/jd.png"
+      ],
+      "author": "@dompling",
+      "repo": "https://github.com/dompling/Script/blob/master/jd/JD_extra.js",
+      "scripts": [
+        {
+          "name": "京东签到",
+          "script": "https://raw.githubusercontent.com/dompling/Script/master/jd/JD_extra_sign.js"
+        },
+        {
+          "name": "删除相关 ck",
+          "script": "https://raw.githubusercontent.com/dompling/Script/master/jd/jd_ck_del.js"
+        }
+      ]
+    },
+    {
+      "id": "JD_jr_Cookies",
+      "name": "金融领豆",
+      "keys": ["@jd_jr.cookies", "@jd_jr.bodys"],
+      "descs_html": [
+        "请勿随意在输入框修改内容，只能通过脚本去获取cookie，若要修改，请按照JSON 格式修改（<a href=\"https://www.bejson.com/json/format\">可使用此JSON校验</a> ，或点击右上角按钮🔘进行校验(如有弹窗提示则为异常JSON)）。",
+        "仅能修改phoneNumber内容",
+        "JSON示例：[{phoneNumber: \"13348751678\", username: \"yaya\" }]"
+      ],
+      "settings": [
+        {
+          "id": "@jd_jr.cookies",
+          "name": "CK 列表",
+          "val": "",
+          "type": "textarea",
+          "autoGrow": true,
+          "rows": 8,
+          "desc": "CK 列表 (JSON 格式)"
+        }
+      ],
+      "icons": [
+        "https://raw.githubusercontent.com/Orz-3/mini/master/jd.png",
+        "https://raw.githubusercontent.com/Orz-3/task/master/jd.png"
+      ],
+      "author": "@dompling",
+      "repo": "https://github.com/dompling/Script/blob/master/jd/jd_jr_cookie.js",
+      "script": "https://raw.githubusercontent.com/dompling/Script/master/jd/jd_jr_sign.js"
+    },
+    {
+      "id": "oneSay",
+      "name": "每天一句",
+      "keys": ["@oneSay.mediaImg", "@oneSay.username"],
+      "icons": [
+        "https://raw.githubusercontent.com/Orz-3/mini/master/calendar.png",
+        "https://raw.githubusercontent.com/Orz-3/task/master/calendar.png"
+      ],
+      "author": "@dompling",
+      "repo": "https://github.com/dompling/Script/blob/master/oneSay/oneSay.js",
+      "script": "https://raw.githubusercontent.com/dompling/Script/master/oneSay/oneSay.js",
+      "settings": [
+        {
+          "id": "@oneSay.username",
+          "name": "姓名",
+          "val": null,
+          "type": "text",
+          "autoGrow": false,
+          "rows": 2,
+          "placeholder": "必填姓名"
+        },
+        {
+          "id": "@oneSay.mediaImg",
+          "name": "内容媒体图",
+          "val": null,
+          "type": "text",
+          "autoGrow": false,
+          "rows": 2,
+          "placeholder": "系统配送图，或者自定义",
+          "desc": "非必填"
+        }
+      ]
+    },
+    {
+      "id": "birthday",
+      "name": "生日计时",
+      "keys": [
+        "@birthday.mediaImg",
+        "@birthday.username",
+        "@birthday.time",
+        "@birthday.pDefault",
+        "@birthday.pCycle",
+        "@birthday.nongli",
+        "@birthday.eday",
+        "@birthday.loveWords"
+      ],
+      "icons": [
+        "https://raw.githubusercontent.com/Orz-3/mini/master/birthday.png",
+        "https://raw.githubusercontent.com/Orz-3/task/master/birthday.png"
+      ],
+      "author": "@dompling",
+      "repo": "https://github.com/dompling/Script/blob/master/birthdayCountDown/index.js",
+      "script": "https://raw.githubusercontent.com/dompling/Script/master/birthdayCountDown/index.js",
+      "settings": [
+        {
+          "id": "@birthday.nongli",
+          "name": "农历",
+          "val": true,
+          "type": "boolean"
+        },
+        {
+          "id": "@birthday.loveWords",
+          "name": "情话",
+          "val": true,
+          "type": "boolean"
+        },
+        {
+          "id": "@birthday.username",
+          "name": "姓名",
+          "val": null,
+          "type": "text",
+          "autoGrow": false,
+          "rows": 2,
+          "placeholder": "必填姓名"
+        },
+        {
+          "id": "@birthday.time",
+          "name": "出生年月",
+          "val": null,
+          "type": "text",
+          "rows": 2,
+          "placeholder": "必填内容，出身年月格式为：年-月-日。"
+        },
+        {
+          "id": "@birthday.mediaImg",
+          "name": "内容媒体图",
+          "val": null,
+          "type": "text",
+          "autoGrow": false,
+          "rows": 2,
+          "placeholder": "默认取的随机推送图片",
+          "desc": "非必填"
+        },
+        {
+          "id": "@birthday.eday",
+          "name": "情侣相识日期",
+          "val": null,
+          "type": "text",
+          "rows": 2,
+          "placeholder": "相识的日期",
+          "desc": "非必填"
+        },
+        {
+          "id": "@birthday.pDefault",
+          "name": "生理期",
+          "val": null,
+          "type": "text",
+          "rows": 2,
+          "placeholder": "最近一次生理期时间",
+          "desc": "非必填"
+        },
+        {
+          "id": "@birthday.pCycle",
+          "name": "生理期区间",
+          "val": null,
+          "type": "text",
+          "rows": 2,
+          "placeholder": "生理期区间，最近一次生理期开始计算。",
+          "desc": "非必填；计算不准时，请重填生理期。"
+        }
+      ]
+    }
+  ]
+}

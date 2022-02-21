@@ -6,5 +6,6 @@
 /.history
 /.output
 *.json
+!dompling.boxjs.json
 test.js
 .DS_Store
