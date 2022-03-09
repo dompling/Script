@@ -172,7 +172,7 @@ async function GetCookie() {
       CookiesData.forEach((item, index) => {
         if (getUsername(item.cookie) === DecodeName) updateIndex = index
       })
-
+      if ($.ql) await $.ql.asyncCookie(CookieValue, 'JD_COOKIE')
       if (updateIndex !== null) {
         const response = await TotalBean(updateCookiesData[updateIndex].cookie)
         if (response && response.retcode === '0')
@@ -192,7 +192,7 @@ async function GetCookie() {
       const cacheValue = JSON.stringify(updateCookiesData, null, `\t`)
       $.write(cacheValue, CacheKey)
       updateJDHelp(DecodeName)
-      if ($.ql) await $.ql.asyncCookie(CookieValue, 'JD_COOKIE')
+      
 
       if ($.mute === 'true') {
         return console.log(
@@ -222,14 +222,14 @@ async function GetCookie() {
           updateIndex = index
         }
       })
-
+      if ($.ql) await $.ql.asyncCookie(code)
       if (updateIndex === false) return console.log(`未找到相关账号`)
       if (CookiesData[updateIndex].wskey === wskey) {
         return console.log(
           `本地 wskey 一致无需更新，若需更新面板，请到 boxjs 同步`
         )
       }
-      if ($.ql) await $.ql.asyncCookie(code)
+      
       CookiesData[updateIndex].wskey = wskey
       const cacheValue = JSON.stringify(CookiesData, null, `\t`)
       $.write(cacheValue, CacheKey)
