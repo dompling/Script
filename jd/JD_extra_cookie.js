@@ -79,6 +79,10 @@ $.mute = $.read(mute)
         const current = qlCk.find(
           (item) => getUsername(item.value) === DecodeName
         )
+        if (current && current.value === cookieValue) {
+          console.log('该账号无需更新')
+          return
+        }
 
         let remarks = ''
         remarks = remark.find((item) => item.username === DecodeName)
@@ -95,7 +99,7 @@ $.mute = $.read(mute)
             name,
             remarks: current.remarks || remarks,
             value: cookieValue,
-            _id: current.id,
+            id: current.id,
           })
           if (response.data.status === 1) {
             response = await $.ql.enabled([current.id])
@@ -147,9 +151,8 @@ function updateJDHelp(username) {
 }
 
 async function GetCookie() {
-  const CV =
-    `${$request.headers['Cookie'] || $request.headers['cookie']};` ||
-    `pin=jd_41f1eafbe3007;wskey=AAJiJzaJAEBm3zmFxLcqhmYMJcOdBS8xKTSNI7mX81Nx55Ov27Pupvk4deokSMFNwPf80VuGFZK376jCnkUrfQaaH21Dymsq;whwswswws=JD0111d47d0ZNExO3u8O16467917525700600nXXrfIFP3jtOgCcL1PDcNvkA_JbNnt3y7AipNXmYPgCTjRQStERJyQ9FSf_BZdSSjj1P5q0xFepC6TDE4ptk7ZExkFGF3nTmV1_mTrY5I1nrn0yn~fKrd6mYK75UuG6oeH1vCrBQOJ/4bX8WxKqeUI7p5fM/xV6BWkCFvO2/pdxiQ3k4E5W8BrPleov08vX3R+SIZjkw==;unionwsws={"jmafinger":"JD0111d47d0ZNExO3u8O16467917525700600nXXrfIFP3jtOgCcL1PDcNvkA_JbNnt3y7AipNXmYPgCTjRQStERJyQ9FSf_BZdSSjj1P5q0xFepC6TDE4ptk7ZExkFGF3nTmV1_mTrY5I1nrn0yn~fKrd6mYK75UuG6oeH1vCrBQOJ\/4bX8WxKqeUI7p5fM\/xV6BWkCFvO2\/pdxiQ3k4E5W8BrPleov08vX3R+SIZjkw==","devicefinger":"eidI04718122d3s58yXK4QxaQjeED+6SfJ6NYvMlzF0csbU49VLQJdklcrnExxGveSkeLlQxcQhsUzz4Cosrp64FnBq+61Z\/ngL5ZsxhLoSs5Fl9M1RL"}`
+  const CV = `${$request.headers['Cookie'] || $request.headers['cookie']};`
+
   if (
     ($request.url.indexOf('GetJDUserInfoUnion') > -1 &&
       $request.url.indexOf('isLogin') === -1) ||
@@ -219,17 +222,14 @@ async function GetCookie() {
           updateIndex = index
         }
       })
-      try{
-        if ($.ql) await $.ql.asyncCookie(code)
-      }catch(error){
-        console.log(error)
-      }
+
       if (updateIndex === false) return console.log(`未找到相关账号`)
       if (CookiesData[updateIndex].wskey === wskey) {
         return console.log(
           `本地 wskey 一致无需更新，若需更新面板，请到 boxjs 同步`
         )
       }
+      if ($.ql) await $.ql.asyncCookie(code)
       CookiesData[updateIndex].wskey = wskey
       const cacheValue = JSON.stringify(CookiesData, null, `\t`)
       $.write(cacheValue, CacheKey)
