@@ -154,8 +154,9 @@ async function GetCookie() {
   const CV = `${$request.headers['Cookie'] || $request.headers['cookie']};`
 
   if (
-    $request.url.indexOf('GetJDUserInfoUnion') > -1 &&
-    $request.url.indexOf('isLogin') === -1
+    ($request.url.indexOf('GetJDUserInfoUnion') > -1 &&
+      $request.url.indexOf('isLogin') === -1) ||
+    $request.url.indexOf('openUpgrade') > -1
   ) {
     if (CV.match(/(pt_key=.+?pt_pin=|pt_pin=.+?pt_key=)/)) {
       const CookieValue = CV.match(/pt_key=.+?;/) + CV.match(/pt_pin=.+?;/)
@@ -191,6 +192,7 @@ async function GetCookie() {
       const cacheValue = JSON.stringify(updateCookiesData, null, `\t`)
       $.write(cacheValue, CacheKey)
       updateJDHelp(DecodeName)
+      
 
       if ($.mute === 'true') {
         return console.log(
@@ -227,7 +229,7 @@ async function GetCookie() {
           `本地 wskey 一致无需更新，若需更新面板，请到 boxjs 同步`
         )
       }
-
+      
       CookiesData[updateIndex].wskey = wskey
       const cacheValue = JSON.stringify(CookiesData, null, `\t`)
       $.write(cacheValue, CacheKey)
