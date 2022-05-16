@@ -192,7 +192,6 @@ async function GetCookie() {
       const cacheValue = JSON.stringify(updateCookiesData, null, `\t`)
       $.write(cacheValue, CacheKey)
       updateJDHelp(DecodeName)
-      
 
       if ($.mute === 'true') {
         return console.log(
@@ -223,20 +222,22 @@ async function GetCookie() {
         }
       })
       if ($.ql) await $.ql.asyncCookie(code)
-      if (updateIndex === false) return console.log(`未找到相关账号`)
-      if (CookiesData[updateIndex].wskey === wskey) {
-        return console.log(
-          `本地 wskey 一致无需更新，若需更新面板，请到 boxjs 同步`
-        )
+      let text
+      if (updateIndex === false) {
+        CookiesData.push({
+          userName: username,
+          wskey: wskey,
+        })
+        text = `新增`
+      } else {
+        CookiesData[updateIndex].wskey = wskey
+        text = `修改`
       }
-      
-      CookiesData[updateIndex].wskey = wskey
-      const cacheValue = JSON.stringify(CookiesData, null, `\t`)
-      $.write(cacheValue, CacheKey)
+      $.write(JSON.stringify(CookiesData, null, `\t`), CacheKey)
       if ($.mute === 'true') {
-        return console.log('用户名: ' + username + '更新wskey成功 🎉')
+        return console.log('用户名: ' + username + `${text}wskey成功 🎉`)
       }
-      return $.notify('用户名: ' + username, '', '更新wskey成功 🎉', {
+      return $.notify('用户名: ' + username, '', `${text}wskey成功 🎉`, {
         'update-pasteboard': code,
       })
     }
