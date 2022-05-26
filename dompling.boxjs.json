@@ -16,6 +16,26 @@
       ]
     },
     {
+      "id": "SubStore",
+      "name": "SubStore",
+      "keys": ["@SubStore.auth"],
+      "author": "@dompling",
+      "settings": [
+        {
+          "id": "@SubStore.auth",
+          "name": "登陆密码",
+          "val": null,
+          "type": "text",
+          "placeholder": "sub-store网页版登录密码",
+          "desc": "必填"
+        }
+      ],
+      "icons": [
+        "https://raw.githubusercontent.com/58xinian/icon/master/Sub-Store1.png",
+        "https://raw.githubusercontent.com/58xinian/icon/master/Sub-Store1.png"
+      ]
+    },
+    {
       "id": "xmSports",
       "name": "多账号运动",
       "keys": ["@xmSports.token", "@xmSports.minStep", "@xmSports.maxStep"],
