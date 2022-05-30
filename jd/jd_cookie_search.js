@@ -41,7 +41,6 @@ const ckRemarkFormat = {}
 cookiesRemark.forEach((item) => {
   ckRemarkFormat[item.username] = item
 })
-
 ;(async () => {
   const ckFormat = []
   const notLogin = []
@@ -56,12 +55,14 @@ cookiesRemark.forEach((item) => {
 
     let avatar = '',
       nickname = '',
-      isPlusVip = 0
+      isPlusVip = 0,
+      mobile = ckRemarkFormat[username] ? ckRemarkFormat[username].mobile : ''
     if (response.retcode === '0') {
       isPlusVip = response.data.userInfo.isPlusVip
       avatar = response.data.userInfo.baseInfo.headImageUrl
       nickname = response.data.userInfo.baseInfo.nickname
       console.log('帐号昵称：' + nickname)
+      mobile = await getPhoneNumber(cookie)
     }
 
     console.log(`检查结束：账号【${ckIndex}】 ${username}【${status}】`)
@@ -75,10 +76,10 @@ cookiesRemark.forEach((item) => {
       username,
       nickname,
       qywxUserId: '',
-      mobile: '',
       cardId: '',
       avatar,
       ...ckRemarkFormat[username],
+      mobile,
       isPlusVip,
       status,
       remark: newRemark,
@@ -152,6 +153,25 @@ async function isLogin(Cookie) {
       return JSON.parse(response.body)
     } catch (e) {
       return {}
+    }
+  })
+}
+
+async function getPhoneNumber(cookie) {
+  const opt = {
+    url: `https://crmsam.jd.com/union/bindingPhoneNumber`,
+    headers: {
+      cookie: cookie,
+    },
+  }
+
+  return $.http.get(opt).then((response) => {
+    try {
+      const data = JSON.parse(response.body)
+      if (data.code === 200) return data.data
+      return ''
+    } catch (e) {
+      return ''
     }
   })
 }
