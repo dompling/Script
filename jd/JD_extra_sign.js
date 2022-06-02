@@ -133,7 +133,7 @@ function getCache() {
 
 function getUsername(ck) {
   if (!ck) return '';
-  return ck.match(/pt_pin=(.+?);/)[1];
+  return ck.match(/pin=(.+?);/)[1];
 }
 
 function ENV() {
