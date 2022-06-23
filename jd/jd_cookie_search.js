@@ -77,6 +77,7 @@ cookiesRemark.forEach((item) => {
       nickname,
       qywxUserId: '',
       cardId: '',
+      paymentCode: '',
       avatar,
       ...ckRemarkFormat[username],
       mobile,
