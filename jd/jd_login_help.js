@@ -1,3 +1,16 @@
+/**
+ * 登录助手
+ * 环境：qx,loon,surge
+ *
+ * [MITM] *.jd.com, *.*.jd.com, *.jingxi.com, *.*.jingxi.com
+ *
+ * [Rule]
+ * 京喜：^https?:\/\/([\w-]+\.)?([\w-]+\.)jingxi\.com\/?((?!\.(js|json|gif|webp|dpg|flv|mp3|mp4)).)*$
+ * 京东：^https?:\/\/([\w-]+\.)?([\w-]+\.)jd\.(com|hk)\/?((?!\.(js|json|gif|webp|dpg|flv|mp3|mp4)).)*$
+ *
+ * [Script]
+ * https://raw.githubusercontent.com/dompling/Script/master/jd/jd_login_help.js
+ */
 const $ = new API('jd_ck_remark'),
   APIKey = 'CookiesJD',
   CacheKey = `#${APIKey}`,
