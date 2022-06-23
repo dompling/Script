@@ -1,17 +1,3 @@
-/**
- * 登录助手
- * 环境：qx,loon,surge
- *
- * [MITM] *.jd.com, *.*.jd.com, *.jingxi.com, *.*.jingxi.com
- *
- * [Rule]
- * 京喜：^https?:\/\/([\w-]+\.)?([\w-]+\.)jingxi\.com\/?((?!\.(js|json|gif|webp|dpg|flv|mp3|mp4)).)*$
- * 京东：^https?:\/\/([\w-]+\.)?([\w-]+\.)jd\.(com|hk)\/?((?!\.(js|json|gif|webp|dpg|flv|mp3|mp4)).)*$
- *
- * [Script]
- * https://raw.githubusercontent.com/dompling/Script/master/jd/jd_login_help.js
- */
-
 const $ = new API('jd_ck_remark'),
   APIKey = 'CookiesJD',
   CacheKey = `#${APIKey}`,
@@ -19,6 +5,7 @@ const $ = new API('jd_ck_remark'),
   searchKey = 'keyword'
 ;($.url = $request.url), ($.html = $response.body)
 
+const cookieIndex = $.read(`#CookieIndex`) || 0
 const boxjs_host = $.read('#boxjs_host').indexOf('com') !== -1 ? 'com' : 'net'
 
 try {
@@ -846,9 +833,9 @@ function createScript() {
           $("#fill-input").remove();
           $("#edit-row").show();
           $("#form-title").html(username);
+          
           if(mobile){
-            copyToClipMobile(mobile);
-            if(isLogin) $("#cus-mask-cancel").after(\`${fillMobile}\`);
+            $("#cus-mask-ok").before(\`${fillMobile}\`);
             registerClick();
           }
         }
@@ -856,7 +843,9 @@ function createScript() {
 
       if(fill_btn){
         fill_btn.addEventListener('click',function(){
-          fillInput();
+          if(isLogin) fillInput();
+          const mobile = $('#jd_account').data('value');
+          copyToClip(mobile,'手机号复制成功')
         });
       }
 
@@ -1004,9 +993,9 @@ function createScript() {
     })
 
     copyCk_btn.addEventListener('click',function(){
-      copyToClip();
+      copyToClip(\`pt_key=\${pk};pt_pin=\${pp}\`,'COOKIE复制成功');
     })
-
+     
     function toast(message,time= 2000){
        tip_view.style.display = "block";
        tip_view.innerHTML = message;
@@ -1093,35 +1082,23 @@ function createScript() {
       }
       return "";
   }
-  function copyToClip(){
-    const _input = document.createElement('input');
-    _input.style.width="1px";
-    _input.style.height="1px";
-    _input.style.position="fixed";
-    _input.style.right="-1px";
-    document.body.prepend(_input);
-    _input.value = "pt_key="+pk+";pt_pin="+pp+";";
-    _input.focus();
-    _input.select();
-    document.execCommand('copy');
-    _input.blur();
-    document.body.removeChild(_input);
-    toast('复制成功');
-  }
 
-  function copyToClipMobile(mobile){
+
+  function copyToClip(text,notify=false){
     const _input = document.createElement('input');
     _input.style.width="1px";
     _input.style.height="1px";
     _input.style.position="fixed";
     _input.style.right="-1px";
     document.body.prepend(_input);
-    _input.value = mobile;
+    _input.value = text;
     _input.focus();
     _input.select();
     document.execCommand('copy');
     _input.blur();
     document.body.removeChild(_input);
+    console.log(text)
+    if(notify)toast(notify);
   }
 
   $('#mask').on('click',function(){
@@ -1168,11 +1145,12 @@ function createScript() {
 
 ;(async () => {
   if ($.html.indexOf('</body>') > -1) {
+    
     console.log(`重写URL：${$.url}`)
     const n = createStyle(),
       e = createScript(),
       t = createHTML(),
-      i = `\n${n}\n${t}\n${e}`
+      i = `\n${n}\n${t}\n${e}\n`
     $.html = $.html.replace(/(<body)/, `${i} <body`)
   }
 })()
