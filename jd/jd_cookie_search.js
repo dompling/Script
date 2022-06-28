@@ -56,9 +56,11 @@ cookiesRemark.forEach((item) => {
     let avatar = '',
       nickname = '',
       isPlusVip = 0,
+      beanNum = 0,
       mobile = ckRemarkFormat[username] ? ckRemarkFormat[username].mobile : ''
     if (response.retcode === '0') {
       isPlusVip = response.data.userInfo.isPlusVip
+      beanNum = response.data.assetInfo.beanNum
       avatar = response.data.userInfo.baseInfo.headImageUrl
       nickname = response.data.userInfo.baseInfo.nickname
       console.log('帐号昵称：' + nickname)
@@ -80,6 +82,7 @@ cookiesRemark.forEach((item) => {
       paymentCode: '',
       avatar,
       ...ckRemarkFormat[username],
+      beanNum,
       mobile,
       isPlusVip,
       status,
