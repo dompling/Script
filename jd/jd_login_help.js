@@ -1,16 +1,4 @@
-/**
- * 登录助手
- * 环境：qx,loon,surge
- *
- * [MITM] *.jd.com, *.*.jd.com, *.jingxi.com, *.*.jingxi.com
- *
- * [Rule]
- * 京喜：^https?:\/\/([\w-]+\.)?([\w-]+\.)jingxi\.com\/?((?!\.(js|json|gif|webp|dpg|flv|mp3|mp4)).)*$
- * 京东：^https?:\/\/([\w-]+\.)?([\w-]+\.)jd\.(com|hk)\/?((?!\.(js|json|gif|webp|dpg|flv|mp3|mp4)).)*$
- *
- * [Script]
- * https://raw.githubusercontent.com/dompling/Script/master/jd/jd_login_help.js
- */const $ = new API('jd_ck_remark'),
+const $ = new API('jd_ck_remark'),
   APIKey = 'CookiesJD',
   CacheKey = `#${APIKey}`,
   remark_key = `remark`,
@@ -571,8 +559,10 @@ function createStyle() {
 }
 const accounts = cookiesRemark
   .map((n, e) => {
-    const t = '正常' === n.status;
-    const beanNum = n.beanNum?`<b class="ant-ribbon beanNum">京豆：${n.beanNum}</b>`:'';
+    const t = '正常' === n.status
+    const beanNum = n.beanNum
+      ? `<b class="ant-ribbon beanNum">京豆：${n.beanNum}</b>`
+      : ''
     return `
 <div class="cus-avatar" data-value="${n.mobile || ''}" data-name="${
       n.username
@@ -678,7 +668,7 @@ function createScript() {
   
   let jd_ck = ${JSON.stringify(cookiesRemark)};
   console.log(jd_ck)
-  const boxjs_btn = document.querySelector("#boxjs");
+  
   let fill_btn = document.querySelector("#fill-input");
   const copyCk_btn = document.querySelector("#copyCk");
   const ok_btn = document.querySelector("#cus-mask-ok");
@@ -765,7 +755,7 @@ function createScript() {
    $input.addEventListener("input",inputChange)
    const avatarItem = jd_ck.find(item=> item.username === pp);
    if(avatarItem && avatarItem.avatar){
-     boxjs_btn.innerHTML = "<img src='"+ avatarItem.avatar +"' />";
+     $('#boxjs').html("<img src='"+ avatarItem.avatar +"' />");
    }
 
    if(pk === "" || !pk){
@@ -878,10 +868,48 @@ function createScript() {
     
     registerClick();
 
+    const $container = $("#tool-bars");
+    var nx,
+      ny,
+      wxX,
+      wxY,
+      isDown = false; //X Y坐标
+    // H5页面
+    $("#boxjs")
+      .bind("touchstart", function (e) {
+        //点击触发
+        e.preventDefault();
+        $(this).css("transform", "translate(0)");
+        var touch = event.targetTouches[0];
+        wxX = touch.clientX;
+        wxY = touch.clientY;
+        isDown = true;
+        $(document).bind("touchmove", function (ev) {
+          if (!isDown) return;
+          //滑动触发
+          e.preventDefault();
 
-    boxjs_btn.addEventListener('click', function(){
-      maskVisible(true);
-    });
+          var touch = event.targetTouches[0];
+          ny = touch.clientY;
+          nx = touch.clientX;
+          $container.css("top", ny / ($(window).height() / 100) + "%");
+        });
+      })
+      .bind("touchend", function (e) {
+        //移开触发
+        var touch = event.changedTouches[0];
+        //判断跟初始坐标是否一致，一致则大概率为点击事件
+        if (wxX === touch.clientX && wxY === touch.clientY) {
+          maskVisible(true);
+        } else {
+          if ($(window).height() * 0.9 - $container.height() < ny) {
+            $container.css({top: "90%"});
+          } else if ($(window).height() * 0.1 > ny) {
+            $container.css({ top: "12%" });
+          }
+        }
+        isDown = false; //$('.service_s').hide()
+      });
 
     ok_btn.addEventListener('click', function(){
       btnSubmit();
@@ -1142,12 +1170,15 @@ function createScript() {
 }
 
 ;(async () => {
+  console.log($.url)
   if ($.html.indexOf('</body>') > -1) {
+    
+
     console.log(`重写URL：${$.url}`)
     const n = createStyle(),
       e = createScript(),
       t = createHTML(),
-      i = `\n${n}\n${t}\n${e}`
+      i = `\n${n}\n${t}\n${e}\n`
     $.html = $.html.replace(/(<body)/, `${i} <body`)
   }
 })()
@@ -1177,6 +1208,7 @@ function createScript() {
     $.done({ body: $.html, headers: modifiedHeaders })
   })
 
+  
 // prettier-ignore
 function ENV(){const e="function"==typeof require&&"undefined"!=typeof $jsbox;return{isQX:"undefined"!=typeof $task,isLoon:"undefined"!=typeof $loon,isSurge:"undefined"!=typeof $httpClient&&"undefined"!=typeof $utils,isBrowser:"undefined"!=typeof document,isNode:"function"==typeof require&&!e,isJSBox:e,isRequest:"undefined"!=typeof $request,isScriptable:"undefined"!=typeof importModule}}
 // prettier-ignore
