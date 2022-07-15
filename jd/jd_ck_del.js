@@ -1,4 +1,4 @@
-const $ = new API('JD_Cookies', true)
+const $ = new API('jd_ck_remark', true)
 const delKey = '#del_condition'
 let condition = $.read(delKey)
 const CacheKey = `#CookiesJD`
@@ -6,7 +6,7 @@ let jdHelp = []
 let cookies = []
 try {
   cookies = JSON.parse($.read(CacheKey) || '[]')
-  jdHelp = JSON.parse($.read('#jd_ck_remark') || '[]')
+  jdHelp = JSON.parse($.read('remark') || '[]')
 } catch (e) {
   console.log(e)
 }
@@ -33,13 +33,11 @@ try {
       console.log(JSON.stringify(delData, null, `\t`))
       console.log('=================================')
       $.write(JSON.stringify(newData, null, `\t`), CacheKey)
-      $.write(JSON.stringify(newJDHelp, null, `\t`), '#jd_ck_remark')
+      $.write(JSON.stringify(newJDHelp, null, `\t`), 'remark')
       $.notify(
         '删除成功',
         '',
-        `已删除 CK ${cookies.length - newData.length} 条\n${delData
-          .map((item) => item.userName)
-          .join('，')}`
+        `已删除 CK ${cookies.length - newData.length} 条\n${delData.join('，')}`
       )
       $.write('', delKey)
     }
