@@ -8,13 +8,47 @@ const $ = new API('jd_ck_remark'),
 const cookieIndex = $.read(`#CookieIndex`) || 0
 const boxjs_host = $.read('#boxjs_host').indexOf('com') !== -1 ? 'com' : 'net'
 
-try {
-  ;($.html.includes && $.html.includes('</body>')) || $.done({ body: $.html })
-} catch (n) {
-  $.done()
-}
-
 const isLogin = $.url.indexOf('/login/login') > -1
+
+;(async () => {
+  console.log($.url)
+  if ($.html.includes && $.html.includes('</body>')) {
+  
+    console.log(`重写URL：${$.url}`)
+    const n = createStyle(),
+      e = createScript(),
+      t = createHTML(),
+      i = `\n${n}\n${t}\n${e}\n`
+    $.html = $.html.replace(/(<body)/, `${i} <body`)
+  }
+})()
+  .catch((n) => {
+    console.log(`错误URL：${$.url}\n错误信息：${JSON.stringify(n)}`)
+  })
+  .finally(() => {
+    $.headers = { ...$.headers, 'Cache-Control': 'no-cache' }
+    let modifiedHeaders = $.headers
+    if (modifiedHeaders['Content-Security-Policy'])
+      delete modifiedHeaders['Content-Security-Policy']
+    if (modifiedHeaders['X-XSS-Protection'])
+      delete modifiedHeaders['X-XSS-Protection']
+
+    if ($.headers['Set-Cookie']) {
+      const cookies = $.headers['Set-Cookie']
+        .replace(/HttpOnly/gi, '')
+        .replace(/(Expires=.+?),/gi, '$1@')
+        .split(', ')
+
+      let key = 'Set-Cookie'
+      cookies.forEach((ck, i) => {
+        key += ' '
+        modifiedHeaders[key] = ck.replace(/@/g, ',')
+      })
+    }
+    delete modifiedHeaders['Content-Encoding']
+    $.done({ body: $.html, headers: modifiedHeaders })
+  })
+
 function getRem(n) {
   return `${25 * n}vw`
 }
@@ -1168,45 +1202,6 @@ function createScript() {
 <\/script>
   `
 }
-
-;(async () => {
-  console.log($.url)
-  if ($.html.indexOf('</body>') > -1) {
-
-    console.log(`重写URL：${$.url}`)
-    const n = createStyle(),
-      e = createScript(),
-      t = createHTML(),
-      i = `\n${n}\n${t}\n${e}`
-    $.html = $.html.replace(/(<body)/, `${i} <body`)
-  }
-})()
-  .catch((n) => {
-    console.log(`错误URL：${$.url}\n错误信息：${JSON.stringify(n)}`)
-  })
-  .finally(() => {
-    $.headers = { ...$.headers, 'Cache-Control': 'no-cache' }
-    let modifiedHeaders = $.headers
-    if (modifiedHeaders['Content-Security-Policy'])
-      delete modifiedHeaders['Content-Security-Policy']
-    if (modifiedHeaders['X-XSS-Protection'])
-      delete modifiedHeaders['X-XSS-Protection']
-
-    if ($.headers['Set-Cookie']) {
-      const cookies = $.headers['Set-Cookie']
-        .replace(/HttpOnly/gi, '')
-        .replace(/(Expires=.+?),/gi, '$1@')
-        .split(', ')
-
-      let key = 'Set-Cookie'
-      cookies.forEach((ck, i) => {
-        key += ' '
-        modifiedHeaders[key] = ck.replace(/@/g, ',')
-      })
-    }
-    delete modifiedHeaders['Content-Encoding']
-    $.done({ body: $.html, headers: modifiedHeaders })
-  })
 
 // prettier-ignore
 function ENV(){const e="function"==typeof require&&"undefined"!=typeof $jsbox;return{isQX:"undefined"!=typeof $task,isLoon:"undefined"!=typeof $loon,isSurge:"undefined"!=typeof $httpClient&&"undefined"!=typeof $utils,isBrowser:"undefined"!=typeof document,isNode:"function"==typeof require&&!e,isJSBox:e,isRequest:"undefined"!=typeof $request,isScriptable:"undefined"!=typeof importModule}}
