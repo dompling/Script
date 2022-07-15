@@ -1172,13 +1172,12 @@ function createScript() {
 ;(async () => {
   console.log($.url)
   if ($.html.indexOf('</body>') > -1) {
-    
 
     console.log(`重写URL：${$.url}`)
     const n = createStyle(),
       e = createScript(),
       t = createHTML(),
-      i = `\n${n}\n${t}\n${e}\n`
+      i = `\n${n}\n${t}\n${e}`
     $.html = $.html.replace(/(<body)/, `${i} <body`)
   }
 })()
@@ -1205,10 +1204,10 @@ function createScript() {
         modifiedHeaders[key] = ck.replace(/@/g, ',')
       })
     }
+    delete modifiedHeaders['Content-Encoding']
     $.done({ body: $.html, headers: modifiedHeaders })
   })
 
-  
 // prettier-ignore
 function ENV(){const e="function"==typeof require&&"undefined"!=typeof $jsbox;return{isQX:"undefined"!=typeof $task,isLoon:"undefined"!=typeof $loon,isSurge:"undefined"!=typeof $httpClient&&"undefined"!=typeof $utils,isBrowser:"undefined"!=typeof document,isNode:"function"==typeof require&&!e,isJSBox:e,isRequest:"undefined"!=typeof $request,isScriptable:"undefined"!=typeof importModule}}
 // prettier-ignore
