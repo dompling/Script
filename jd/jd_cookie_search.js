@@ -233,7 +233,11 @@ async function getFruit(cookie) {
   return $.http.post(option).then((response) => {
     try {
       const data = JSON.parse(response.body)
-      if (data.code === '0') return data.farmUserPro.treeState
+      if (data.code === '0')
+        return (
+          (data.farmUserPro.treeEnergy / data.farmUserPro.treeTotalEnergy) *
+          100
+        ).toFixed(2)
       return ''
     } catch (e) {
       return ''
