@@ -12,7 +12,6 @@
  * https://raw.githubusercontent.com/dompling/Script/master/jd/jd_login_help.js
  */
 
-
  const $ = new API('jd_ck_remark'),
  APIKey = 'CookiesJD',
  CacheKey = `#${APIKey}`,
@@ -568,7 +567,10 @@ function createStyle() {
  }
  b.beanNum{
    color:#ef3620 !important;
-   margin-right: ${getRem(0.14)} !important;
+   margin-right: 0 !important;
+ }
+ .beanNumValue{
+   margin-right: ${getRem(0.15)};
  }
  .beanNumValue,.hb_process{
    display:flex;
@@ -735,6 +737,8 @@ function createScript() {
  const $input = document.querySelector("#cu_search_input input");
  const cus_cancel = document.querySelector("#cus_cancel");
  
+ registerClick();
+
  function classFunc(element,str){
    let newClass = element.className.split(" ");
    if(newClass.indexOf(str)>-1){
@@ -852,13 +856,11 @@ function createScript() {
      if(nextIndex!==null){
        toolView.insertAdjacentHTML('beforeEnd','<div id="nextCK" class="tool_bar"><span class="iconfont icon-xiajiantou" /></div>')
      }
-
      if(current) animateScroll(current);
   };
 
-
   function animateScroll(key) {
-     account_list.scrollTo({top: 52 * key});
+     account_list.scrollTo({top: $('.cus-now_active').position().top - $('.cus-now_active').height() * 4 });
   }
 
   var preCK = document.getElementById("preCK");
@@ -937,7 +939,7 @@ function createScript() {
      }
    }
    
-   registerClick();
+   
 
    const $container = $("#tool-bars");
    var nx,
@@ -1242,12 +1244,11 @@ function createScript() {
 
 ;(async () => {
  if (typeof $.html === 'string' && $.html.indexOf('</body>') > -1) {
-  
    console.log(`重写URL：${$.url}`)
    const n = createStyle(),
      e = createScript(),
      t = createHTML(),
-     i = `\n${n}\n${t}\n${e}\n`
+     i = `\n${n}\n${t}\n${e}`
    $.html = $.html.replace(/(<body)/, `${i} <body`)
  }
 })()
