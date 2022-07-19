@@ -57,6 +57,8 @@ cookiesRemark.forEach((item) => {
       nickname = '',
       isPlusVip = 0,
       beanNum = 0,
+      fruit = '',
+      jdPet = '',
       mobile = ckRemarkFormat[username] ? ckRemarkFormat[username].mobile : ''
     if (response.retcode === '0') {
       isPlusVip = response.data.userInfo.isPlusVip
@@ -64,7 +66,9 @@ cookiesRemark.forEach((item) => {
       avatar = response.data.userInfo.baseInfo.headImageUrl
       nickname = response.data.userInfo.baseInfo.nickname
       console.log('帐号昵称：' + nickname)
-      mobile = await getPhoneNumber(cookie)
+      if (!mobile) mobile = await getPhoneNumber(cookie)
+      fruit = await getFruit(cookie)
+      jdPet = await PetRequest('energyCollect', cookie)
     }
 
     console.log(`检查结束：账号【${ckIndex}】 ${username}【${status}】`)
@@ -82,6 +86,8 @@ cookiesRemark.forEach((item) => {
       paymentCode: '',
       avatar,
       ...ckRemarkFormat[username],
+      jdPet,
+      fruit,
       beanNum,
       mobile,
       isPlusVip,
@@ -173,6 +179,61 @@ async function getPhoneNumber(cookie) {
     try {
       const data = JSON.parse(response.body)
       if (data.code === 200) return data.data
+      return ''
+    } catch (e) {
+      return ''
+    }
+  })
+}
+
+function taskPetUrl(function_id, body = {}, cookie) {
+  body['version'] = 2
+  body['channel'] = 'app'
+  return {
+    url: `https://api.m.jd.com/client.action?functionId=${function_id}`,
+    body: `body=${escape(
+      JSON.stringify(body)
+    )}&appid=wh5&loginWQBiz=pet-town&clientVersion=9.0.4`,
+    headers: {
+      cookie: cookie,
+      host: 'api.m.jd.com',
+      'content-type': 'application/x-www-form-urlencoded',
+    },
+  }
+}
+
+async function PetRequest(function_id, cookie, body = {}) {
+  return $.http.post(taskPetUrl(function_id, body, cookie)).then((response) => {
+    try {
+      const data = JSON.parse(response.body)
+      if (data.code === '0') return data.result.medalPercent.toFixed(1)
+      return ''
+    } catch (e) {
+      return ''
+    }
+  })
+}
+
+async function getFruit(cookie) {
+  const option = {
+    url: `https://api.m.jd.com/client.action?functionId=initForFarm`,
+    body: `body=${escape(
+      JSON.stringify({ version: 4 })
+    )}&appid=wh5&clientVersion=9.1.0`,
+    headers: {
+      accept: '*/*',
+      cookie: cookie,
+      origin: 'https://home.m.jd.com',
+      referer: 'https://home.m.jd.com/myJd/newhome.action',
+
+      'content-type': 'application/x-www-form-urlencoded',
+    },
+  }
+
+  return $.http.post(option).then((response) => {
+    try {
+      const data = JSON.parse(response.body)
+      if (data.code === '0') return data.farmUserPro.treeState
       return ''
     } catch (e) {
       return ''
