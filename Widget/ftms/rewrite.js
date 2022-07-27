@@ -1,32 +1,17 @@
-
-/**
- 
-(1). Quantumult X
-[MITM]
-hostname=访问网页版Sub-Store的IP或域名
-[rewrite_local]
-^https?:\/\/访问网页版Sub-Store的IP或域名如（sub-store\.com）url script-request-header https://raw.githubusercontent.com/dompling/Script/master/Sub-Store/rewrite.js
-
-(2). Loon
-[MITM]
-hostname=访问网页版Sub-Store的IP或域名
-[Script]
-http-request ^https?:\/\/访问网页版Sub-Store的IP或域名如（sub-store\.com） script-path=https://raw.githubusercontent.com/dompling/Script/master/Sub-Store/rewrite.js, require-body=false
-
-(3). Surge
-[MITM]
-hostname=访问网页版Sub-Store的IP或域名
-[Script]
-type=http-request, pattern=^https?:\/\/访问网页版Sub-Store的IP或域名如（sub-store\.com）, script-path=https://raw.githubusercontent.com/dompling/Script/master/Sub-Store/rewrite.js, require-body=false
-  
- */
-
-const $ = API('SubStore')
-const auth = $.read('auth')
-
-const headers = $request.headers
-headers.Authorization = auth
-$.done({ headers })
+const $ = new API('ftms', true)
+const title = '一汽丰田'
+try {
+  if (
+    $request.url.indexOf('getbmuservehicleinfo') > -1 &&
+    $request.url.indexOf('scriptable') === -1
+  ) {
+    $.write(JSON.stringify($request.headers), 'headers')
+  }
+  $.done({})
+} catch (e) {
+  console.log(`${title}cookie 写入失败` + e)
+  $.done({})
+}
 
 function ENV() {
   const isQX = typeof $task !== 'undefined'

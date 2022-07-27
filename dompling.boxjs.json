@@ -16,64 +16,6 @@
       ]
     },
     {
-      "id": "SubStore",
-      "name": "SubStore",
-      "keys": ["@SubStore.auth"],
-      "author": "@dompling",
-      "settings": [
-        {
-          "id": "@SubStore.auth",
-          "name": "登陆密码",
-          "val": null,
-          "type": "text",
-          "placeholder": "sub-store网页版登录密码",
-          "desc": "必填"
-        }
-      ],
-      "icons": [
-        "https://raw.githubusercontent.com/58xinian/icon/master/Sub-Store1.png",
-        "https://raw.githubusercontent.com/58xinian/icon/master/Sub-Store1.png"
-      ]
-    },
-    {
-      "id": "xmSports",
-      "name": "多账号运动",
-      "keys": ["@xmSports.token", "@xmSports.minStep", "@xmSports.maxStep"],
-      "author": "@dompling",
-      "settings": [
-        {
-          "id": "@xmSports.minStep",
-          "name": "最小步数",
-          "val": "20000",
-          "type": "text",
-          "placeholder": "最小步数",
-          "desc": "必填"
-        },
-        {
-          "id": "@xmSports.maxStep",
-          "name": "最大步数",
-          "val": "23000",
-          "type": "text",
-          "placeholder": "最大步数",
-          "desc": "必填"
-        }
-      ],
-      "icons": [
-        "https://raw.githubusercontent.com/58xinian/icon/master/xmyd.png",
-        "https://raw.githubusercontent.com/58xinian/icon/master/xmyd.png"
-      ],
-      "scripts": [
-        {
-          "name": "初始账号",
-          "script": "https://raw.githubusercontent.com/dompling/Script/master/xmSportsCookieTask.js"
-        },
-        {
-          "name": "同步设备",
-          "script": "https://raw.githubusercontent.com/dompling/Script/master/xmSports.js"
-        }
-      ]
-    },
-    {
       "id": "gistBackup",
       "name": "Gist备份",
       "keys": ["@gist.token", "@gist.username"],
@@ -114,18 +56,6 @@
           "desc": "必填"
         }
       ]
-    },
-    {
-      "id": "bilibili",
-      "name": "哔哩哔哩关注中心/番剧监控",
-      "keys": ["@bilibili.cookie", "@BiliBiliMonitor.subscriptions"],
-      "icons": [
-        "https://raw.githubusercontent.com/Orz-3/task/master/bilibili.png",
-        "https://raw.githubusercontent.com/Orz-3/task/master/bilibili.png"
-      ],
-      "author": "@dompling",
-      "repo": "https://github.com/dompling/Script/blob/master/BiliBili/bilibili.cookie.js",
-      "script": "https://raw.githubusercontent.com/dompling/Script/master/BiliBiliMonitor/BiliBiliMonitor.js"
     },
     {
       "id": "scriptable",
@@ -339,153 +269,13 @@
       ]
     },
     {
-      "id": "JD_jr_Cookies",
-      "name": "金融领豆",
-      "keys": ["@jd_jr.cookies", "@jd_jr.bodys"],
-      "descs_html": [
-        "请勿随意在输入框修改内容，只能通过脚本去获取cookie，若要修改，请按照JSON 格式修改（<a href=\"https://www.bejson.com/json/format\">可使用此JSON校验</a> ，或点击右上角按钮🔘进行校验(如有弹窗提示则为异常JSON)）。",
-        "仅能修改phoneNumber内容",
-        "JSON示例：[{phoneNumber: \"13348751678\", username: \"yaya\" }]"
-      ],
-      "settings": [
-        {
-          "id": "@jd_jr.cookies",
-          "name": "CK 列表",
-          "val": "",
-          "type": "textarea",
-          "autoGrow": true,
-          "rows": 8,
-          "desc": "CK 列表 (JSON 格式)"
-        }
-      ],
-      "icons": [
-        "https://raw.githubusercontent.com/Orz-3/mini/master/jd.png",
-        "https://raw.githubusercontent.com/Orz-3/task/master/jd.png"
-      ],
+      "id": "ftms",
+      "name": "中国联通",
+      "keys": ["@ftms.headers"],
       "author": "@dompling",
-      "repo": "https://github.com/dompling/Script/blob/master/jd/jd_jr_cookie.js",
-      "script": "https://raw.githubusercontent.com/dompling/Script/master/jd/jd_jr_sign.js"
-    },
-    {
-      "id": "oneSay",
-      "name": "每天一句",
-      "keys": ["@oneSay.mediaImg", "@oneSay.username"],
       "icons": [
-        "https://raw.githubusercontent.com/Orz-3/mini/master/calendar.png",
-        "https://raw.githubusercontent.com/Orz-3/task/master/calendar.png"
-      ],
-      "author": "@dompling",
-      "repo": "https://github.com/dompling/Script/blob/master/oneSay/oneSay.js",
-      "script": "https://raw.githubusercontent.com/dompling/Script/master/oneSay/oneSay.js",
-      "settings": [
-        {
-          "id": "@oneSay.username",
-          "name": "姓名",
-          "val": null,
-          "type": "text",
-          "autoGrow": false,
-          "rows": 2,
-          "placeholder": "必填姓名"
-        },
-        {
-          "id": "@oneSay.mediaImg",
-          "name": "内容媒体图",
-          "val": null,
-          "type": "text",
-          "autoGrow": false,
-          "rows": 2,
-          "placeholder": "系统配送图，或者自定义",
-          "desc": "非必填"
-        }
-      ]
-    },
-    {
-      "id": "birthday",
-      "name": "生日计时",
-      "keys": [
-        "@birthday.mediaImg",
-        "@birthday.username",
-        "@birthday.time",
-        "@birthday.pDefault",
-        "@birthday.pCycle",
-        "@birthday.nongli",
-        "@birthday.eday",
-        "@birthday.loveWords"
-      ],
-      "icons": [
-        "https://raw.githubusercontent.com/Orz-3/mini/master/birthday.png",
-        "https://raw.githubusercontent.com/Orz-3/task/master/birthday.png"
-      ],
-      "author": "@dompling",
-      "repo": "https://github.com/dompling/Script/blob/master/birthdayCountDown/index.js",
-      "script": "https://raw.githubusercontent.com/dompling/Script/master/birthdayCountDown/index.js",
-      "settings": [
-        {
-          "id": "@birthday.nongli",
-          "name": "农历",
-          "val": true,
-          "type": "boolean"
-        },
-        {
-          "id": "@birthday.loveWords",
-          "name": "情话",
-          "val": true,
-          "type": "boolean"
-        },
-        {
-          "id": "@birthday.username",
-          "name": "姓名",
-          "val": null,
-          "type": "text",
-          "autoGrow": false,
-          "rows": 2,
-          "placeholder": "必填姓名"
-        },
-        {
-          "id": "@birthday.time",
-          "name": "出生年月",
-          "val": null,
-          "type": "text",
-          "rows": 2,
-          "placeholder": "必填内容，出身年月格式为：年-月-日。"
-        },
-        {
-          "id": "@birthday.mediaImg",
-          "name": "内容媒体图",
-          "val": null,
-          "type": "text",
-          "autoGrow": false,
-          "rows": 2,
-          "placeholder": "默认取的随机推送图片",
-          "desc": "非必填"
-        },
-        {
-          "id": "@birthday.eday",
-          "name": "情侣相识日期",
-          "val": null,
-          "type": "text",
-          "rows": 2,
-          "placeholder": "相识的日期",
-          "desc": "非必填"
-        },
-        {
-          "id": "@birthday.pDefault",
-          "name": "生理期",
-          "val": null,
-          "type": "text",
-          "rows": 2,
-          "placeholder": "最近一次生理期时间",
-          "desc": "非必填"
-        },
-        {
-          "id": "@birthday.pCycle",
-          "name": "生理期区间",
-          "val": null,
-          "type": "text",
-          "rows": 2,
-          "placeholder": "生理期区间，最近一次生理期开始计算。",
-          "desc": "非必填；计算不准时，请重填生理期。"
-        }
+        "https://raw.githubusercontent.com/dompling/Scriptable/master/images/ftms.png",
+        "https://raw.githubusercontent.com/dompling/Scriptable/master/images/ftms.png"
       ]
     }
   ]
