@@ -270,9 +270,18 @@
     },
     {
       "id": "ftms",
-      "name": "中国联通",
-      "keys": ["@ftms.headers"],
+      "name": "丰田汽车",
+      "keys": ["@ftms.headers", "@ftms.mute"],
       "author": "@dompling",
+      "settings": [
+        {
+          "id": "@ftms.mute",
+          "name": "静音获取",
+          "val": false,
+          "type": "boolean",
+          "desc": "更新时，不会执行通知提示"
+        }
+      ],
       "icons": [
         "https://raw.githubusercontent.com/dompling/Scriptable/master/images/ftms.png",
         "https://raw.githubusercontent.com/dompling/Scriptable/master/images/ftms.png"
