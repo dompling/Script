@@ -6,10 +6,14 @@ try {
     $request.url.indexOf('scriptable') === -1
   ) {
     $.write(JSON.stringify($request.headers), 'headers')
+    if ($.read('mute') !== 'true') {
+      $.notify(title, `Cookie 写入成功`)
+    }
   }
   $.done({})
 } catch (e) {
   console.log(`${title}cookie 写入失败` + e)
+  $.notify(title, `Cookie 写入失败`)
   $.done({})
 }
 
