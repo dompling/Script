@@ -601,15 +601,17 @@ b.beanNum{
 }
 
 .async{
- right: 2px;
- top: 50%;
- background: #fff;
-}
-
-.async img,.check img{
-   width:100%;
-   height:100%;
-}
+  right: 2px;
+  top: 50%;
+  background: #f7bb10;
+ }
+ 
+ .async img,.check img{
+    width:100%;
+    height:100%;
+    filter: invert(100%) sepia(5%) saturate(7500%) hue-rotate( 
+     170deg) brightness(106%) contrast(102%);
+ }
 
 .loading{
  animation: loading 4s linear infinite;
