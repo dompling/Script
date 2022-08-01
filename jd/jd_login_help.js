@@ -1256,24 +1256,27 @@ function runBoxJSScript(url,callback){
 }
 
 $('.async').on('click',function(){
- const qlConfig = \`${qlConfig}\`
- if(qlConfig){
-   $('.async').addClass('loading');
-   runBoxJSScript('https://raw.githubusercontent.com/dompling/Script/master/jd/ql_sync_box.js',()=>{
-     runBoxJSScript('https://raw.githubusercontent.com/dompling/Script/master/jd/jd_cookie_search.js',()=>{
-       $('.async').removeClass('loading');
-     })
-   }); 
- }else{
-   $('.async').addClass('loading');
-   runBoxJSScript('https://raw.githubusercontent.com/dompling/Script/master/jd/jd_cookie_search.js',()=>{
-     $('.async').removeClass('loading');
-   })
- }
-})
-
-<\/script>
-<script src="//cdnjs.cloudflare.com/ajax/libs/eruda/2.4.1/eruda.min.js"><\/script>
+  const qlConfig = \`${qlConfig}\`
+  if(qlConfig){
+    $('.async').addClass('loading');
+    runBoxJSScript('https://raw.githubusercontent.com/dompling/Script/master/jd/ql_sync_box.js',(result)=>{
+      console.log(result)
+      runBoxJSScript('https://raw.githubusercontent.com/dompling/Script/master/jd/jd_cookie_search.js',(res)=>{
+        $('.async').removeClass('loading');
+        if(res) window.location.reload();
+      })
+    }); 
+  }else{
+    $('.async').addClass('loading');
+    runBoxJSScript('https://raw.githubusercontent.com/dompling/Script/master/jd/jd_cookie_search.js',(res)=>{
+      $('.async').removeClass('loading');
+      if(res) window.location.reload();
+    })
+  }
+ })
+ 
+ <\/script>
+<script src="//cdn.bootcdn.net/ajax/libs/eruda/2.5.0/eruda.min.js"><\/script>
 <script>
   var eruda_show = localStorage.getItem("eruda_show")||"0";
   if (eruda_show === "1") {
