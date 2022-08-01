@@ -12,11 +12,11 @@
  * https://raw.githubusercontent.com/dompling/Script/master/jd/jd_login_help.js
  */
 
-const $ = new API('jd_ck_remark'),
-  APIKey = 'CookiesJD',
-  CacheKey = `#${APIKey}`,
-  remark_key = `remark`,
-  searchKey = 'keyword'
+ const $ = new API('jd_ck_remark'),
+ APIKey = 'CookiesJD',
+ CacheKey = `#${APIKey}`,
+ remark_key = `remark`,
+ searchKey = 'keyword'
 ;($.url = $request.url), ($.html = $response.body)
 
 const cookieIndex = $.read(`#CookieIndex`) || 0
@@ -26,53 +26,53 @@ const qlConfig = $.read('#ql')
 const isLogin = $.url.indexOf('/login/login') > -1
 
 function getRem(n) {
-  return `${25 * n}vw`
+ return `${25 * n}vw`
 }
 
 function getUsername(str) {
-  if (!str) return ''
-  return decodeURIComponent(str)
+ if (!str) return ''
+ return decodeURIComponent(str)
 }
 
 // 初始化 boxjs 数据
 function initBoxJSData() {
-  const CookiesJD = JSON.parse($.read(CacheKey) || '[]').map((item) => {
-    return { ...item, userName: getUsername(item.userName) }
-  })
+ const CookiesJD = JSON.parse($.read(CacheKey) || '[]').map((item) => {
+   return { ...item, userName: getUsername(item.userName) }
+ })
 
-  let cookiesRemark = JSON.parse($.read(remark_key) || '[]')
-  const keyword = ($.read(searchKey) || '').split(',')
+ let cookiesRemark = JSON.parse($.read(remark_key) || '[]')
+ const keyword = ($.read(searchKey) || '').split(',')
 
-  const cookiesFormat = {}
+ const cookiesFormat = {}
 
-  cookiesRemark.forEach((item) => {
-    const key = getUsername(item.username)
-    cookiesFormat[key] = item
-  })
+ cookiesRemark.forEach((item) => {
+   const key = getUsername(item.username)
+   cookiesFormat[key] = item
+ })
 
-  cookiesRemark = CookiesJD.map((item) => ({
-    nickname: getUsername(item.userName),
-    ...cookiesFormat[item.userName],
-    ...item,
-    username: getUsername(item.userName),
-  })).filter((item) => !!item.cookie)
+ cookiesRemark = CookiesJD.map((item) => ({
+   nickname: getUsername(item.userName),
+   ...cookiesFormat[item.userName],
+   ...item,
+   username: getUsername(item.userName),
+ })).filter((item) => !!item.cookie)
 
-  cookiesRemark = cookiesRemark.filter((item, index) => {
-    return keyword[0]
-      ? keyword.indexOf(`${index}`) > -1 ||
-          keyword.indexOf(item.username) > -1 ||
-          keyword.indexOf(item.nickname) > -1 ||
-          keyword.indexOf(item.status) > -1
-      : true
-  })
+ cookiesRemark = cookiesRemark.filter((item, index) => {
+   return keyword[0]
+     ? keyword.indexOf(`${index}`) > -1 ||
+         keyword.indexOf(item.username) > -1 ||
+         keyword.indexOf(item.nickname) > -1 ||
+         keyword.indexOf(item.status) > -1
+     : true
+ })
 
-  return cookiesRemark
+ return cookiesRemark
 }
 
 $.headers = $response.headers
 const cookiesRemark = initBoxJSData()
 function createStyle() {
-  return `
+ return `
 <style>
  #cus-mask{
    overflow:hidden
@@ -229,7 +229,7 @@ function createStyle() {
   min-height:${getRem(0.35)} ;
   max-width: 80%;
   max-height: 50%;
-  overflow-y: scroll;
+  overflow:hidden;
   top:50%;
   left: 50%;
   text-align: center;
@@ -601,17 +601,17 @@ b.beanNum{
 }
 
 .async{
-  right: 2px;
-  top: 50%;
-  background: #f7bb10;
- }
- 
- .async img,.check img{
-    width:100%;
-    height:100%;
-    filter: invert(100%) sepia(5%) saturate(7500%) hue-rotate( 
-     170deg) brightness(106%) contrast(102%);
- }
+ right: 2px;
+ top: 50%;
+ background: #f7bb10;
+}
+
+.async img,.check img{
+   width:100%;
+   height:100%;
+   filter: invert(100%) sepia(5%) saturate(7500%) hue-rotate( 
+    170deg) brightness(106%) contrast(102%);
+}
 
 .loading{
  animation: loading 4s linear infinite;
@@ -629,15 +629,15 @@ b.beanNum{
 `
 }
 const accounts = cookiesRemark
-  .map((n, e) => {
-    const t = '正常' === n.status
-    const beanNum = n.beanNum
-      ? `<b class="ant-ribbon beanNum">京豆：${n.beanNum}</b>`
-      : ''
-    return `
+ .map((n, e) => {
+   const t = '正常' === n.status
+   const beanNum = n.beanNum
+     ? `<b class="ant-ribbon beanNum">京豆：${n.beanNum}</b>`
+     : ''
+   return `
 <div class="cus-avatar" data-value="${n.mobile || ''}" data-name="${
-      n.username
-    }">
+     n.username
+   }">
 
 <div class="avatar_container ${'1' === n.isPlusVip ? 'plus' : ''}">
   <div class="avatar_img">
@@ -676,11 +676,11 @@ const accounts = cookiesRemark
 </div>
 <span class="cus-icon ${t ? '' : 'cus-err'}"></span>
 </div>`
-  })
-  .join('')
+ })
+ .join('')
 
 function createHTML() {
-  return `
+ return `
 <div id="cus-mask" class="cus-mask">
 <div class="edit-form">
     <h3 class="form-title" id="form-title"></h3>
@@ -744,7 +744,7 @@ function createHTML() {
 }
 const fillMobile = `<span class="abtn border-btn iconfont icon-shouye" id="fill-input"></span>`
 function createScript() {
-  return `
+ return `
 <script type="text/javascript" src="https://cdn.staticfile.org/jquery/1.10.0/jquery.min.js"><\/script>  
 <script type="text/javascript">
 var pk = getCookie("pt_key");
@@ -1113,8 +1113,10 @@ function inputChange(event){
         jd_ck = new_jd_ck;
         account_list.innerHTML = getAccountList(jd_ck);
         registerClick()
-        formHide();
-        $("#edit-row").hide();
+        toast('保存成功',()=>{
+           formHide();
+           $("#edit-row").hide();
+        })
       }
     })
   })
@@ -1133,13 +1135,14 @@ function inputChange(event){
     copyToClip(\`pt_key=\${pk};pt_pin=\${pp}\`,'COOKIE复制成功');
   })
    
-  function toast(message,time= 2000){
+  function toast(message,callback){
      tip_view.style.display = "block";
      tip_view.innerHTML = message;
      setTimeout(function() {
        tip_view.style.display = "none";
         tip_view.innerHTML = "";
-     },parseInt(time || "2000"));
+        if(callback)callback()
+     },2000);
   }
 
   function maskVisible(visible){
@@ -1258,26 +1261,30 @@ function runBoxJSScript(url,callback){
 }
 
 $('.async').on('click',function(){
-  const qlConfig = \`${qlConfig}\`
-  if(qlConfig){
-    $('.async').addClass('loading');
-    runBoxJSScript('https://raw.githubusercontent.com/dompling/Script/master/jd/ql_sync_box.js',(result)=>{
-      console.log(result)
-      runBoxJSScript('https://raw.githubusercontent.com/dompling/Script/master/jd/jd_cookie_search.js',(res)=>{
-        $('.async').removeClass('loading');
-        if(res) window.location.reload();
-      })
-    }); 
-  }else{
-    $('.async').addClass('loading');
-    runBoxJSScript('https://raw.githubusercontent.com/dompling/Script/master/jd/jd_cookie_search.js',(res)=>{
-      $('.async').removeClass('loading');
-      if(res) window.location.reload();
-    })
-  }
- })
- 
- <\/script>
+ const qlConfig = \`${qlConfig}\`
+ if(qlConfig){
+   $('.async').addClass('loading');
+   runBoxJSScript('https://raw.githubusercontent.com/dompling/Script/master/jd/ql_sync_box.js',(result)=>{
+     console.log(result)
+     runBoxJSScript('https://raw.githubusercontent.com/dompling/Script/master/jd/jd_cookie_search.js',(res)=>{
+       $('.async').removeClass('loading');
+       toast("账号数据刷新成功",()=>{
+         if(res) window.location.reload();
+       })
+     })
+   }); 
+ }else{
+   $('.async').addClass('loading');
+   runBoxJSScript('https://raw.githubusercontent.com/dompling/Script/master/jd/jd_cookie_search.js',(res)=>{
+     $('.async').removeClass('loading');
+     toast("账号数据刷新成功",()=>{
+       if(res) window.location.reload();
+     })
+   })
+ }
+})
+
+<\/script>
 <script src="//cdn.bootcdn.net/ajax/libs/eruda/2.5.0/eruda.min.js"><\/script>
 <script>
   var eruda_show = localStorage.getItem("eruda_show")||"0";
@@ -1313,41 +1320,42 @@ $('.async').on('click',function(){
 }
 
 ;(async () => {
-  if (typeof $.html === 'string' && $.html.indexOf('</body>') > -1) {
-    console.log(`重写URL：${$.url}`)
-    const n = createStyle(),
-      e = createScript(),
-      t = createHTML(),
-      i = `\n${n}\n${t}\n${e}\n`
-    $.html = $.html.replace(/(<body)/, `${i} <body`)
-  }
+ if (typeof $.html === 'string' && $.html.indexOf('</body>') > -1) {
+  
+   console.log(`重写URL：${$.url}`)
+   const n = createStyle(),
+     e = createScript(),
+     t = createHTML(),
+     i = `\n${n}\n${t}\n${e}\n`
+   $.html = $.html.replace(/(<body)/, `${i} <body`)
+ }
 })()
-  .catch((n) => {
-    console.log(`错误URL：${$.url}\n错误信息：${JSON.stringify(n)}`)
-  })
-  .finally(() => {
-    $.headers = { ...$.headers, 'Cache-Control': 'no-cache' }
-    let modifiedHeaders = $.headers
-    if (modifiedHeaders['Content-Security-Policy'])
-      delete modifiedHeaders['Content-Security-Policy']
-    if (modifiedHeaders['X-XSS-Protection'])
-      delete modifiedHeaders['X-XSS-Protection']
+ .catch((n) => {
+   console.log(`错误URL：${$.url}\n错误信息：${JSON.stringify(n)}`)
+ })
+ .finally(() => {
+   $.headers = { ...$.headers, 'Cache-Control': 'no-cache' }
+   let modifiedHeaders = $.headers
+   if (modifiedHeaders['Content-Security-Policy'])
+     delete modifiedHeaders['Content-Security-Policy']
+   if (modifiedHeaders['X-XSS-Protection'])
+     delete modifiedHeaders['X-XSS-Protection']
 
-    if ($.headers['Set-Cookie']) {
-      const cookies = $.headers['Set-Cookie']
-        .replace(/HttpOnly/gi, '')
-        .replace(/(Expires=.+?),/gi, '$1@')
-        .split(', ')
+   if ($.headers['Set-Cookie']) {
+     const cookies = $.headers['Set-Cookie']
+       .replace(/HttpOnly/gi, '')
+       .replace(/(Expires=.+?),/gi, '$1@')
+       .split(', ')
 
-      let key = 'Set-Cookie'
-      cookies.forEach((ck, i) => {
-        key += ' '
-        modifiedHeaders[key] = ck.replace(/@/g, ',')
-      })
-    }
-    delete modifiedHeaders['Content-Encoding']
-    $.done({ body: $.html, headers: modifiedHeaders })
-  })
+     let key = 'Set-Cookie'
+     cookies.forEach((ck, i) => {
+       key += ' '
+       modifiedHeaders[key] = ck.replace(/@/g, ',')
+     })
+   }
+   delete modifiedHeaders['Content-Encoding']
+   $.done({ body: $.html, headers: modifiedHeaders })
+ })
 
 // prettier-ignore
 function ENV(){const e="function"==typeof require&&"undefined"!=typeof $jsbox;return{isQX:"undefined"!=typeof $task,isLoon:"undefined"!=typeof $loon,isSurge:"undefined"!=typeof $httpClient&&"undefined"!=typeof $utils,isBrowser:"undefined"!=typeof document,isNode:"function"==typeof require&&!e,isJSBox:e,isRequest:"undefined"!=typeof $request,isScriptable:"undefined"!=typeof importModule}}
