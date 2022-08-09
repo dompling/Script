@@ -174,10 +174,9 @@ async function GetCookie() {
       })
       if ($.ql) await $.ql.asyncCookie(CookieValue, 'JD_COOKIE')
       if (updateIndex !== null) {
-        const response = await TotalBean(updateCookiesData[updateIndex].cookie)
-        if (response && response.retcode === '0')
-          return console.log('cookie 未过期，无需更新')
-
+        // const response = await TotalBean(updateCookiesData[updateIndex].cookie)
+        // if (response && response.retcode === '0')
+        //   return console.log('cookie 未过期，无需更新')
         updateCookiesData[updateIndex].cookie = CookieValue
         CookieName = '【账号' + (updateIndex + 1) + '】'
         tipPrefix = '更新京东'
