@@ -10,6 +10,7 @@
  *
  * [Script]
  * https://raw.githubusercontent.com/dompling/Script/master/jd/jd_login_help.js
+ * 
  */
 
  const $ = new API('jd_ck_remark'),
@@ -614,7 +615,7 @@ b.beanNum{
 }
 
 .loading{
- animation: loading 4s linear infinite;
+ animation: loading 2s linear infinite;
  animation-play-state:running;
 }
 @-webkit-keyframes loading {
@@ -747,6 +748,15 @@ function createScript() {
  return `
 <script type="text/javascript" src="https://cdn.staticfile.org/jquery/1.10.0/jquery.min.js"><\/script>  
 <script type="text/javascript">
+Array.prototype._map = function(callback){
+ var newArr = [];
+ for(var i = 0; i < this.length; i++){
+     newArr.push(callback(this[i],i,this))
+ }
+ return newArr;
+}
+
+
 var pk = getCookie("pt_key");
 var pp = decodeURIComponent(getCookie("pt_pin"));
 
@@ -806,7 +816,7 @@ cu_search_close.addEventListener("click",function(){
 })
 
 function getAccountList(cks){
- return  cks.map((item,index) => {
+ return  cks._map((item,index) => {
 const status = item.status === '正常';
 const beanNum = item.beanNum? \`<b class="ant-ribbon beanNum">京豆：\${item.beanNum}</b>\`:'';
 return \`
@@ -1092,7 +1102,7 @@ function inputChange(event){
       updateItem[item.name]=item.value;
     })
     const new_jd_ck = []
-    const formValue = jd_ck.map((item,index)=>{
+    const formValue = jd_ck._map((item,index)=>{
         const {wskey,cookie,userName,...temp} = item;
         if(item.userName === updateItem.userName){
           updateItem = {...temp , ...updateItem};
@@ -1321,12 +1331,11 @@ $('.async').on('click',function(){
 
 ;(async () => {
  if (typeof $.html === 'string' && $.html.indexOf('</body>') > -1) {
-  
    console.log(`重写URL：${$.url}`)
    const n = createStyle(),
      e = createScript(),
      t = createHTML(),
-     i = `\n${n}\n${t}\n${e}\n`
+     i = `\n${n}\n${t}\n${e}`
    $.html = $.html.replace(/(<body)/, `${i} <body`)
  }
 })()
