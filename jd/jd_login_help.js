@@ -1327,7 +1327,7 @@ if(qlConfig){
    const n = createStyle(),
      e = createScript(),
      t = createHTML(),
-     i = `\n${n}\n${t}\n${e}\n${jfScript}`
+     i = `\n${n}\n${t}\n${e}\n`
    $.html = $.html.replace(/(<\/title>)/, `$1${i}`)
  }
 })()
