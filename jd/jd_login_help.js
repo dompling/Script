@@ -75,530 +75,544 @@ const cookiesRemark = initBoxJSData()
 function createStyle() {
  return `
 <style>
+body #imk2FixedBottom.imk2b_wraper,
+body #imk2FixedSide,
+body #m_common_tip,
+body .jumpJdApp,
+body .modal,
+body .modal,
+body #imk2FixedBottom.imk2b_wraper + a,
+body #plugIn_downloadAppPlugIn_loadIframe,
+body div.download-pannel.download-noBg,
+body div.bottom_tips_wrapper
+{
+ display:none !important;
+}
+
 #cus-mask{
-  overflow:hidden
+ overflow:hidden
 }
 #cus-mask .iconfont{
-  font-size: ${getRem(0.2)};
+ font-size: ${getRem(0.2)};
 }
 #cus-mask p,#cus-mask span{
- padding: 0;
- margin: 0;
+padding: 0;
+margin: 0;
 }
 .tool_bars{
- position: fixed;
- top:50%;
- right: 0;
- z-index: 999;
- transform: translateY(-50%);
+position: fixed;
+top:50%;
+right: 0;
+z-index: 999;
+transform: translateY(-50%);
 }
 .tool_bar_jf{
- position: fixed;
- top: 80%;
- right: 0;
- z-index: 999;
- transform: translateY(-50%);
+position: fixed;
+top: 80%;
+right: 0;
+z-index: 999;
+transform: translateY(-50%);
 }
 .tool_bar{
- display: flex;
- height:33px;
- width:33px;
- align-items: center;
- background: #f7bb10;
- padding-left: 2px;
- border-top-left-radius: 50%;
- border-bottom-left-radius: 50%;
- padding-right: 3px;
- color: #fff;
- font-size: ${getRem(0.1)};
- margin-bottom: ${getRem(0.1)};
- border-top: 1px solid #e8e8e8;
- border-bottom: 1px solid #e8e8e8;
- border-left: 1px solid #e8e8e8;
+display: flex;
+height:33px;
+width:33px;
+align-items: center;
+background: #f7bb10;
+padding-left: 2px;
+border-top-left-radius: 50%;
+border-bottom-left-radius: 50%;
+padding-right: 3px;
+color: #fff;
+font-size: ${getRem(0.1)};
+margin-bottom: ${getRem(0.1)};
+border-top: 1px solid #e8e8e8;
+border-bottom: 1px solid #e8e8e8;
+border-left: 1px solid #e8e8e8;
 }
 .tool_bar_jf{
- position: fixed;
- top: 80%;
- right: 0;
- z-index: 999;
- transform: translateY(-50%);
+position: fixed;
+top: 80%;
+right: 0;
+z-index: 999;
+transform: translateY(-50%);
 }
 .tool_bar img,.tool_bar span{
- border-radius: 50%;
- border:1px solid #fff;
- width: 27px;
- height: 27px;
- line-height: 27px;
- text-align: center;
- display: block;
- font-size: 24px;
+border-radius: 50%;
+border:1px solid #fff;
+width: 27px;
+height: 27px;
+line-height: 27px;
+text-align: center;
+display: block;
+font-size: 24px;
 }
 .cus-mask{
- position: fixed;
- top: -500vh;
- left: 50%;
- z-index: 9999;   
- transform: translate(-50%,-50%);
- -ms-transform: translate(-50%,-50%);
- -moz-transform: translate(-50%,-50%);
- -webkit-transform: translate(-50%,-50%);
- -o-transform: translate(-50%,-50%); 
+position: fixed;
+top: -500vh;
+left: 50%;
+z-index: 9999;   
+transform: translate(-50%,-50%);
+-ms-transform: translate(-50%,-50%);
+-moz-transform: translate(-50%,-50%);
+-webkit-transform: translate(-50%,-50%);
+-o-transform: translate(-50%,-50%); 
 }
 .cus-mask_view{
- width: 90vw;
- background: #fff;
- border-radius: ${getRem(0.25)};
- overflow: hidden;
- color: #2e2d2d;
+width: 90vw;
+background: #fff;
+border-radius: ${getRem(0.25)};
+overflow: hidden;
+color: #2e2d2d;
 }
 .cus-view{
- font-size: ${getRem(0.16)};
- font-family: PingFangSC-Semibold;
- text-align: center;
- padding: 0 ${getRem(0.13)} 0;
- position: absolute;
- top: ${getRem(0.1)};
- background: #fff;
- left: 50%;
- transform: translateX(-50%);
- z-index: 999;
- display:flex;
- align-items: center;
- border-radius: ${getRem(0.1)};
- box-shadow: 0 2px 5px #ecc4d8;
+font-size: ${getRem(0.16)};
+font-family: PingFangSC-Semibold;
+text-align: center;
+padding: 0 ${getRem(0.13)} 0;
+position: absolute;
+top: ${getRem(0.1)};
+background: #fff;
+left: 50%;
+transform: translateX(-50%);
+z-index: 999;
+display:flex;
+align-items: center;
+border-radius: ${getRem(0.1)};
+box-shadow: 0 2px 5px #ecc4d8;
 }
 .cus-content{
- font-family: PingFangSC-Regular;
- font-size: ${getRem(0.14)};
- line-height: ${getRem(0.22)};
- padding: ${getRem(0.25)} ${getRem(0.1)} 0;
- position: relative;
+font-family: PingFangSC-Regular;
+font-size: ${getRem(0.14)};
+line-height: ${getRem(0.22)};
+padding: ${getRem(0.25)} ${getRem(0.1)} 0;
+position: relative;
 }
 .cus-content label{
- color: rgba(0,0,0,.4);
- font-size: ${getRem(0.16)};
- margin-bottom: ${getRem(0.2)};
- display: block
+color: rgba(0,0,0,.4);
+font-size: ${getRem(0.16)};
+margin-bottom: ${getRem(0.2)};
+display: block
 }
 .cus-content ul{
- padding-left: ${getRem(0.2)};
- color: rgba(0,0,0,.4);
- margin-top: ${getRem(0.1)};
- font-size: ${getRem(0.1)}
+padding-left: ${getRem(0.2)};
+color: rgba(0,0,0,.4);
+margin-top: ${getRem(0.1)};
+font-size: ${getRem(0.1)}
 }
 .cus-content li{
- list-style-type: cjk-ideographic;
+list-style-type: cjk-ideographic;
 }
 .cus-footer{
- margin-top: ${getRem(0.09)};
- border-radius: ${getRem(0.1)};
- -webkit-box-shadow: 0 -${getRem(0.025)} ${getRem(0.05)} 0 rgb(0 0 0/10%);
- box-shadow: 0 -${getRem(0.025)} ${getRem(0.05)} 0 rgb(0 0 0/10%);
+margin-top: ${getRem(0.09)};
+border-radius: ${getRem(0.1)};
+-webkit-box-shadow: 0 -${getRem(0.025)} ${getRem(0.05)} 0 rgb(0 0 0/10%);
+box-shadow: 0 -${getRem(0.025)} ${getRem(0.05)} 0 rgb(0 0 0/10%);
 }
 .cus-footer .abtn{
- display: inline-block;
- font-family: PingFangSC-Regular;
- font-size: ${getRem(0.15)};
- color: #2e2d2d;
- text-align: center;
- height: ${getRem(0.45)};
- line-height: ${getRem(0.45)};
- width: 100%;
- border-top: 1px solid #eaeaea;
+display: inline-block;
+font-family: PingFangSC-Regular;
+font-size: ${getRem(0.15)};
+color: #2e2d2d;
+text-align: center;
+height: ${getRem(0.45)};
+line-height: ${getRem(0.45)};
+width: 100%;
+border-top: 1px solid #eaeaea;
 }
 .cus-footer span{
- font-size: ${getRem(0.15)};
+font-size: ${getRem(0.15)};
 }
 .border-btn{
- border-left: 1px solid #eaeaea;
- border-top: 1px solid #eaeaea;
+border-left: 1px solid #eaeaea;
+border-top: 1px solid #eaeaea;
 }
 .cus-footer .btn-ok{
- color: #fff;
- background-image: -webkit-gradient(linear,left top,right top,from(#f7bb10),to(#ff4f18));
- background-image: -webkit-linear-gradient(left,#f7bb10,#ff4f18);
- background-image: -o-linear-gradient(left,#f7bb10,#ff4f18);
- background-image: linear-gradient(90deg,#f7bb10,#ff4f18);
- border-radius: 0 0 ${getRem(0.1)} 0;
+color: #fff;
+background-image: -webkit-gradient(linear,left top,right top,from(#f7bb10),to(#ff4f18));
+background-image: -webkit-linear-gradient(left,#f7bb10,#ff4f18);
+background-image: -o-linear-gradient(left,#f7bb10,#ff4f18);
+background-image: linear-gradient(90deg,#f7bb10,#ff4f18);
+border-radius: 0 0 ${getRem(0.1)} 0;
 }
 #cus-tip{
- position: fixed;
- z-index: 9999;
- background: rgba(0,0,0,.5);
- color: #fff;
- min-width: ${getRem(1)};
- min-height:${getRem(0.35)} ;
- max-width: 80%;
- max-height: 50%;
- overflow:hidden;
- top:50%;
- left: 50%;
- text-align: center;
- padding: ${getRem(0.1)};
- box-sizing: border-box;
- font-size: ${getRem(0.1)};
- border-radius: ${getRem(0.1)};
- transform: translate(-50%,-50%);
- -ms-transform: translate(-50%,-50%);
- -moz-transform: translate(-50%,-50%);
- -webkit-transform: translate(-50%,-50%);
- -o-transform: translate(-50%,-50%);
+position: fixed;
+z-index: 9999;
+background: rgba(0,0,0,.5);
+color: #fff;
+min-width: ${getRem(1)};
+min-height:${getRem(0.35)} ;
+max-width: 80%;
+max-height: 50%;
+overflow:hidden;
+top:50%;
+left: 50%;
+text-align: center;
+padding: ${getRem(0.1)};
+box-sizing: border-box;
+font-size: ${getRem(0.1)};
+border-radius: ${getRem(0.1)};
+transform: translate(-50%,-50%);
+-ms-transform: translate(-50%,-50%);
+-moz-transform: translate(-50%,-50%);
+-webkit-transform: translate(-50%,-50%);
+-o-transform: translate(-50%,-50%);
 }
 #account_list{
- border: 4px solid #f7bb10;
- border-radius: ${getRem(0.3)};
- height: ${getRem(3.69)};
- // min-height: ${getRem(1.98)};
- overflow-x: hidden;
- overflow-y: scroll;
- padding: ${getRem(0.06)} ${getRem(0.1)};
- box-sizing: border-box;
+border: 4px solid #f7bb10;
+border-radius: ${getRem(0.3)};
+height: ${getRem(3.69)};
+// min-height: ${getRem(1.98)};
+overflow-x: hidden;
+overflow-y: scroll;
+padding: ${getRem(0.06)} ${getRem(0.1)};
+box-sizing: border-box;
 }
 .cus-avatar{
-  padding: ${getRem(0.05)};
-  display: flex;
-  align-items: center;
-  border: 1px solid #eee;
-  border-radius: ${getRem(0.2)};
-  box-sizing: border-box;
-  position: relative;
-  margin-bottom: ${getRem(0.1)};
-  height: ${getRem(0.5)};
+ padding: ${getRem(0.05)};
+ display: flex;
+ align-items: center;
+ border: 1px solid #eee;
+ border-radius: ${getRem(0.2)};
+ box-sizing: border-box;
+ position: relative;
+ margin-bottom: ${getRem(0.1)};
+ height: ${getRem(0.5)};
 }
 .avatar_img{
- width:100%;
- height:100%;
- border-radius: 50%;
- font-size: ${getRem(0.1)};
- border: 1px solid #f7bb10;
- overflow: hidden;
- padding: ${getRem(0.1)};
- white-space: nowrap;
- background-size: contain;
- box-sizing: border-box;   
- position: absolute;
- z-index: 1; 
+width:100%;
+height:100%;
+border-radius: 50%;
+font-size: ${getRem(0.1)};
+border: 1px solid #f7bb10;
+overflow: hidden;
+padding: ${getRem(0.1)};
+white-space: nowrap;
+background-size: contain;
+box-sizing: border-box;   
+position: absolute;
+z-index: 1; 
 }
 .cususer_info{
- margin-left: ${getRem(0.1)};
- display: flex;
- align-items: start;
- flex-direction: column;
- flex:1 0;
- width:30%;
- overflow: hidden;
+margin-left: ${getRem(0.1)};
+display: flex;
+align-items: start;
+flex-direction: column;
+flex:1 0;
+width:30%;
+overflow: hidden;
 }
 .cus-icon{
- display: block;
- width: 5px;
- height: 5px;
- border-radius: 50%;
- border: 1px solid #52c41a;
- position: absolute;
- font-size: ${getRem(0.05)};
- right: ${getRem(0.15)};
- top: 50%;
- transform: translateY(-50%);
- text-align: center;
- line-height: ${getRem(0.3)};
- box-shadow: 0 0 4px #52c41a;
- animation: flash 2s linear infinite;
+display: block;
+width: 5px;
+height: 5px;
+border-radius: 50%;
+border: 1px solid #52c41a;
+position: absolute;
+font-size: ${getRem(0.05)};
+right: ${getRem(0.15)};
+top: 50%;
+transform: translateY(-50%);
+text-align: center;
+line-height: ${getRem(0.3)};
+box-shadow: 0 0 4px #52c41a;
+animation: flash 2s linear infinite;
 }
 .cususer_info p {
- font-weight: bold;
- font-size: ${getRem(0.1)};
- line-height: 1.8;
+font-weight: bold;
+font-size: ${getRem(0.1)};
+line-height: 1.8;
 }
 .cususer_info span{
- font-weight: unset;
- color: #666;
- font-size: ${getRem(0.08)};
- line-height: 1.8;
- width: 100%;
- text-overflow: ellipsis;
- white-space: nowrap;
- overflow: hidden;
+font-weight: unset;
+color: #666;
+font-size: ${getRem(0.08)};
+line-height: 1.8;
+width: 100%;
+text-overflow: ellipsis;
+white-space: nowrap;
+overflow: hidden;
 }
 .not_content{
- text-align: center;
- height: 100%;
- display: flex;
- justify-content: center;
- align-items: center;
+text-align: center;
+height: 100%;
+display: flex;
+justify-content: center;
+align-items: center;
 }
 
 .cus-err{
- border-color: red;
- animation: flashred 2s linear infinite;
- box-shadow: 0 0 4px red;
+border-color: red;
+animation: flashred 2s linear infinite;
+box-shadow: 0 0 4px red;
 }
 
 .cus-active{
- border-color: #91d5ff;
- box-shadow: 0 0 4px #91d5ff;
+border-color: #91d5ff;
+box-shadow: 0 0 4px #91d5ff;
 }
 
 .cus-now_active{
- border-color: #a0d911;
- box-shadow: unset;
+border-color: #a0d911;
+box-shadow: unset;
 }
 
 @keyframes flashred{
- 0%{ box-shadow: 0 0 4px red}
- 25%{ box-shadow: 0 0 6px red}
- 50%{ box-shadow: 0 0 10px red}
- 75%{ box-shadow: 0 0 6px red}
- 100%{ box-shadow: 0 0 4px red}
+0%{ box-shadow: 0 0 4px red}
+25%{ box-shadow: 0 0 6px red}
+50%{ box-shadow: 0 0 10px red}
+75%{ box-shadow: 0 0 6px red}
+100%{ box-shadow: 0 0 4px red}
 }
 
 @keyframes flash{
- 0%{ box-shadow: 0 0 4px #52c41a}
- 25%{ box-shadow: 0 0 6px #52c41a}
- 50%{ box-shadow: 0 0 10px #52c41a}
- 75%{ box-shadow: 0 0 6px #52c41a}
- 100%{ box-shadow: 0 0 4px #52c41a}
+0%{ box-shadow: 0 0 4px #52c41a}
+25%{ box-shadow: 0 0 6px #52c41a}
+50%{ box-shadow: 0 0 10px #52c41a}
+75%{ box-shadow: 0 0 6px #52c41a}
+100%{ box-shadow: 0 0 4px #52c41a}
 }
 .ant-tag{
 font-size: ${getRem(0.08)} !important;
 margin-right:${getRem(0.3)} !important;
 }
 .ant-tag-cyan{
- color: #ffa39e !important;
+color: #ffa39e !important;
 }
 .ant-tag-magenta{
- color: #adc6ff !important;
+color: #adc6ff !important;
 }
 
 .cus_input {
- border: none;
- background: none;
- flex: 1 0;
+border: none;
+background: none;
+flex: 1 0;
 }
 #cu_search{
- display: flex;
- height: ${getRem(0.25)};
- align-items: center;
+display: flex;
+height: ${getRem(0.25)};
+align-items: center;
 }
 .input{
- display: inline-block;
- width: 100%;
- border: none;
- background: #fff;
- font-size: ${getRem(0.1)};
- -webkit-box-align: center;
- line-height: ${getRem(0.32)};
- padding-left: 10px;
- box-sizing: border-box;
- border-radius: ${getRem(0.1)};
- height: ${getRem(0.32)};
- overflow: hidden;
+display: inline-block;
+width: 100%;
+border: none;
+background: #fff;
+font-size: ${getRem(0.1)};
+-webkit-box-align: center;
+line-height: ${getRem(0.32)};
+padding-left: 10px;
+box-sizing: border-box;
+border-radius: ${getRem(0.1)};
+height: ${getRem(0.32)};
+overflow: hidden;
 }
 .cu_search_input{
- display: flex;
+display: flex;
 }
 #cus_cancel{
- font-weight: unset;
- margin-left: 3px !important;
- white-space: nowrap;
- font-size: ${getRem(0.1)};
+font-weight: unset;
+margin-left: 3px !important;
+white-space: nowrap;
+font-size: ${getRem(0.1)};
 }
 .hidden {
- display: none !important;
+display: none !important;
 }
 #cus-mask .ant-ribbon {
- box-sizing: border-box;
- margin: 0 5px 0 0;
- color: #eb2f96;
- border-radius: 50%;
- opacity: 0.5;
- text-align: center;
- display:inline-block;
- transform: scale(0.7);
+box-sizing: border-box;
+margin: 0 5px 0 0;
+color: #eb2f96;
+border-radius: 50%;
+opacity: 0.5;
+text-align: center;
+display:inline-block;
+transform: scale(0.7);
 }
 .avatar_container{
- position: relative;
- width: ${getRem(0.35)};
- height: ${getRem(0.35)};
- margin-left: ${getRem(0.05)};
+position: relative;
+width: ${getRem(0.35)};
+height: ${getRem(0.35)};
+margin-left: ${getRem(0.05)};
 }
 .isPlus{
- width: ${getRem(0.4)};
- z-index:99;
- height: ${getRem(0.4)};
- position: absolute;
- left: -1px;
- top: -3px;
- pointer-events: none;
- background:url(https://img12.360buyimg.com/img/s115x118_jfs/t1/127010/39/7866/7131/5f18f9afE8e5c1d37/1713cb8c5a329d3f.png) no-repeat scroll 50%/cover
+width: ${getRem(0.4)};
+z-index:99;
+height: ${getRem(0.4)};
+position: absolute;
+left: -1px;
+top: -3px;
+pointer-events: none;
+background:url(https://img12.360buyimg.com/img/s115x118_jfs/t1/127010/39/7866/7131/5f18f9afE8e5c1d37/1713cb8c5a329d3f.png) no-repeat scroll 50%/cover
 }
 .avatar_img img{
- min-width: 1px;
- min-height: 1px;
- border-radius: 50%;
- width: 100%;
- height: auto;
- transform: translate3d(-50%,-50%,0);
- position: absolute;
- left: 50%;
- top: 50%;
- z-index:1;
+min-width: 1px;
+min-height: 1px;
+border-radius: 50%;
+width: 100%;
+height: auto;
+transform: translate3d(-50%,-50%,0);
+position: absolute;
+left: 50%;
+top: 50%;
+z-index:1;
 }
 .plus .avatar_img{
- border:none;
+border:none;
 }
 .jinfen_group li{
- margin-bottom:10px;
- list-style-type:none !important;
- display:flex;
- font-size: 14px;
+margin-bottom:10px;
+list-style-type:none !important;
+display:flex;
+font-size: 14px;
 }
 
 .jinfen_group .iconfont{
- font-size: 18px;
+font-size: 18px;
 }
 
 .jinfen_group li span{
- margin-right:10px;
+margin-right:10px;
 }
 
 .jinfen_group li s{
-  color: #888;
-  transform: scale(0.7);
+ color: #888;
+ transform: scale(0.7);
 }
 
 .jinfen_group .price{
- color:#f5222d !important;
+color:#f5222d !important;
 }
 
 .jinfen_group .commission{
- color: #faad14 !important;
+color: #faad14 !important;
 }
 
 .jinfen_group .coupon,.jinfen_group .coupon a{
- color: #13c2c2 !important;
+color: #13c2c2 !important;
 }
 
 .jinfen_group .cart,.jinfen_group .cart a{
- color: #1890ff !important;
+color: #1890ff !important;
 }
 
 .mask{
- position:fixed;
- width:100%;
- height:100%;
- top:0;
- left:0;
- z-index:9998;
- background:rgba(0,0,0,.2);
- display:none;
+position:fixed;
+width:100%;
+height:100%;
+top:0;
+left:0;
+z-index:9998;
+background:rgba(0,0,0,.2);
+display:none;
 }
 #edit-row {
- display:none;
+display:none;
 }
 .edit-form{
- position: absolute;
- width:100%;
- height:100%;
- z-index:9999;
- background: #fff;
- border-radius: ${getRem(0.25)};
- overflow: hidden;
- color: #2e2d2d;
- bottom: -500vh;
- box-sizing: border-box;
+position: absolute;
+width:100%;
+height:100%;
+z-index:9999;
+background: #fff;
+border-radius: ${getRem(0.25)};
+overflow: hidden;
+color: #2e2d2d;
+bottom: -500vh;
+box-sizing: border-box;
 }
 .edit-form .form-title{
- padding: 10px;
- height: 45px;
- text-align: center;
- font-size: 16px;
- color: #333;
- background:linear-gradient(180deg,#fff,#efefef);
- box-sizing: border-box;
+padding: 10px;
+height: 45px;
+text-align: center;
+font-size: 16px;
+color: #333;
+background:linear-gradient(180deg,#fff,#efefef);
+box-sizing: border-box;
 }
 #eidt-form{
- padding:0 10px;
+padding:0 10px;
 }
 #cus-mask p.form-item{
- font-size: 12px;
- padding: 12px 10px 12px 75px;
- position: relative;
- box-sizing: border-box;
+font-size: 12px;
+padding: 12px 10px 12px 75px;
+position: relative;
+box-sizing: border-box;
 }
 .form-item-label:after{
- content: "";
- position: absolute;
- z-index: 1;
- pointer-events: none;
- background-color: #cbcbcb;
- height: 1px;
- left: 0;
- right: 0;
- bottom: 0;
+content: "";
+position: absolute;
+z-index: 1;
+pointer-events: none;
+background-color: #cbcbcb;
+height: 1px;
+left: 0;
+right: 0;
+bottom: 0;
 }
 .form-item-label span{
- width: 65px;
- line-height: 1;
- position: absolute;
- top: 15px;
- left: 0;
- right: 0;
- margin: auto 0;
- padding: 0 10px;
- font-size: 14px;
- color: #999;
+width: 65px;
+line-height: 1;
+position: absolute;
+top: 15px;
+left: 0;
+right: 0;
+margin: auto 0;
+padding: 0 10px;
+font-size: 14px;
+color: #999;
 }
 .form-item-input{
- height: 20px;
- line-height: normal;
- border: 0 none;
- font-size: 14px;
- width: 100%;
- -webkit-appearance: none;
- vertical-align: top;
- color: #333;
+height: 20px;
+line-height: normal;
+border: 0 none;
+font-size: 14px;
+width: 100%;
+-webkit-appearance: none;
+vertical-align: top;
+color: #333;
 }
 .form-container{
- position:relative;
- height:calc(100% - 45px)
+position:relative;
+height:calc(100% - 45px)
 }
 .form-container .cus-footer{
- position: absolute;
- width:100%;
- bottom:0;
+position: absolute;
+width:100%;
+bottom:0;
 }
 b.beanNum{
- color:#ef3620 !important;
- margin-right: 0 !important;
+color:#ef3620 !important;
+margin-right: 0 !important;
 }
 .beanNumValue{
- margin-right: ${getRem(0.15)};
+margin-right: ${getRem(0.15)};
 }
 .beanNumValue{
- display:flex;
- justify-content: center;
- align-items: center;
- flex-direction: column;
+display:flex;
+justify-content: center;
+align-items: center;
+flex-direction: column;
 }
 
 .hb_process{
- float:left;
- display: flex;
- align-items: center;
- width:${getRem(0.53)};
+float:left;
+display: flex;
+align-items: center;
+width:${getRem(0.53)};
 }
 
 .hb_process img{
- width: 12px;
- height: 12px;
- border-radius:2px;
+width: 12px;
+height: 12px;
+border-radius:2px;
 }
 
 .async,.check{
-  position:absolute;
-  width:24px;
-  height:24px;
-  border-radius: 50%;
+ position:absolute;
+ width:24px;
+ height:24px;
+ border-radius: 50%;
 }
 
 .async{
@@ -608,10 +622,10 @@ background: #f7bb10;
 }
 
 .async img,.check img{
-  width:100%;
-  height:100%;
-  filter: invert(100%) sepia(5%) saturate(7500%) hue-rotate( 
-   170deg) brightness(106%) contrast(102%);
+ width:100%;
+ height:100%;
+ filter: invert(100%) sepia(5%) saturate(7500%) hue-rotate( 
+  170deg) brightness(106%) contrast(102%);
 }
 
 .loading{
@@ -620,10 +634,10 @@ animation-play-state:running;
 }
 @-webkit-keyframes loading {
 from {
-  -webkit-transform: rotate(0deg);
+ -webkit-transform: rotate(0deg);
 }
 to {
-  -webkit-transform: rotate(360deg);
+ -webkit-transform: rotate(360deg);
 }
 }
 </style>
@@ -641,39 +655,39 @@ const accounts = cookiesRemark
    }">
 
 <div class="avatar_container ${'1' === n.isPlusVip ? 'plus' : ''}">
- <div class="avatar_img">
-   <img src="${
-     n.avatar ||
-     '//img11.360buyimg.com/jdphoto/s120x120_jfs/t21160/90/706848746/2813/d1060df5/5b163ef9N4a3d7aa6.png'
-   }" alt="${n.username}" />
- </div>
- ${'1' === n.isPlusVip ? `<div class="isPlus"></div>` : ''}
+<div class="avatar_img">
+  <img src="${
+    n.avatar ||
+    '//img11.360buyimg.com/jdphoto/s120x120_jfs/t21160/90/706848746/2813/d1060df5/5b163ef9N4a3d7aa6.png'
+  }" alt="${n.username}" />
+</div>
+${'1' === n.isPlusVip ? `<div class="isPlus"></div>` : ''}
 </div>
 <div class="cususer_info">
-  <p>${decodeURIComponent(n.nickname)}</p>
-  <span><b class="ant-ribbon">${e + 1}</b>${n.username}</span>
+ <p>${decodeURIComponent(n.nickname)}</p>
+ <span><b class="ant-ribbon">${e + 1}</b>${n.username}</span>
 </div>
 
 <div class="beanNumValue">
- ${beanNum}  
- <div class="fruit_pet">
-   ${
-     n.fruit
-       ? `<div class="hb_process">
-   <img src="https://raw.githubusercontent.com/Former-Years/icon/master/jdnc.png" alt="fruit" />
-   <b class="ant-ribbon beanNum">${parseInt(n.fruit)}%</b>
- </div>`
-       : ''
-   }
-   ${
-     n.jdPet
-       ? `<div class="hb_process">
-   <img src="https://raw.githubusercontent.com/Former-Years/icon/master/jdmc.png" alt="pet" />
-   <b class="ant-ribbon beanNum">${parseInt(n.jdPet)}%</b>
- </div>`
-       : ''
-   }
- </div>
+${beanNum}  
+<div class="fruit_pet">
+  ${
+    n.fruit
+      ? `<div class="hb_process">
+  <img src="https://raw.githubusercontent.com/Former-Years/icon/master/jdnc.png" alt="fruit" />
+  <b class="ant-ribbon beanNum">${parseInt(n.fruit)}%</b>
+</div>`
+      : ''
+  }
+  ${
+    n.jdPet
+      ? `<div class="hb_process">
+  <img src="https://raw.githubusercontent.com/Former-Years/icon/master/jdmc.png" alt="pet" />
+  <b class="ant-ribbon beanNum">${parseInt(n.jdPet)}%</b>
+</div>`
+      : ''
+  }
+</div>
 </div>
 <span class="cus-icon ${t ? '' : 'cus-err'}"></span>
 </div>`
@@ -684,55 +698,55 @@ function createHTML() {
  return `
 <div id="cus-mask" class="cus-mask">
 <div class="edit-form">
-   <h3 class="form-title" id="form-title"></h3>
-   <div class="form-container">
-     <form id="eidt-form"></form>
-     <div class="cus-footer">
-       <div class="btn-wrap" style="display: flex">
-         <span class="abtn" id="form-cancel">取消</span>
-         <span class="abtn btn-ok" id="form-ok">确定</span>
-       </div>
-     </div>
-   </div>
+  <h3 class="form-title" id="form-title"></h3>
+  <div class="form-container">
+    <form id="eidt-form"></form>
+    <div class="cus-footer">
+      <div class="btn-wrap" style="display: flex">
+        <span class="abtn" id="form-cancel">取消</span>
+        <span class="abtn btn-ok" id="form-ok">确定</span>
+      </div>
+    </div>
+  </div>
 </div>
 <div class="cus-mask_view">
- <div class="cus-content">
-   <div class="async">
-      <img src="https://img.icons8.com/ios/72/circled-play--v1.png" alt="助手检测"/>
-   </div>
-   <div class="cus-view">
-     <div id="cu_search_input" class="cu_search_input input hidden">
-        <input placeholder="请输入昵称" type="text" class="cus_input"/>
-        <span id="cu_search_close" class="iconfont icon-close"></span>
-     </div>
-     <span id="cus_cancel" class="hidden">取消</span>
-    <div id="cu_search">
-       <span id="cus-username">京东账号列表</span>
-       <span class="iconfont icon-search"></span>
-     </div>
-   </div>
-   <div id="account_list">
-       ${
-         accounts.length
-           ? accounts
-           : '<div class="not_content">未找到账号</div>'
-       }
-   </div>
- </div>
- <div class="cus-footer">
-     <div class="btn-wrap" style="display: flex">
-       <span class="abtn iconfont icon-bianji" id="edit-row"></span>
-       <span class="abtn border-btn iconfont icon-dengchu" id="clear-ck"></span>
-       <span class="abtn border-btn iconfont icon-fuzhi" id="copyCk"></span>
-       <span class="abtn btn-ok iconfont ${
-         isLogin ? 'icon-denglu' : 'icon-zhuanhuan'
-       }" id="cus-mask-ok" ></span>
-     </div>
- </div>
+<div class="cus-content">
+  <div class="async">
+     <img src="https://img.icons8.com/ios/72/circled-play--v1.png" alt="助手检测"/>
+  </div>
+  <div class="cus-view">
+    <div id="cu_search_input" class="cu_search_input input hidden">
+       <input placeholder="请输入昵称" type="text" class="cus_input"/>
+       <span id="cu_search_close" class="iconfont icon-close"></span>
+    </div>
+    <span id="cus_cancel" class="hidden">取消</span>
+   <div id="cu_search">
+      <span id="cus-username">京东账号列表</span>
+      <span class="iconfont icon-search"></span>
+    </div>
+  </div>
+  <div id="account_list">
+      ${
+        accounts.length
+          ? accounts
+          : '<div class="not_content">未找到账号</div>'
+      }
+  </div>
+</div>
+<div class="cus-footer">
+    <div class="btn-wrap" style="display: flex">
+      <span class="abtn iconfont icon-bianji" id="edit-row"></span>
+      <span class="abtn border-btn iconfont icon-dengchu" id="clear-ck"></span>
+      <span class="abtn border-btn iconfont icon-fuzhi" id="copyCk"></span>
+      <span class="abtn btn-ok iconfont ${
+        isLogin ? 'icon-denglu' : 'icon-zhuanhuan'
+      }" id="cus-mask-ok" ></span>
+    </div>
+</div>
 </div>
 </div>
 <div class="cus-mask" id="jf_mask">
- <div class="cus-mask_view" style="overflow: hidden;"></div>
+<div class="cus-mask_view" style="overflow: hidden;"></div>
 </div>
 <div id="cus-tip" style="display: none;"></div>
 <div class="tool_bars" id="tool-bars">
@@ -780,31 +794,31 @@ const cus_cancel = document.querySelector("#cus_cancel");
 registerClick();
 
 function classFunc(element,str){
- let newClass = element.className.split(" ");
- if(newClass.indexOf(str)>-1){
-   element.className = newClass.filter(item => item!==str).join(" ");
-   return
- }
- newClass.push(str);
- return element.className = newClass.join(" ")
+let newClass = element.className.split(" ");
+if(newClass.indexOf(str)>-1){
+  element.className = newClass.filter(item => item!==str).join(" ");
+  return
+}
+newClass.push(str);
+return element.className = newClass.join(" ")
 }
 
 cu_search.addEventListener("click",function(){
-  classFunc(cu_search, "hidden");
-  classFunc(usernameView,"hidden");
-  classFunc(cu_search_input, "hidden");
-  classFunc(cus_cancel,"hidden");
+ classFunc(cu_search, "hidden");
+ classFunc(usernameView,"hidden");
+ classFunc(cu_search_input, "hidden");
+ classFunc(cus_cancel,"hidden");
 })
 
 cus_cancel.addEventListener("click",function(){
- cu_search.click();
- cu_search_close.click();
- registerClick();
+cu_search.click();
+cu_search_close.click();
+registerClick();
 })
 
 cu_search_close.addEventListener("click",function(){
- $input.value = "";
- account_list.innerHTML = getAccountList(jd_ck);
+$input.value = "";
+account_list.innerHTML = getAccountList(jd_ck);
 })
 
 function getAccountList(cks){
@@ -814,38 +828,38 @@ const beanNum = item.beanNum? \`<b class="ant-ribbon beanNum">京豆：\${item.b
 return \`
 <div class="cus-avatar" data-value="\${item.mobile||''}" data-name="\${item.username}">
 <div class="avatar_container \${item.isPlusVip==='1' ? 'plus' : ''}">
- <div class="avatar_img">
-   <img src="\${
-     item.avatar ||
-     '//img11.360buyimg.com/jdphoto/s120x120_jfs/t21160/90/706848746/2813/d1060df5/5b163ef9N4a3d7aa6.png'
-   }" alt="\${item.username}" />
- </div>
- \${item.isPlusVip==='1' ? \`<div class="isPlus"></div>\` : ''}
+<div class="avatar_img">
+  <img src="\${
+    item.avatar ||
+    '//img11.360buyimg.com/jdphoto/s120x120_jfs/t21160/90/706848746/2813/d1060df5/5b163ef9N4a3d7aa6.png'
+  }" alt="\${item.username}" />
+</div>
+\${item.isPlusVip==='1' ? \`<div class="isPlus"></div>\` : ''}
 </div>
 
 <div class="cususer_info">
-  <p>\${decodeURIComponent(item.nickname)}</p>
-  <span><b class="ant-ribbon">\${index + 1}</b>\${item.username}</span>
+ <p>\${decodeURIComponent(item.nickname)}</p>
+ <span><b class="ant-ribbon">\${index + 1}</b>\${item.username}</span>
 </div>
 <div class="beanNumValue">
- \${beanNum}
- <div class="fruit_pet">
- \${
-   item.fruit
-     ? \`<div class="hb_process">
- <img src="https://raw.githubusercontent.com/Former-Years/icon/master/jdnc.png" alt="fruit" />
- <b class="ant-ribbon beanNum">\${parseInt(item.fruit)}%</b>
+\${beanNum}
+<div class="fruit_pet">
+\${
+  item.fruit
+    ? \`<div class="hb_process">
+<img src="https://raw.githubusercontent.com/Former-Years/icon/master/jdnc.png" alt="fruit" />
+<b class="ant-ribbon beanNum">\${parseInt(item.fruit)}%</b>
 </div>\`
-     : ''
- }
- \${
-   item.jdPet
-     ? \`<div class="hb_process">
- <img src="https://raw.githubusercontent.com/Former-Years/icon/master/jdmc.png" alt="pet" />
- <b class="ant-ribbon beanNum">\${parseInt(item.jdPet)}%</b>
+    : ''
+}
+\${
+  item.jdPet
+    ? \`<div class="hb_process">
+<img src="https://raw.githubusercontent.com/Former-Years/icon/master/jdmc.png" alt="pet" />
+<b class="ant-ribbon beanNum">\${parseInt(item.jdPet)}%</b>
 </div>\`
-     : ''
- }
+    : ''
+}
 </div>
 </div>
 <span class="cus-icon \${status ? '' : 'cus-err'}"></span>
@@ -860,475 +874,479 @@ if(!value) return;
 let newList = [];
 if(timer) clearTimeout(timer);
 timer = setTimeout(()=>{ 
-  newList = jd_ck.filter(item=>item.username.indexOf(value)>-1 || item.nickname.indexOf(value)>-1)
-  if(!newList.length) return;
-  account_list.innerHTML = getAccountList(newList);
-  registerClick()
- },500);
+ newList = jd_ck.filter(item=>item.username.indexOf(value)>-1 || item.nickname.indexOf(value)>-1)
+ if(!newList.length) return;
+ account_list.innerHTML = getAccountList(newList);
+ registerClick()
+},500);
 }
 
 $input.addEventListener("input",inputChange)
 const avatarItem = jd_ck.find(item=> item.username === pp);
 if(avatarItem && avatarItem.avatar){
-  $('#boxjs').html("<img src='"+ avatarItem.avatar +"' />");
+ $('#boxjs').html("<img src='"+ avatarItem.avatar +"' />");
 }
 
 if(pk === "" || !pk){
- copyCk_btn.style.display="none";
- clear_btn.style.display="none";
+copyCk_btn.style.display="none";
+clear_btn.style.display="none";
 }
 
 if(pp){
-   usernameView.innerHTML= pp;
-   var preIndex = null;
-   var nextIndex = null;
-   var current = null
-   jd_ck.forEach((item,index)=>{
-     if(decodeURIComponent(item.username) === pp){
-       current = index;
-       preIndex = index !== 0 ? index - 1 : null;
-       nextIndex = index !== jd_ck.length - 1 ? index + 1 : null;
-     }
-   })
-   if(preIndex!==null){
-     toolView.insertAdjacentHTML('afterbegin','<div id="preCK" class="tool_bar"><span class="iconfont icon-shangjiantou" /></div>')
-   }
-   if(nextIndex!==null){
-     toolView.insertAdjacentHTML('beforeEnd','<div id="nextCK" class="tool_bar"><span class="iconfont icon-xiajiantou" /></div>')
-   }
-   if(current) animateScroll(current);
+  usernameView.innerHTML= pp;
+  var preIndex = null;
+  var nextIndex = null;
+  var current = null
+  jd_ck.forEach((item,index)=>{
+    if(decodeURIComponent(item.username) === pp){
+      current = index;
+      preIndex = index !== 0 ? index - 1 : null;
+      nextIndex = index !== jd_ck.length - 1 ? index + 1 : null;
+    }
+  })
+  if(preIndex!==null){
+    toolView.insertAdjacentHTML('afterbegin','<div id="preCK" class="tool_bar"><span class="iconfont icon-shangjiantou" /></div>')
+  }
+  if(nextIndex!==null){
+    toolView.insertAdjacentHTML('beforeEnd','<div id="nextCK" class="tool_bar"><span class="iconfont icon-xiajiantou" /></div>')
+  }
+  if(current) animateScroll(current);
 };
 
 function animateScroll(key) {
-   account_list.scrollTo({top: $('.cus-now_active').position().top - $('.cus-now_active').height() * 4 });
+  account_list.scrollTo({top: $('.cus-now_active').position().top - $('.cus-now_active').height() * 4 });
 }
 
 var preCK = document.getElementById("preCK");
 var nextCK = document.getElementById("nextCK");
 if(preCK){
-  preCK.addEventListener('click',function() {
-   if(preIndex !== null) changeIndex(preIndex);
-  });
+ preCK.addEventListener('click',function() {
+  if(preIndex !== null) changeIndex(preIndex);
+ });
 }
 
 if(nextCK){
-  nextCK.addEventListener('click',function() {
-   if(nextIndex !== null) changeIndex(nextIndex);
-  });
+ nextCK.addEventListener('click',function() {
+  if(nextIndex !== null) changeIndex(nextIndex);
+ });
 }
 
 function changeIndex(key){
-   avatarView.forEach((item,index)=>{
-     if(index === key){
-       item.className = "cus-avatar cus-active";
-       item.id = "jd_account";
-     } else {
-        item.className = "cus-avatar";
-        item.id = "";
-     }
-   });
-   btnSubmit();
+  avatarView.forEach((item,index)=>{
+    if(index === key){
+      item.className = "cus-avatar cus-active";
+      item.id = "jd_account";
+    } else {
+       item.className = "cus-avatar";
+       item.id = "";
+    }
+  });
+  btnSubmit();
 }
 
- function registerClick(){
-   avatarView = document.querySelectorAll(".cus-avatar");
-   fill_btn = document.querySelector("#fill-input");
-   clear_btn = document.querySelector("#clear-ck");
+function registerClick(){
+  avatarView = document.querySelectorAll(".cus-avatar");
+  fill_btn = document.querySelector("#fill-input");
+  clear_btn = document.querySelector("#clear-ck");
 
-   avatarView.forEach(item=>{
-    const username = item.getAttribute('data-name');
-     if(username === pp)item.className = "cus-avatar cus-now_active";
+  avatarView.forEach(item=>{
+   const username = item.getAttribute('data-name');
+    if(username === pp)item.className = "cus-avatar cus-now_active";
 
-     item.onclick = function (){
-       avatarView.forEach(account=>{
-         account.className = "cus-avatar";
-         account.id = "";
-       })
+    item.onclick = function (){
+      avatarView.forEach(account=>{
+        account.className = "cus-avatar";
+        account.id = "";
+      })
 
-       const mobile = this.getAttribute('data-value');
-       this.className = "cus-avatar cus-active";
-       this.id = "jd_account";
+      const mobile = this.getAttribute('data-value');
+      this.className = "cus-avatar cus-active";
+      this.id = "jd_account";
 
-       $("#fill-input").remove();
-       $("#edit-row").show();
-       $("#form-title").html(username);
-       
-       if(mobile){
-         $("#cus-mask-ok").before(\`${fillMobile}\`);
-         registerClick();
-       }
-     }
-   })
+      $("#fill-input").remove();
+      $("#edit-row").show();
+      $("#form-title").html(username);
+      
+      if(mobile){
+        $("#cus-mask-ok").before(\`${fillMobile}\`);
+        registerClick();
+      }
+    }
+  })
 
-   if(fill_btn){
-     fill_btn.addEventListener('click',function(){
-       if(isLogin) fillInput();
-       const mobile = $('#jd_account').data('value');
-       copyToClip(mobile,'手机号复制成功')
-     });
-   }
+  if(fill_btn){
+    fill_btn.addEventListener('click',function(){
+      if(isLogin) fillInput();
+      const mobile = $('#jd_account').data('value');
+      copyToClip(mobile,'手机号复制成功')
+    });
+  }
 
-   if(clear_btn){
-     clear_btn.addEventListener('click',function(){
-        sessionStorage.clear();
-        localStorage.clear();
-        setCookie('pt_key',"");
-        setCookie("pt_pin","");
-        window.location.reload();
-     })
-   }
- }
- 
- 
+  if(clear_btn){
+    clear_btn.addEventListener('click',function(){
+       sessionStorage.clear();
+       localStorage.clear();
+       setCookie('pt_key',"");
+       setCookie("pt_pin","");
+       window.location.reload();
+    })
+  }
+}
 
- const $container = $("#tool-bars");
- var nx,
-   ny,
-   wxX,
-   wxY,
-   isDown = false; //X Y坐标
- // H5页面
- $("#boxjs")
-   .bind("touchstart", function (e) {
-     //点击触发
-     e.preventDefault();
-     $(this).css("transform", "translate(0)");
-     var touch = event.targetTouches[0];
-     wxX = touch.clientX;
-     wxY = touch.clientY;
-     isDown = true;
-     $(document).bind("touchmove", function (ev) {
-       if (!isDown) return;
-       //滑动触发
-       e.preventDefault();
 
-       var touch = event.targetTouches[0];
-       ny = touch.clientY;
-       nx = touch.clientX;
-       $container.css("top", ny / ($(window).height() / 100) + "%");
-     });
-   })
-   .bind("touchend", function (e) {
-     //移开触发
-     var touch = event.changedTouches[0];
-     //判断跟初始坐标是否一致，一致则大概率为点击事件
-     if (wxX === touch.clientX && wxY === touch.clientY) {
-       maskVisible(true);
-     } else {
-       if ($(window).height() * 0.9 - $container.height() < ny) {
-         $container.css({top: "90%"});
-       } else if ($(window).height() * 0.1 > ny) {
-         $container.css({ top: "12%" });
-       }
-     }
-     isDown = false; //$('.service_s').hide()
-   });
 
- ok_btn.addEventListener('click', function(){
-   btnSubmit();
- });
+const $container = $("#tool-bars");
+var nx,
+  ny,
+  wxX,
+  wxY,
+  isDown = false; //X Y坐标
+// H5页面
+$("#boxjs")
+  .bind("touchstart", function (e) {
+    //点击触发
+    e.preventDefault();
+    $(this).css("transform", "translate(0)");
+    var touch = event.targetTouches[0];
+    wxX = touch.clientX;
+    wxY = touch.clientY;
+    isDown = true;
+    $(document).bind("touchmove", function (ev) {
+      if (!isDown) return;
+      //滑动触发
+      e.preventDefault();
 
- const form_field = {
-     "avatar": {
-         "label": "头像",
-         "remark": "请输入头像链接"
-     },
-     "nickname": {
-         "label": "姓名"
-     },
-     "mobile": {
-         "label": "手机号"
-     },
-     "paymentCode": {
-       "label": "支付密码"
-     },
-     "cardId": {
-         "label": "身份证",
-         "remark": "请输入身份证前两位和后四位"
-     },
-     "isPlusVip": {
-         "label": "VIP",
-         "remark": "1vip ，0 非 vip"
-     },
-     "qywxUserId": {
-         "label": "企业微信",
-         "remark": "企业微信 ID&（all 推送所有）"
-     }
- };
+      var touch = event.targetTouches[0];
+      ny = touch.clientY;
+      nx = touch.clientX;
+      $container.css("top", ny / ($(window).height() / 100) + "%");
+    });
+  })
+  .bind("touchend", function (e) {
+    //移开触发
+    var touch = event.changedTouches[0];
+    //判断跟初始坐标是否一致，一致则大概率为点击事件
+    if (wxX === touch.clientX && wxY === touch.clientY) {
+      maskVisible(true);
+    } else {
+      if ($(window).height() * 0.9 - $container.height() < ny) {
+        $container.css({top: "90%"});
+      } else if ($(window).height() * 0.1 > ny) {
+        $container.css({ top: "12%" });
+      }
+    }
+    isDown = false; //$('.service_s').hide()
+  });
 
- $("#edit-row").on('click',function(){
-   $(".edit-form").show();
-   $(".edit-form").animate({bottom:0});
-   const selectPin = $("#jd_account").data("name");
-   const current = jd_ck.find(item=>item.username === selectPin);
-   if(!current)return;
-   let form_html = \`
-         <input 
-           type="hidden"
-           name="userName" 
-           class="form-item-input" 
-           value="\${selectPin}" 
-         />
-     \`;
-   Object.keys(form_field).forEach((name)=>{
-     const field = form_field[name];
-     form_html+=\`<p class="form-item">
-                   <label class="form-item-label" for="\${name}">
-                     <span>\${field.label}</span>
-                     <input 
-                         name="\${name}" 
-                         class="form-item-input" 
-                         value="\${current[name]||""}" 
-                         placeholder="\${field.remark||"请输入"}"
-                      />
-                   </label>
-                 </p>\`
-   })
-   $("#eidt-form").html(form_html);
- });
- 
- $('#form-ok').on('click',function(){
-   const updateArr = $('#eidt-form').serializeArray();
-   let updateItem = {};
-   updateArr.forEach((item)=>{
-     updateItem[item.name]=item.value;
-   })
-   const new_jd_ck = []
-   const formValue = jd_ck.map((item,index)=>{
-       const {wskey,cookie,userName,...temp} = item;
-       if(item.userName === updateItem.userName){
-         updateItem = {...temp , ...updateItem};
-         new_jd_ck.push({...item , ...updateItem});
-         return { index , ...updateItem}
-       }
-       new_jd_ck.push(item);
-       return { index, ...temp}
-   });
-   
-   const val = JSON.stringify(formValue, null, \`\t\`);
-   $.ajax({
-     method:"post",
-     url:"//boxjs.${boxjs_host}/api/saveData/",
-     data:JSON.stringify({key:"@jd_ck_remark.remark",val:val}),
-     contentType:'application/x-www-form-urlencoded; charset=UTF-8',
-     success:(response)=>{
-       jd_ck = new_jd_ck;
-       account_list.innerHTML = getAccountList(jd_ck);
-       registerClick()
-       toast('保存成功',()=>{
-          formHide();
-          $("#edit-row").hide();
-       })
-     }
-   })
- })
+ok_btn.addEventListener('click', function(){
+  btnSubmit();
+});
 
- function formHide(){
-   $('.edit-form').animate({bottom:"-500vh"},function(){
-     $(".edit-form").hide();
-   });
- }
+const form_field = {
+    "avatar": {
+        "label": "头像",
+        "remark": "请输入头像链接"
+    },
+    "nickname": {
+        "label": "姓名"
+    },
+    "mobile": {
+        "label": "手机号"
+    },
+    "paymentCode": {
+      "label": "支付密码"
+    },
+    "cardId": {
+        "label": "身份证",
+        "remark": "请输入身份证前两位和后四位"
+    },
+    "isPlusVip": {
+        "label": "VIP",
+        "remark": "1vip ，0 非 vip"
+    },
+    "qywxUserId": {
+        "label": "企业微信",
+        "remark": "企业微信 ID&（all 推送所有）"
+    }
+};
 
- $('#form-cancel').on('click',function(){
-   formHide();
- })
+$("#edit-row").on('click',function(){
+  $(".edit-form").show();
+  $(".edit-form").animate({bottom:0});
+  const selectPin = $("#jd_account").data("name");
+  const current = jd_ck.find(item=>item.username === selectPin);
+  if(!current)return;
+  let form_html = \`
+        <input 
+          type="hidden"
+          name="userName" 
+          class="form-item-input" 
+          value="\${selectPin}" 
+        />
+    \`;
+  Object.keys(form_field).forEach((name)=>{
+    const field = form_field[name];
+    form_html+=\`<p class="form-item">
+                  <label class="form-item-label" for="\${name}">
+                    <span>\${field.label}</span>
+                    <input 
+                        name="\${name}" 
+                        class="form-item-input" 
+                        value="\${current[name]||""}" 
+                        placeholder="\${field.remark||"请输入"}"
+                     />
+                  </label>
+                </p>\`
+  })
+  $("#eidt-form").html(form_html);
+});
 
- copyCk_btn.addEventListener('click',function(){
-   copyToClip(\`pt_key=\${pk};pt_pin=\${pp}\`,'COOKIE复制成功');
- })
+$('#form-ok').on('click',function(){
+  const updateArr = $('#eidt-form').serializeArray();
+  let updateItem = {};
+  updateArr.forEach((item)=>{
+    updateItem[item.name]=item.value;
+  })
+  const new_jd_ck = []
+  const formValue = jd_ck.map((item,index)=>{
+      const {wskey,cookie,userName,...temp} = item;
+      if(item.userName === updateItem.userName){
+        updateItem = {...temp , ...updateItem};
+        new_jd_ck.push({...item , ...updateItem});
+        return { index , ...updateItem}
+      }
+      new_jd_ck.push(item);
+      return { index, ...temp}
+  });
   
- function toast(message,callback){
-    tip_view.style.display = "block";
-    tip_view.innerHTML = message;
-    setTimeout(function() {
-      tip_view.style.display = "none";
-       tip_view.innerHTML = "";
-       if(callback)callback()
-    },2000);
- }
+  const val = JSON.stringify(formValue, null, \`\t\`);
+  $.ajax({
+    method:"post",
+    url:"//boxjs.${boxjs_host}/api/saveData/",
+    data:JSON.stringify({key:"@jd_ck_remark.remark",val:val}),
+    contentType:'application/x-www-form-urlencoded; charset=UTF-8',
+    success:(response)=>{
+      jd_ck = new_jd_ck;
+      account_list.innerHTML = getAccountList(jd_ck);
+      registerClick()
+      toast('保存成功',()=>{
+         formHide();
+         $("#edit-row").hide();
+      })
+    }
+  })
+})
 
- function maskVisible(visible){
-   if(visible){
-     $('#mask').show();
-   }
-   $('#cus-mask').animate({top:visible?"50%":"-500vh"},function(){
-     if(!visible){
-       $('#mask').hide();
-       $('.edit-form').hide();
-       $('.edit-form').animate({bottom:"-500vh"});
-     }
-   });
- }
+function formHide(){
+  $('.edit-form').animate({bottom:"-500vh"},function(){
+    $(".edit-form").hide();
+  });
+}
 
- function fillInput(){
-   const sbBtn= document.getElementById('jd_account');
-   const cuMobile = sbBtn.getAttribute('data-value');
-   console.log('快速填充号码：'+ cuMobile);
-   const input = document.getElementsByClassName('acc-input mobile J_ping')[0];
-   input.value = cuMobile;
-   ev = document.createEvent("HTMLEvents");
-   ev.initEvent("input", true,false );
-   input.dispatchEvent(ev);
-   maskVisible(false);
- }
+$('#form-cancel').on('click',function(){
+  formHide();
+})
 
- function clearAllCookie() {
-     var keys = document.cookie.match(/[^ =;]+(?=\\=)/g);
-     if (keys) {
-         for (var i = keys.length; i--;){
-           document.cookie = keys[i] + '=;path=/;domain=.jd.com;expires=' + new Date(0).toUTCString()
-         }
-     }
- }
+copyCk_btn.addEventListener('click',function(){
+  copyToClip(\`pt_key=\${pk};pt_pin=\${pp}\`,'COOKIE复制成功');
+})
+ 
+function toast(message,callback){
+   tip_view.style.display = "block";
+   tip_view.innerHTML = message;
+   setTimeout(function() {
+     tip_view.style.display = "none";
+      tip_view.innerHTML = "";
+      if(callback)callback()
+   },2000);
+}
+
+function maskVisible(visible){
+  if(visible){
+    $('#mask').show();
+  }
+  $('#cus-mask').animate({top:visible?"50%":"-500vh"},function(){
+    if(!visible){
+      $('#mask').hide();
+      $('.edit-form').hide();
+      $('.edit-form').animate({bottom:"-500vh"});
+    }
+  });
+}
+
+function fillInput(){
+  const sbBtn= document.getElementById('jd_account');
+  const cuMobile = sbBtn.getAttribute('data-value');
+  console.log('快速填充号码：'+ cuMobile);
+  const input = document.getElementsByClassName('acc-input mobile J_ping')[0];
+  input.value = cuMobile;
+  ev = document.createEvent("HTMLEvents");
+  ev.initEvent("input", true,false );
+  input.dispatchEvent(ev);
+  maskVisible(false);
+}
+
+function clearAllCookie() {
+    var keys = document.cookie.match(/[^ =;]+(?=\\=)/g);
+    if (keys) {
+        for (var i = keys.length; i--;){
+          document.cookie = keys[i] + '=;path=/;domain=.jd.com;expires=' + new Date(0).toUTCString()
+        }
+    }
+}
 
 function btnSubmit(){
- const sbBtn= document.getElementById('jd_account');
- if(!sbBtn) return alert("请选择需要登陆的账号");
- const cuName = sbBtn.getAttribute('data-name');
- const login_ck = jd_ck.find(item=>item.username===cuName);
- if(!login_ck) return alert("未找到相关账号");
- let [ pt_key , pt_pin ] = login_ck.cookie.split(";");
- pt_key = pt_key.split("=");
- pt_pin = pt_pin.split("=");
- clearAllCookie();
- setCookie(pt_key[0],pt_key[1]);
- setCookie(pt_pin[0],pt_pin[1]);
- window.location.reload();
+const sbBtn= document.getElementById('jd_account');
+if(!sbBtn) return alert("请选择需要登陆的账号");
+const cuName = sbBtn.getAttribute('data-name');
+const login_ck = jd_ck.find(item=>item.username===cuName);
+if(!login_ck) return alert("未找到相关账号");
+let [ pt_key , pt_pin ] = login_ck.cookie.split(";");
+pt_key = pt_key.split("=");
+pt_pin = pt_pin.split("=");
+clearAllCookie();
+setCookie(pt_key[0],pt_key[1]);
+setCookie(pt_pin[0],pt_pin[1]);
+window.location.reload();
 }
 
 
 function setCookie(cname,cvalue){
-   var ed = new Date();
-   const mt = ed.getMonth()+1;
-   ed.setMonth(mt);
-   var expires = "expires="+ed.toGMTString();
-   document.cookie = cname+"="+cvalue+"; "+expires+"; path=/; domain=.jingxi.com";
-   document.cookie = cname+"="+cvalue+"; "+expires+"; path=/; domain=.jd.com";
+  var ed = new Date();
+  const mt = ed.getMonth()+1;
+  ed.setMonth(mt);
+  var expires = "expires="+ed.toGMTString();
+  document.cookie = cname+"="+cvalue+"; "+expires+"; path=/; domain=.jingxi.com";
+  document.cookie = cname+"="+cvalue+"; "+expires+"; path=/; domain=.jd.com";
 }
 
 function getQueryVariable(variable){
-  var query = window.location.search.substring(1);
-  var vars = query.split("&");
-  for (var i=0;i<vars.length;i++) {
-          var pair = vars[i].split("=");
-          if(pair[0] == variable){return pair[1];}
-  }
-  return(false);
+ var query = window.location.search.substring(1);
+ var vars = query.split("&");
+ for (var i=0;i<vars.length;i++) {
+         var pair = vars[i].split("=");
+         if(pair[0] == variable){return pair[1];}
+ }
+ return(false);
 }
 function getCookie(cname){
-   var name = cname + "=";
-   var ca = document.cookie.split(';');
-   for(var i=0; i<ca.length; i++) {
-       var c = ca[i].trim();
-       if (c.indexOf(name)==0) { return c.substring(name.length,c.length); }
-   }
-   return "";
+  var name = cname + "=";
+  var ca = document.cookie.split(';');
+  for(var i=0; i<ca.length; i++) {
+      var c = ca[i].trim();
+      if (c.indexOf(name)==0) { return c.substring(name.length,c.length); }
+  }
+  return "";
 }
 
 
 function copyToClip(text,notify=false){
- const _input = document.createElement('input');
- _input.style.width="1px";
- _input.style.height="1px";
- _input.style.position="fixed";
- _input.style.right="-1px";
- document.body.prepend(_input);
- _input.value = text;
- _input.focus();
- _input.select();
- document.execCommand('copy');
- _input.blur();
- document.body.removeChild(_input);
- console.log(text)
- if(notify)toast(notify);
+const _input = document.createElement('input');
+_input.style.width="1px";
+_input.style.height="1px";
+_input.style.position="fixed";
+_input.style.right="-1px";
+document.body.prepend(_input);
+_input.value = text;
+_input.focus();
+_input.select();
+document.execCommand('copy');
+_input.blur();
+document.body.removeChild(_input);
+console.log(text)
+if(notify)toast(notify);
 }
 
 $('#mask').on('click',function(){
- $("#jf_mask,#cus-mask").animate({top:"-500vh"},function(){
-   formHide();
-   $('#mask').hide();
- }) 
+$("#jf_mask,#cus-mask").animate({top:"-500vh"},function(){
+  formHide();
+  $('#mask').hide();
+}) 
 })
 
 function runBoxJSScript(url,callback){
 const body = {"url":url,"isRemote":true};
 $.ajax({
-  method:"post",
-  timeout: 10000,
-  url:"//boxjs.${boxjs_host}/api/runScript",
-  data:JSON.stringify(body),
-  contentType:'application/x-www-form-urlencoded; charset=UTF-8',
-  success:callback
+ method:"post",
+ timeout: 10000,
+ url:"//boxjs.${boxjs_host}/api/runScript",
+ data:JSON.stringify(body),
+ contentType:'application/x-www-form-urlencoded; charset=UTF-8',
+ success:callback
 })
 }
 
 $('.async').on('click',function(){
 const qlConfig = \`${qlConfig}\`
 if(qlConfig){
-  $('.async').addClass('loading');
-  runBoxJSScript('https://raw.githubusercontent.com/dompling/Script/master/jd/ql_sync_box.js',(result)=>{
-    console.log(result)
-    runBoxJSScript('https://raw.githubusercontent.com/dompling/Script/master/jd/jd_cookie_search.js',(res)=>{
-      $('.async').removeClass('loading');
-      toast("账号数据刷新成功",()=>{
-        if(res) window.location.reload();
-      })
-    })
-  }); 
+ $('.async').addClass('loading');
+ runBoxJSScript('https://raw.githubusercontent.com/dompling/Script/master/jd/ql_sync_box.js',(result)=>{
+   console.log(result)
+   runBoxJSScript('https://raw.githubusercontent.com/dompling/Script/master/jd/jd_cookie_search.js',(res)=>{
+     $('.async').removeClass('loading');
+     toast("账号数据刷新成功",()=>{
+       if(res) window.location.reload();
+     })
+   })
+ }); 
 }else{
-  $('.async').addClass('loading');
-  runBoxJSScript('https://raw.githubusercontent.com/dompling/Script/master/jd/jd_cookie_search.js',(res)=>{
-    $('.async').removeClass('loading');
-    toast("账号数据刷新成功",()=>{
-      if(res) window.location.reload();
-    })
-  })
+ $('.async').addClass('loading');
+ runBoxJSScript('https://raw.githubusercontent.com/dompling/Script/master/jd/jd_cookie_search.js',(res)=>{
+   $('.async').removeClass('loading');
+   toast("账号数据刷新成功",()=>{
+     if(res) window.location.reload();
+   })
+ })
 }
 })
 
 <\/script>
 <script src="//cdn.bootcdn.net/ajax/libs/eruda/2.5.0/eruda.min.js"><\/script>
 <script>
- var eruda_show = localStorage.getItem("eruda_show")||"0";
- if (eruda_show === "1") {
-   window.eruda && eruda.init();
- }
- // 记录点击次数
- var clickCount = 0,initCount = 0;
- // 设置连点监听
- document.addEventListener('click', function() {
-     clickCount++;
-     if(initCount) clearTimeout(initCount)
-     initCount = setTimeout(function() {
-       clickCount = 0
-     }, 500)
-     if(clickCount === 3) showConsole();
- })
- 
- function showConsole() {
-   if (eruda_show === "0"){
-     $('#tool-bars,#tool_bar_jf').animate({right:"0"},1000);
-     window.eruda && eruda.init();
-     eruda_show = "1"
-   }else{
-     $('#tool-bars,#tool_bar_jf').animate({right:"-100px"},1000);
-     window.eruda && eruda.destroy();
-     eruda_show = "0"
-   }
-   localStorage.setItem("eruda_show",eruda_show)
- }
+var eruda_show = localStorage.getItem("eruda_show")||"0";
+if (eruda_show === "1") {
+  window.eruda && eruda.init();
+}
+// 记录点击次数
+var clickCount = 0,initCount = 0;
+// 设置连点监听
+document.addEventListener('click', function() {
+    clickCount++;
+    if(initCount) clearTimeout(initCount)
+    initCount = setTimeout(function() {
+      clickCount = 0
+    }, 500)
+    if(clickCount === 3) showConsole();
+})
+
+function showConsole() {
+  if (eruda_show === "0"){
+    $('#tool-bars,#tool_bar_jf').animate({right:"0"},1000);
+    window.eruda && eruda.init();
+    eruda_show = "1"
+  }else{
+    $('#tool-bars,#tool_bar_jf').animate({right:"-100px"},1000);
+    window.eruda && eruda.destroy();
+    eruda_show = "0"
+  }
+  localStorage.setItem("eruda_show",eruda_show)
+}
 <\/script>
 `
 }
 
 ;(async () => {
  if (typeof $.html === 'string' && $.html.indexOf('</body>') > -1) {
+   
    console.log(`重写URL：${$.url}`)
    const n = createStyle(),
      e = createScript(),
      t = createHTML(),
      i = `\n${n}\n${t}\n${e}\n`
-   $.html = $.html.replace(/(<\/title>)/, `$1${i}`)
+   $.html = $.html
+     .replace(/(<\/title>)/, `$1${i}`)
+     .replace(/openApp\.jdMobile:\/\/virtual\??/g, ``)
+     .replace(/openapp\.jdmobile:\/\/virtual\??/g, ``)
  }
 })()
  .catch((n) => {
