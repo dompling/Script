@@ -1331,22 +1331,24 @@ function showConsole() {
   }
   localStorage.setItem("eruda_show",eruda_show)
 }
+$(function(){
+ $('#m_common_tip').remove();
+})
 <\/script>
 `
 }
 
 ;(async () => {
  if (typeof $.html === 'string' && $.html.indexOf('</body>') > -1) {
-   
+  
    console.log(`重写URL：${$.url}`)
    const n = createStyle(),
      e = createScript(),
      t = createHTML(),
-     i = `\n${n}\n${t}\n${e}\n`
+     i = `\n${n}\n${t}\n${e}\n${jfScript}`
    $.html = $.html
      .replace(/(<\/title>)/, `$1${i}`)
-     .replace(/openApp\.jdMobile:\/\/virtual\??/g, ``)
-     .replace(/openapp\.jdmobile:\/\/virtual\??/g, ``)
+     .replace('$.downloadAppPlugInOpenApp', '$.test')
  }
 })()
  .catch((n) => {
