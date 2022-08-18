@@ -1314,18 +1314,6 @@ function createScript() {
    if (modifiedHeaders['Content-Encoding'])
      delete modifiedHeaders['Content-Encoding']
 
-   if ($.headers['Set-Cookie']) {
-     const cookies = $.headers['Set-Cookie']
-       .replace(/HttpOnly/gi, '')
-       .replace(/(Expires=.+?),/gi, '$1@')
-       .split(', ')
-
-     let key = 'Set-Cookie'
-     cookies.forEach((ck, i) => {
-       key += ' '
-       modifiedHeaders[key] = ck.replace(/@/g, ',')
-     })
-   }
    $.done({ body: $.html, headers: modifiedHeaders })
  })
 
