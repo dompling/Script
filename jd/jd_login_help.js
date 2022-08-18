@@ -767,7 +767,7 @@ function createScript() {
 <script type="text/javascript" src="https://cdn.staticfile.org/jquery/1.10.0/jquery.min.js"><\/script>  
 <script src="//cdn.bootcdn.net/ajax/libs/eruda/2.5.0/eruda.min.js"><\/script>
 <script type="text/javascript">
-$(document).ready(function(){
+
  var pk = getCookie("pt_key");
  var pp = decodeURIComponent(getCookie("pt_pin"));
  var isLogin = window.location.href.indexOf("/login/login")>-1;
@@ -1283,7 +1283,6 @@ $(document).ready(function(){
      }
      localStorage.setItem("eruda_show",eruda_show)
    }
- })
 <\/script>
 `
 }
