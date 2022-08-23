@@ -20,7 +20,6 @@
  searchKey = 'keyword'
 ;($.url = $request.url), ($.html = $response.body)
 
-
 const cookieIndex = $.read(`#CookieIndex`) || 0
 const boxjs_host = $.read('#boxjs_host').indexOf('com') !== -1 ? 'com' : 'net'
 const qlConfig = $.read('#ql')
@@ -614,6 +613,7 @@ border-radius:2px;
  width:24px;
  height:24px;
  border-radius: 50%;
+ z-index:99
 }
 
 .async{
@@ -917,7 +917,7 @@ function createScript() {
     btnSubmit();
  }
  
- $('.cus-avatar').on('click',function(){
+ $(document).on('click','.cus-avatar',function(){
    $('.cus-avatar').removeClass("cus-active");
    $('.cus-avatar').attr("id","");
    $(this).attr("id","jd_account");
@@ -1287,8 +1287,8 @@ function createScript() {
 `
 }
 
+
 ;(async () => {
- 
  if (typeof $.html === 'string' && $.html.indexOf('</body>') > -1) {
    
    console.log(`重写URL：${$.url}`)
@@ -1314,7 +1314,7 @@ function createScript() {
    if (modifiedHeaders['Content-Encoding'])
      delete modifiedHeaders['Content-Encoding']
 
-   $.done({ body: $.html, headers: modifiedHeaders })
+   $.done({ body: $.html })
  })
 
 // prettier-ignore
