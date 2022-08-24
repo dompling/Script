@@ -235,29 +235,72 @@ background-image: -o-linear-gradient(left,#f7bb10,#ff4f18);
 background-image: linear-gradient(90deg,#f7bb10,#ff4f18);
 border-radius: 0 0 ${getRem(0.1)} 0;
 }
-#cus-tip{
-position: fixed;
-z-index: 9999;
-background: rgba(0,0,0,.5);
-color: #fff;
-min-width: ${getRem(1)};
-min-height:${getRem(0.35)} ;
-max-width: 80%;
-max-height: 50%;
-overflow:hidden;
-top:50%;
-left: 50%;
-text-align: center;
-padding: ${getRem(0.1)};
-box-sizing: border-box;
-font-size: ${getRem(0.1)};
-border-radius: ${getRem(0.1)};
-transform: translate(-50%,-50%);
--ms-transform: translate(-50%,-50%);
--moz-transform: translate(-50%,-50%);
--webkit-transform: translate(-50%,-50%);
--o-transform: translate(-50%,-50%);
+
+
+#toast {
+ position:fixed;
+ list-style:none;
+ padding:0;
+ bottom:0;
+ z-index:999999;
+ font-family:'Helvetica Neue', Helvetica, Arial, sans-serif;
+ font-size:14px;
+ line-height:20px
 }
+
+#toast li {
+ margin:0 0 10px 0;
+ display:block;
+ background-color:#fcf8e3;
+ color:#c09853;
+ border:1px solid #fbeed5;
+ padding:5px 10px;
+ border-radius:4px;
+ -webkit-border-radius:4px;
+ text-shadow:0 1px 0 rgba(255, 255, 255, 0.5);
+ box-shadow:0 2px 5px rgba(0, 0, 0, .15);
+ -webkit-box-shadow:0 2px 5px rgba(0, 0, 0, .15)
+}
+
+#toast li:first-child {
+ margin-top:0
+}
+
+#toast li.danger {
+ color:#b94a48;
+ background-color:#f2dede;
+ border-color:#eed3d7
+}
+
+#toast li.info {
+ color:#3a87ad;
+ background-color:#d9edf7;
+ border-color:#bce8f1
+}
+
+#toast li.success {
+ color:#468847;
+ background-color:#dff0d8;
+ border-color:#d6e9c6
+}
+
+#toast button.close {
+ background:none;
+ border:none;
+ font-weight:bold;
+ font-size:20px;
+ line-height:20px;
+ float:right;
+ padding:0;
+ margin:0 0 0 5px;
+ color:rgba(0, 0, 0, .25);
+ cursor:pointer
+}
+
+#toast h1, #toast h2, #toast h3, #toast h4 {
+ display:inline
+}
+
 #account_list{
 border: 4px solid #f7bb10;
 border-radius: ${getRem(0.3)};
@@ -750,13 +793,14 @@ function createHTML() {
 <div class="cus-mask" id="jf_mask">
 <div class="cus-mask_view" style="overflow: hidden;"></div>
 </div>
-<div id="cus-tip" style="display: none;"></div>
+
 <div class="tool_bars" id="tool-bars">
 <div id="boxjs" class="tool_bar">
 <img  src="https://raw.githubusercontent.com/chavyleung/scripts/master/BOXJS.png" />
 </div>
 </div>
 <div id="mask" class="mask"></div>
+<ul id="toast" style="display: none;left: 50%;transform: translateX(-50%);"></ul>
 `
 }
 
@@ -1083,7 +1127,7 @@ function createScript() {
         jd_ck = new_jd_ck;
         $("#account_list").html(getAccountList(jd_ck))
         registerClick()
-        toast('保存成功',()=>{
+        cusShowToast('保存成功',()=>{
            formHide();
            $("#edit-row").hide();
         })
@@ -1102,13 +1146,15 @@ function createScript() {
   })
  
   $("#copyCk").on('click',function(){
-    copyToClip(\`pt_key=\${pk};pt_pin=\${pp}\`,'COOKIE复制成功');
+    const username = $(".cus-active").data("name");
+    const copyValue = jd_ck.find(item=>item.userName===username);
+    copyToClip(copyValue.cookie,\`\${copyValue.nickname||username}-CK复制成功\`);
   })
    
-  function toast(message,callback){
-     $("cus-tip").html(message).show();
+  function cusShowToast(message,callback){
+     $("#toast").html(\`<li class="info">\${message}</li>\`).fadeIn();
      setTimeout(function() {
-       $("cus-tip").html("").hide();
+       $("#toast").html("").fadeOut();
        if(callback)callback()
      },2000);
   }
@@ -1193,20 +1239,8 @@ function createScript() {
  
  
  function copyToClip(text,notify=false){
-  const _input = document.createElement('input');
-  _input.style.width="1px";
-  _input.style.height="1px";
-  _input.style.position="fixed";
-  _input.style.right="-1px";
-  document.body.prepend(_input);
-  _input.value = text;
-  _input.focus();
-  _input.select();
-  document.execCommand('copy');
-  _input.blur();
-  document.body.removeChild(_input);
-  console.log(text)
-  if(notify)toast(notify);
+  navigator.clipboard.writeText(text);
+  if(notify)cusShowToast(notify);
  }
  
  $('#mask').on('click',function(){
@@ -1236,7 +1270,7 @@ function createScript() {
      console.log(result)
      runBoxJSScript('https://raw.githubusercontent.com/dompling/Script/master/jd/jd_cookie_search.js',(res)=>{
        $('.async').removeClass('loading');
-       toast("账号数据刷新成功",()=>{
+       cusShowToast("账号数据刷新成功",()=>{
          if(res) window.location.reload();
        })
      })
@@ -1245,7 +1279,7 @@ function createScript() {
    $('.async').addClass('loading');
    runBoxJSScript('https://raw.githubusercontent.com/dompling/Script/master/jd/jd_cookie_search.js',(res)=>{
      $('.async').removeClass('loading');
-     toast("账号数据刷新成功",()=>{
+     cusShowToast("账号数据刷新成功",()=>{
        if(res) window.location.reload();
      })
    })
@@ -1286,7 +1320,6 @@ function createScript() {
 <\/script>
 `
 }
-
 
 ;(async () => {
  if (typeof $.html === 'string' && $.html.indexOf('</body>') > -1) {
