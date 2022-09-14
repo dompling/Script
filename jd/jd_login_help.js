@@ -1072,7 +1072,7 @@ function createScript() {
     $(".edit-form").show();
     $(".edit-form").animate({bottom:0});
     const selectPin = $("#jd_account").data("name");
-    const current = jd_ck.find(item=>item.username === selectPin);
+    const current = jd_ck.find(item=>item.username === \`\${selectPin}\`);
     if(!current)return;
     let form_html = \`
           <input 
