@@ -66,9 +66,9 @@ async function getScriptUrl() {
     jd_reamrk.remark = JSON.parse(jd_reamrk.remark || '[]');
 
     if (jd_reamrk.remark.length) {
-      jd_reamrk.remark = jd_reamrk.remark.map((item) => {
+      jd_reamrk.remark = jd_reamrk.remark.map((item, index) => {
         if (cache_info[item.username]) {
-          return { ...item, ...cache_info[item.username] };
+          return { ...item, ...cache_info[item.username], index };
         }
         return item;
       });
