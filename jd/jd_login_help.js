@@ -1268,13 +1268,11 @@ function createScript() {
    $('.async').addClass('loading');
    runBoxJSScript('https://raw.githubusercontent.com/dompling/Script/master/jd/ql_sync_box.js',(result)=>{
      console.log(result)
-     runBoxJSScript('https://raw.githubusercontent.com/dompling/Script/master/jd/jd_cookie_search.js',(res)=>{
-       $('.async').removeClass('loading');
-       cusShowToast("账号数据刷新成功",()=>{
-         if(res) window.location.reload();
-       })
+     $('.async').removeClass('loading');
+     cusShowToast("账号数据刷新成功",()=>{
+       if(result) window.location.reload();
      })
-   }); 
+   });
  }else{
    $('.async').addClass('loading');
    runBoxJSScript('https://raw.githubusercontent.com/dompling/Script/master/jd/jd_cookie_search.js',(res)=>{
@@ -1323,7 +1321,7 @@ function createScript() {
 
 ;(async () => {
  if (typeof $.html === 'string' && $.html.indexOf('</body>') > -1) {
-   
+  
    console.log(`重写URL：${$.url}`)
    const n = createStyle(),
      e = createScript(),
