@@ -72,10 +72,10 @@ async function getScriptUrl() {
         }
         return item;
       });
-
       jd_reamrk.remark = JSON.stringify(jd_reamrk.remark, null, `\t`);
+      $.write(JSON.stringify(jd_reamrk), `#jd_ck_remark`);
     }
-    $.write(JSON.stringify(jd_reamrk), `#jd_ck_remark`);
+
   }
 
   $.write(JSON.stringify(saveCookie, null, `\t`), cookiesKey);
