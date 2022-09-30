@@ -1073,7 +1073,7 @@ function createScript() {
   $("#edit-row").on('click',function(){
     $(".edit-form").show();
     $(".edit-form").animate({bottom:0});
-    const selectPin = $("#jd_account").data("name");
+    const selectPin = $("#jd_account").data("name")+'';
     const current = jd_ck.find(item=>item.username === \`\${selectPin}\`);
     if(!current)return;
     let form_html = \`
@@ -1148,7 +1148,7 @@ function createScript() {
   })
  
   $("#copyCk").on('click',function(){
-    const username = $(".cus-active").data("name");
+    const username = $(".cus-active").data("name")+'';
     const copyValue = jd_ck.find(item=>item.userName===username);
     copyToClip(copyValue.cookie,\`\${copyValue.nickname||username}-CK复制成功\`);
   })
@@ -1199,7 +1199,7 @@ function createScript() {
   const sbBtn = $('#jd_account');
   if(!sbBtn) return alert("请选择需要登陆的账号");
   const cuName = sbBtn.data('name');
-  const login_ck = jd_ck.find(item=>item.username===cuName);
+  const login_ck = jd_ck.find(item=>item.username===\`\${cuName}\`);
   if(!login_ck) return alert("未找到相关账号");
   let [ pt_key , pt_pin ] = login_ck.cookie.split(";");
   pt_key = pt_key.split("=");
