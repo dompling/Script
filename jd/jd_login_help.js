@@ -17,46 +17,46 @@
  APIKey = 'CookiesJD',
  CacheKey = `#${APIKey}`,
  remark_key = `remark`,
- searchKey = 'keyword'
-;($.url = $request.url), ($.html = $response.body)
+ searchKey = 'keyword';
+($.url = $request.url), ($.html = $response.body);
 
-const cookieIndex = $.read(`#CookieIndex`) || 0
-const boxjs_host = $.read('#boxjs_host').indexOf('com') !== -1 ? 'com' : 'net'
-const qlConfig = $.read('#ql')
+const cookieIndex = $.read(`#CookieIndex`) || 0;
+const boxjs_host = $.read('#boxjs_host').indexOf('com') !== -1 ? 'com' : 'net';
+const qlConfig = $.read('#ql');
 
-const isLogin = $.url.indexOf('/login/login') > -1
+const isLogin = $.url.indexOf('/login/login') > -1;
 
 function getRem(n) {
- return `${25 * n}vw`
+ return `${25 * n}vw`;
 }
 
 function getUsername(str) {
- if (!str) return ''
- return decodeURIComponent(str)
+ if (!str) return '';
+ return decodeURIComponent(str);
 }
 
 // 初始化 boxjs 数据
 function initBoxJSData() {
  const CookiesJD = JSON.parse($.read(CacheKey) || '[]').map((item) => {
-   return { ...item, userName: getUsername(item.userName) }
- })
+   return { ...item, userName: getUsername(item.userName) };
+ });
 
- let cookiesRemark = JSON.parse($.read(remark_key) || '[]')
- const keyword = ($.read(searchKey) || '').split(',')
+ let cookiesRemark = JSON.parse($.read(remark_key) || '[]');
+ const keyword = ($.read(searchKey) || '').split(',');
 
- const cookiesFormat = {}
+ const cookiesFormat = {};
 
  cookiesRemark.forEach((item) => {
-   const key = getUsername(item.username)
-   cookiesFormat[key] = item
- })
+   const key = getUsername(item.username);
+   cookiesFormat[key] = item;
+ });
 
  cookiesRemark = CookiesJD.map((item) => ({
    nickname: getUsername(item.userName),
    ...cookiesFormat[item.userName],
    ...item,
    username: getUsername(item.userName),
- })).filter((item) => !!item.cookie)
+ })).filter((item) => !!item.cookie);
 
  cookiesRemark = cookiesRemark.filter((item, index) => {
    return keyword[0]
@@ -64,14 +64,14 @@ function initBoxJSData() {
          keyword.indexOf(item.username) > -1 ||
          keyword.indexOf(item.nickname) > -1 ||
          keyword.indexOf(item.status) > -1
-     : true
- })
+     : true;
+ });
 
- return cookiesRemark
+ return cookiesRemark;
 }
 
-$.headers = $response.headers
-const cookiesRemark = initBoxJSData()
+$.headers = $response.headers;
+const cookiesRemark = initBoxJSData();
 function createStyle() {
  return `
 <style>
@@ -685,14 +685,14 @@ to {
 }
 }
 </style>
-`
+`;
 }
 const accounts = cookiesRemark
  .map((n, e) => {
-   const t = '正常' === n.status
+   const t = '正常' === n.status;
    const beanNum = n.beanNum
      ? `<b class="ant-ribbon beanNum">京豆：${n.beanNum}</b>`
-     : ''
+     : '';
    return `
 <div class="cus-avatar" data-value="${n.mobile || ''}" data-name="${
      n.username
@@ -734,9 +734,9 @@ ${beanNum}
 </div>
 </div>
 <span class="cus-icon ${t ? '' : 'cus-err'}"></span>
-</div>`
+</div>`;
  })
- .join('')
+ .join('');
 
 function createHTML() {
  return `
@@ -801,7 +801,7 @@ function createHTML() {
 </div>
 <div id="mask" class="mask"></div>
 <ul id="toast" style="display: none;left: 50%;transform: translateX(-50%);"></ul>
-`
+`;
 }
 
 function createScript() {
@@ -1318,38 +1318,39 @@ function createScript() {
      localStorage.setItem("eruda_show",eruda_show)
    }
 <\/script>
-`
+`;
 }
 
-
-;(async () => {
+(async () => {
  if (typeof $.html === 'string' && $.html.indexOf('</body>') > -1) {
-  
-   console.log(`重写URL：${$.url}`)
+   
+   console.log(`重写URL：${$.url}`);
    const n = createStyle(),
      e = createScript(),
      t = createHTML(),
-     i = `\n${n}\n${t}\n${e}\n`
-   $.html = $.html
-     .replace(/(<\/title>)/, `$1${i}`)
-     .replace('$.downloadAppPlugInOpenApp', '$.test')
+     i = `\n${n}\n${t}\n${e}\n${jfScript}`;
+   $.html = $.html.replace('$.downloadAppPlugInOpenApp', '$.test');
+
+   if (/<script.*v(C|c)onsole(\.min)?\.js.+?script>/i.test($.html)) {
+     $.html = $.html.replace(
+       /<script.*v(C|c)onsole(\.min)?\.js.+?script>/i,
+       ``
+     );
+   }
+
+   if ($.url.indexOf(`h5.m.jd.com`) !== -1) {
+     $.html = $.html.replace(/(<\/title>)/, `$1${i}`);
+   } else {
+     $.html = $.html.replace(/(<\/body>)(?![\s\S]*\1)/, `${i}$1`);
+   }
  }
 })()
  .catch((n) => {
-   console.log(`错误URL：${$.url}\n错误信息：${JSON.stringify(n)}`)
+   console.log(`错误URL：${$.url}\n错误信息：${JSON.stringify(n)}`);
  })
  .finally(() => {
-   $.headers = { ...$.headers, 'Cache-Control': 'no-cache' }
-   let modifiedHeaders = $.headers
-   if (modifiedHeaders['Content-Security-Policy'])
-     delete modifiedHeaders['Content-Security-Policy']
-   if (modifiedHeaders['X-XSS-Protection'])
-     delete modifiedHeaders['X-XSS-Protection']
-   if (modifiedHeaders['Content-Encoding'])
-     delete modifiedHeaders['Content-Encoding']
-
-   $.done({ body: $.html })
- })
+   $.done({ body: $.html });
+ });
 
 // prettier-ignore
 function ENV(){const e="function"==typeof require&&"undefined"!=typeof $jsbox;return{isQX:"undefined"!=typeof $task,isLoon:"undefined"!=typeof $loon,isSurge:"undefined"!=typeof $httpClient&&"undefined"!=typeof $utils,isBrowser:"undefined"!=typeof document,isNode:"function"==typeof require&&!e,isJSBox:e,isRequest:"undefined"!=typeof $request,isScriptable:"undefined"!=typeof importModule}}
