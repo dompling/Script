@@ -806,38 +806,34 @@ function createHTML() {
 
 function createScript() {
  return `
-<meta name="viewport" content="width=device-width,initial-scale=1.0,minimum-scale=1.0,maximum-scale=1.0,user-scalable=no" />
-<link rel="stylesheet" type="text/css" href="//at.alicdn.com/t/font_2100531_8vma5eluuga.css" charset="utf-8"/>
-<script type="text/javascript" src="https://cdn.staticfile.org/jquery/1.10.0/jquery.min.js"><\/script>  
-<script src="//cdn.bootcdn.net/ajax/libs/eruda/2.5.0/eruda.min.js"><\/script>
-<script type="text/javascript">
 
+<script type="text/javascript">
  var pk = getCookie("pt_key");
  var pp = decodeURIComponent(getCookie("pt_pin"));
  var isLogin = window.location.href.indexOf("/login/login")>-1;
  let jd_ck = ${JSON.stringify(cookiesRemark)};
  console.log(jd_ck)
  registerClick();
- 
+
  $("#cu_search").on("click",function(){
    $(this).toggleClass("hidden");
    $("#cus-username").toggleClass("hidden");
    $("#cu_search_input").toggleClass("hidden");
    $("#cus_cancel").toggleClass("hidden");
  })
- 
+
  $("#cus_cancel").on("click",function(){
    $("#cu_search").click();
    $("#cu_search_close").click();
    registerClick();
  })
- 
+
  $("#cu_search_close").on("click",function(){
-  $("#cu_search_input input")[0].value="";
-  $("#account_list").html(getAccountList(jd_ck));
-  registerClick();
+   $("#cu_search_input input")[0].value="";
+   $("#account_list").html(getAccountList(jd_ck));
+   registerClick();
  })
- 
+
  function getAccountList(cks){
  return  cks.map((item,index) => {
  const status = item.status === '正常';
@@ -845,45 +841,45 @@ function createScript() {
  return \`
  <div class="cus-avatar" data-value="\${item.mobile||''}" data-name="\${item.username}">
  <div class="avatar_container \${item.isPlusVip==='1' ? 'plus' : ''}">
-  <div class="avatar_img">
-    <img src="\${
-      item.avatar ||
-      '//img11.360buyimg.com/jdphoto/s120x120_jfs/t21160/90/706848746/2813/d1060df5/5b163ef9N4a3d7aa6.png'
-    }" alt="\${item.username}" />
-  </div>
-  \${item.isPlusVip==='1' ? \`<div class="isPlus"></div>\` : ''}
+   <div class="avatar_img">
+     <img src="\${
+       item.avatar ||
+       '//img11.360buyimg.com/jdphoto/s120x120_jfs/t21160/90/706848746/2813/d1060df5/5b163ef9N4a3d7aa6.png'
+     }" alt="\${item.username}" />
+   </div>
+   \${item.isPlusVip==='1' ? \`<div class="isPlus"></div>\` : ''}
  </div>
- 
+
  <div class="cususer_info">
    <p>\${decodeURIComponent(item.nickname)}</p>
    <span><b class="ant-ribbon">\${index + 1}</b>\${item.username}</span>
  </div>
  <div class="beanNumValue">
-  \${beanNum}
-  <div class="fruit_pet">
-  \${
-    item.fruit
-      ? \`<div class="hb_process">
-  <img src="https://raw.githubusercontent.com/Former-Years/icon/master/jdnc.png" alt="fruit" />
-  <b class="ant-ribbon beanNum">\${parseInt(item.fruit)}%</b>
+   \${beanNum}
+   <div class="fruit_pet">
+   \${
+     item.fruit
+       ? \`<div class="hb_process">
+   <img src="https://raw.githubusercontent.com/Former-Years/icon/master/jdnc.png" alt="fruit" />
+   <b class="ant-ribbon beanNum">\${parseInt(item.fruit)}%</b>
  </div>\`
-      : ''
-  }
-  \${
-    item.jdPet
-      ? \`<div class="hb_process">
-  <img src="https://raw.githubusercontent.com/Former-Years/icon/master/jdmc.png" alt="pet" />
-  <b class="ant-ribbon beanNum">\${parseInt(item.jdPet)}%</b>
+       : ''
+   }
+   \${
+     item.jdPet
+       ? \`<div class="hb_process">
+   <img src="https://raw.githubusercontent.com/Former-Years/icon/master/jdmc.png" alt="pet" />
+   <b class="ant-ribbon beanNum">\${parseInt(item.jdPet)}%</b>
  </div>\`
-      : ''
-  }
+       : ''
+   }
  </div>
  </div>
  <span class="cus-icon \${status ? '' : 'cus-err'}"></span>
  </div>\`;
  }).join('')
  }
- 
+
  let timer = null;
  $("#cu_search_input input").on('input',function(event){
    console.log(event)
@@ -898,71 +894,71 @@ function createScript() {
      registerClick()
    },500);
  })
- 
- 
+
+
  const avatarItem = jd_ck.find(item=> item.username === pp);
  if(avatarItem && avatarItem.avatar){
    $('#boxjs').html("<img src='"+ avatarItem.avatar +"' />");
  }
- 
+
  if(pk === "" || !pk){
    $("#copyCk").hide();
    $("#clear-ck").hide();
  }
- 
+
  if(pp){
-    $("#cus-username").html(pp)
-    var preIndex = null;
-    var nextIndex = null;
-    var current = null
-    jd_ck.forEach((item,index)=>{
-      if(decodeURIComponent(item.username) === pp){
-        current = index;
-        preIndex = index !== 0 ? index - 1 : null;
-        nextIndex = index !== jd_ck.length - 1 ? index + 1 : null;
-      }
-    })
-    if(preIndex!==null){
-      $("#boxjs").before('<div id="preCK" class="tool_bar"><span class="iconfont icon-shangjiantou" /></div>')
-    }
-    if(nextIndex!==null){
-      $("#boxjs").after('<div id="nextCK" class="tool_bar"><span class="iconfont icon-xiajiantou" /></div>')
-    }
-    if(current) animateScroll(current);
+     $("#cus-username").html(pp)
+     var preIndex = null;
+     var nextIndex = null;
+     var current = null
+     jd_ck.forEach((item,index)=>{
+       if(decodeURIComponent(item.username) === pp){
+         current = index;
+         preIndex = index !== 0 ? index - 1 : null;
+         nextIndex = index !== jd_ck.length - 1 ? index + 1 : null;
+       }
+     })
+     if(preIndex!==null){
+       $("#boxjs").before('<div id="preCK" class="tool_bar"><span class="iconfont icon-shangjiantou" /></div>')
+     }
+     if(nextIndex!==null){
+       $("#boxjs").after('<div id="nextCK" class="tool_bar"><span class="iconfont icon-xiajiantou" /></div>')
+     }
+     if(current) animateScroll(current);
  };
- 
+
  function animateScroll(key) {
    try{
    if($('.cus-now_active').position()) $("#account_list").animate({scrollTop: $('.cus-now_active').position().top - $('.cus-now_active').height() * 4 },1000);
    }catch(e){console.log(e)}
  }
- 
+
  var preCK = $("#preCK");
  var nextCK = $("#nextCK");
  if(preCK){
    preCK.on('click',function() {
-    if(preIndex !== null) changeIndex(preIndex);
+     if(preIndex !== null) changeIndex(preIndex);
    });
  }
- 
+
  if(nextCK){
    nextCK.on('click',function() {
-    if(nextIndex !== null) changeIndex(nextIndex);
+     if(nextIndex !== null) changeIndex(nextIndex);
    });
  }
- 
+
  function changeIndex(key){
-    $('.cus-avatar').attr("id","");
-    $('.cus-avatar').attr("class","cus-avatar");
-    $('.cus-avatar').each(function(index){
+     $('.cus-avatar').attr("id","");
+     $('.cus-avatar').attr("class","cus-avatar");
+     $('.cus-avatar').each(function(index){
        if(index === key){
          $(this).addClass("cus-active");
          $(this).attr("id","jd_account");
        }
-    })
-    btnSubmit();
+     })
+     btnSubmit();
  }
- 
+
  $(document).on('click','.cus-avatar',function(){
    $('.cus-avatar').removeClass("cus-active");
    $('.cus-avatar').attr("id","");
@@ -973,13 +969,13 @@ function createScript() {
    $("#fill-input").hide();
    if($(this).data("value"))$("#fill-input").show();
  })
- 
+
  $("#fill-input").on('click',function(){
    if(isLogin) fillInput();
    const mobile = $('#jd_account').data('value');
    copyToClip(mobile,'手机号复制成功')
  })
- 
+
  $("#clear-ck").on('click',function(){
    sessionStorage.clear();
    localStorage.clear();
@@ -987,239 +983,239 @@ function createScript() {
    setCookie("pt_pin","");
    window.location.reload();
  })
- 
-  function registerClick(){
-    $('.cus-avatar').each(function(){
+
+   function registerClick(){
+     $('.cus-avatar').each(function(){
        const username = $(this).data('name') + '';
        if(username === pp) $(this).addClass("cus-now_active");
-    })
-  }
-  
-  const $container = $("#tool-bars");
-  var nx,
-    ny,
-    wxX,
-    wxY,
-    isDown = false; //X Y坐标
-  // H5页面
-  $("#boxjs")
-    .bind("touchstart", function (e) {
-      //点击触发
-      e.preventDefault();
-      $(this).css("transform", "translate(0)");
-      var touch = event.targetTouches[0];
-      wxX = touch.clientX;
-      wxY = touch.clientY;
-      isDown = true;
-      $(document).bind("touchmove", function (ev) {
-        if (!isDown) return;
-        //滑动触发
-        e.preventDefault();
- 
-        var touch = event.targetTouches[0];
-        ny = touch.clientY;
-        nx = touch.clientX;
-        $container.css("top", ny / ($(window).height() / 100) + "%");
-      });
-    })
-    .bind("touchend", function (e) {
-      //移开触发
-      var touch = event.changedTouches[0];
-      //判断跟初始坐标是否一致，一致则大概率为点击事件
-      if (wxX === touch.clientX && wxY === touch.clientY) {
-        maskVisible(true);
-      } else {
-        if ($(window).height() * 0.9 - $container.height() < ny) {
-          $container.css({top: "90%"});
-        } else if ($(window).height() * 0.1 > ny) {
-          $container.css({ top: "12%" });
-        }
-      }
-      isDown = false; //$('.service_s').hide()
-    });
- 
-  $("#cus-mask-ok").on('click', function(){
-    btnSubmit();
-  });
- 
-  const form_field = {
-      "avatar": {
-          "label": "头像",
-          "remark": "请输入头像链接"
-      },
-      "nickname": {
-          "label": "姓名"
-      },
-      "mobile": {
-          "label": "手机号"
-      },
-      "paymentCode": {
-        "label": "支付密码"
-      },
-      "cardId": {
-          "label": "身份证",
-          "remark": "请输入身份证前两位和后四位"
-      },
-      "isPlusVip": {
-          "label": "VIP",
-          "remark": "1vip ，0 非 vip"
-      },
-      "qywxUserId": {
-          "label": "企业微信",
-          "remark": "企业微信 ID&（all 推送所有）"
-      }
-  };
- 
-  $("#edit-row").on('click',function(){
-    $(".edit-form").show();
-    $(".edit-form").animate({bottom:0});
-    const selectPin = $("#jd_account").data("name")+'';
-    const current = jd_ck.find(item=>item.username === \`\${selectPin}\`);
-    if(!current)return;
-    let form_html = \`
-          <input 
-            type="hidden"
-            name="userName" 
-            class="form-item-input" 
-            value="\${selectPin}" 
-          />
-      \`;
-    Object.keys(form_field).forEach((name)=>{
-      const field = form_field[name];
-      form_html+=\`<p class="form-item">
-                    <label class="form-item-label" for="\${name}">
-                      <span>\${field.label}</span>
-                      <input 
-                          name="\${name}" 
-                          class="form-item-input" 
-                          value="\${current[name]||""}" 
-                          placeholder="\${field.remark||"请输入"}"
+     })
+   }
+   
+   const $container = $("#tool-bars");
+   var nx,
+     ny,
+     wxX,
+     wxY,
+     isDown = false; //X Y坐标
+   // H5页面
+   $("#boxjs")
+     .bind("touchstart", function (e) {
+       //点击触发
+       e.preventDefault();
+       $(this).css("transform", "translate(0)");
+       var touch = event.targetTouches[0];
+       wxX = touch.clientX;
+       wxY = touch.clientY;
+       isDown = true;
+       $(document).bind("touchmove", function (ev) {
+         if (!isDown) return;
+         //滑动触发
+         e.preventDefault();
+
+         var touch = event.targetTouches[0];
+         ny = touch.clientY;
+         nx = touch.clientX;
+         $container.css("top", ny / ($(window).height() / 100) + "%");
+       });
+     })
+     .bind("touchend", function (e) {
+       //移开触发
+       var touch = event.changedTouches[0];
+       //判断跟初始坐标是否一致，一致则大概率为点击事件
+       if (wxX === touch.clientX && wxY === touch.clientY) {
+         maskVisible(true);
+       } else {
+         if ($(window).height() * 0.9 - $container.height() < ny) {
+           $container.css({top: "90%"});
+         } else if ($(window).height() * 0.1 > ny) {
+           $container.css({ top: "12%" });
+         }
+       }
+       isDown = false; //$('.service_s').hide()
+     });
+
+   $("#cus-mask-ok").on('click', function(){
+     btnSubmit();
+   });
+
+   const form_field = {
+       "avatar": {
+           "label": "头像",
+           "remark": "请输入头像链接"
+       },
+       "nickname": {
+           "label": "姓名"
+       },
+       "mobile": {
+           "label": "手机号"
+       },
+       "paymentCode": {
+         "label": "支付密码"
+       },
+       "cardId": {
+           "label": "身份证",
+           "remark": "请输入身份证前两位和后四位"
+       },
+       "isPlusVip": {
+           "label": "VIP",
+           "remark": "1vip ，0 非 vip"
+       },
+       "qywxUserId": {
+           "label": "企业微信",
+           "remark": "企业微信 ID&（all 推送所有）"
+       }
+   };
+
+   $("#edit-row").on('click',function(){
+     $(".edit-form").show();
+     $(".edit-form").animate({bottom:0});
+     const selectPin = $("#jd_account").data("name")+'';
+     const current = jd_ck.find(item=>item.username === \`\${selectPin}\`);
+     if(!current)return;
+     let form_html = \`
+           <input 
+             type="hidden"
+             name="userName" 
+             class="form-item-input" 
+             value="\${selectPin}" 
+           />
+       \`;
+     Object.keys(form_field).forEach((name)=>{
+       const field = form_field[name];
+       form_html+=\`<p class="form-item">
+                     <label class="form-item-label" for="\${name}">
+                       <span>\${field.label}</span>
+                       <input 
+                           name="\${name}" 
+                           class="form-item-input" 
+                           value="\${current[name]||""}" 
+                           placeholder="\${field.remark||"请输入"}"
                        />
-                    </label>
-                  </p>\`
-    })
-    $("#eidt-form").html(form_html);
-  });
-  
-  $('#form-ok').on('click',function(){
-    const updateArr = $('#eidt-form').serializeArray();
-    let updateItem = {};
-    updateArr.forEach((item)=>{
-      updateItem[item.name]=item.value;
-    })
-    const new_jd_ck = []
-    const formValue = jd_ck.map((item,index)=>{
-        const {wskey,cookie,userName,...temp} = item;
-        if(item.userName === updateItem.userName){
-          updateItem = {...temp , ...updateItem};
-          new_jd_ck.push({...item , ...updateItem});
-          return { index , ...updateItem}
-        }
-        new_jd_ck.push(item);
-        return { index, ...temp}
-    });
-    
-    const val = JSON.stringify(formValue, null, \`\t\`);
-    $.ajax({
-      method:"post",
-      url:"//boxjs.${boxjs_host}/api/saveData/",
-      data:JSON.stringify({key:"@jd_ck_remark.remark",val:val}),
-      contentType:'application/x-www-form-urlencoded; charset=UTF-8',
-      success:(response)=>{
-        jd_ck = new_jd_ck;
-        $("#account_list").html(getAccountList(jd_ck))
-        registerClick()
-        cusShowToast('保存成功',()=>{
+                     </label>
+                   </p>\`
+     })
+     $("#eidt-form").html(form_html);
+   });
+   
+   $('#form-ok').on('click',function(){
+     const updateArr = $('#eidt-form').serializeArray();
+     let updateItem = {};
+     updateArr.forEach((item)=>{
+       updateItem[item.name]=item.value;
+     })
+     const new_jd_ck = []
+     const formValue = jd_ck.map((item,index)=>{
+         const {wskey,cookie,userName,...temp} = item;
+         if(item.userName === updateItem.userName){
+           updateItem = {...temp , ...updateItem};
+           new_jd_ck.push({...item , ...updateItem});
+           return { index , ...updateItem}
+         }
+         new_jd_ck.push(item);
+         return { index, ...temp}
+     });
+     
+     const val = JSON.stringify(formValue, null, \`\t\`);
+     $.ajax({
+       method:"post",
+       url:"//boxjs.${boxjs_host}/api/saveData/",
+       data:JSON.stringify({key:"@jd_ck_remark.remark",val:val}),
+       contentType:'application/x-www-form-urlencoded; charset=UTF-8',
+       success:(response)=>{
+         jd_ck = new_jd_ck;
+         $("#account_list").html(getAccountList(jd_ck))
+         registerClick()
+         cusShowToast('保存成功',()=>{
            formHide();
            $("#edit-row").hide();
-        })
-      }
-    })
-  })
- 
-  function formHide(){
-    $('.edit-form').animate({bottom:"-500vh"},function(){
-      $(".edit-form").hide();
-    });
-  }
- 
-  $('#form-cancel').on('click',function(){
-    formHide();
-  })
- 
-  $("#copyCk").on('click',function(){
-    const username = $(".cus-active").data("name")+'';
-    const copyValue = jd_ck.find(item=>item.userName===username);
-    copyToClip(copyValue.cookie,\`\${copyValue.nickname||username}-CK复制成功\`);
-  })
+         })
+       }
+     })
+   })
+
+   function formHide(){
+     $('.edit-form').animate({bottom:"-500vh"},function(){
+       $(".edit-form").hide();
+     });
+   }
+
+   $('#form-cancel').on('click',function(){
+     formHide();
+   })
+
+   $("#copyCk").on('click',function(){
+     const username = $(".cus-active").data("name")+'';
+     const copyValue = jd_ck.find(item=>item.userName===username);
+     copyToClip(copyValue.cookie,\`\${copyValue.nickname||username}-CK复制成功\`);
+   })
    
-  function cusShowToast(message,callback){
+   function cusShowToast(message,callback){
      $("#toast").html(\`<li class="info">\${message}</li>\`).fadeIn();
      setTimeout(function() {
        $("#toast").html("").fadeOut();
        if(callback)callback()
      },2000);
-  }
- 
-  function maskVisible(visible){
-    if(visible){
-      $('#mask').show();
-    }
-    $('#cus-mask').animate({top:visible?"50%":"-500vh"},function(){
-      if(!visible){
-        $('#mask').hide();
-        $('.edit-form').hide();
-        $('.edit-form').animate({bottom:"-500vh"});
-      }
-    });
-  }
- 
-  function fillInput(){
-    const sbBtn = $('#jd_account');
-    const cuMobile = sbBtn.data('value');
-    console.log('快速填充号码：'+ cuMobile);
-    const input = document.getElementsByClassName('acc-input mobile J_ping')[0];
-    input.value = cuMobile;
-    ev = document.createEvent("HTMLEvents");
-    ev.initEvent("input", true,false );
-    input.dispatchEvent(ev);
-    maskVisible(false);
-  }
- 
-  function clearAllCookie() {
-      var keys = document.cookie.match(/[^ =;]+(?=\\=)/g);
-      if (keys) {
-          for (var i = keys.length; i--;){
-            document.cookie = keys[i] + '=;path=/;domain=.jd.com;expires=' + new Date(0).toUTCString()
-          }
-      }
-  }
- 
+   }
+
+   function maskVisible(visible){
+     if(visible){
+       $('#mask').show();
+     }
+     $('#cus-mask').animate({top:visible?"50%":"-500vh"},function(){
+       if(!visible){
+         $('#mask').hide();
+         $('.edit-form').hide();
+         $('.edit-form').animate({bottom:"-500vh"});
+       }
+     });
+   }
+
+   function fillInput(){
+     const sbBtn = $('#jd_account');
+     const cuMobile = sbBtn.data('value');
+     console.log('快速填充号码：'+ cuMobile);
+     const input = document.getElementsByClassName('acc-input mobile J_ping')[0];
+     input.value = cuMobile;
+     ev = document.createEvent("HTMLEvents");
+     ev.initEvent("input", true,false );
+     input.dispatchEvent(ev);
+     maskVisible(false);
+   }
+
+   function clearAllCookie() {
+       var keys = document.cookie.match(/[^ =;]+(?=\\=)/g);
+       if (keys) {
+           for (var i = keys.length; i--;){
+             document.cookie = keys[i] + '=;path=/;domain=.jd.com;expires=' + new Date(0).toUTCString()
+           }
+       }
+   }
+
  function btnSubmit(){
-  const sbBtn = $('#jd_account');
-  if(!sbBtn) return alert("请选择需要登陆的账号");
-  const cuName = sbBtn.data('name');
-  const login_ck = jd_ck.find(item=>item.username===\`\${cuName}\`);
-  if(!login_ck) return alert("未找到相关账号");
-  let [ pt_key , pt_pin ] = login_ck.cookie.split(";");
-  pt_key = pt_key.split("=");
-  pt_pin = pt_pin.split("=");
-  clearAllCookie();
-  setCookie(pt_key[0],pt_key[1]);
-  setCookie(pt_pin[0],pt_pin[1]);
-  window.location.reload();
+   const sbBtn = $('#jd_account');
+   if(!sbBtn) return alert("请选择需要登陆的账号");
+   const cuName = sbBtn.data('name');
+   const login_ck = jd_ck.find(item=>item.username===\`\${cuName}\`);
+   if(!login_ck) return alert("未找到相关账号");
+   let [ pt_key , pt_pin ] = login_ck.cookie.split(";");
+   pt_key = pt_key.split("=");
+   pt_pin = pt_pin.split("=");
+   clearAllCookie();
+   setCookie(pt_key[0],pt_key[1]);
+   setCookie(pt_pin[0],pt_pin[1]);
+   window.location.reload();
  }
- 
- 
+
+
  function setCookie(cname,cvalue){
-    var ed = new Date();
-    const mt = ed.getMonth()+1;
-    ed.setMonth(mt);
-    var expires = "expires="+ed.toGMTString();
-    document.cookie = cname+"="+cvalue+"; "+expires+"; path=/; domain=.jingxi.com";
-    document.cookie = cname+"="+cvalue+"; "+expires+"; path=/; domain=.jd.com";
+     var ed = new Date();
+     const mt = ed.getMonth()+1;
+     ed.setMonth(mt);
+     var expires = "expires="+ed.toGMTString();
+     document.cookie = cname+"="+cvalue+"; "+expires+"; path=/; domain=.jingxi.com";
+     document.cookie = cname+"="+cvalue+"; "+expires+"; path=/; domain=.jd.com";
  }
- 
+
  function getQueryVariable(variable){
    var query = window.location.search.substring(1);
    var vars = query.split("&");
@@ -1230,28 +1226,28 @@ function createScript() {
    return(false);
  }
  function getCookie(cname){
-    var name = cname + "=";
-    var ca = document.cookie.split(';');
-    for(var i=0; i<ca.length; i++) {
-        var c = ca[i].trim();
-        if (c.indexOf(name)==0) { return c.substring(name.length,c.length); }
-    }
-    return "";
+     var name = cname + "=";
+     var ca = document.cookie.split(';');
+     for(var i=0; i<ca.length; i++) {
+         var c = ca[i].trim();
+         if (c.indexOf(name)==0) { return c.substring(name.length,c.length); }
+     }
+     return "";
  }
- 
- 
+
+
  function copyToClip(text,notify=false){
-  navigator.clipboard.writeText(text);
-  if(notify)cusShowToast(notify);
+   navigator.clipboard.writeText(text);
+   if(notify)cusShowToast(notify);
  }
- 
+
  $('#mask').on('click',function(){
-  $("#jf_mask,#cus-mask").animate({top:"-500vh"},function(){
-    formHide();
-    $('#mask').hide();
-  }) 
+   $("#jf_mask,#cus-mask").animate({top:"-500vh"},function(){
+     formHide();
+     $('#mask').hide();
+   }) 
  })
- 
+
  function runBoxJSScript(url,callback){
  const body = {"url":url,"isRemote":true};
  $.ajax({
@@ -1263,7 +1259,7 @@ function createScript() {
    success:callback
  })
  }
- 
+
  $('.async').on('click',function(){
  const qlConfig = \`${qlConfig}\`
  if(qlConfig){
@@ -1285,41 +1281,52 @@ function createScript() {
    })
  }
  })
- 
-  var eruda_show = localStorage.getItem("eruda_show")||"0";
-  if (eruda_show === "1") {
-    window.eruda && eruda.init();
-  }
-  // 记录点击次数
-  var clickCount = 0,initCount = 0;
-  // 设置连点监听
-  $(document).on('click', function() {
-      clickCount++;
-      if(initCount){
-       clearTimeout(initCount)
-       initCount = null
-      }
-      initCount = setTimeout(function() {
-        clickCount = 0
-      }, 200)
-      if(clickCount === 3) showConsole();
-   })
-  
-   function showConsole() {
-     if (eruda_show === "0"){
-       $('#tool-bars,#tool_bar_jf').animate({right:"0"},1000);
-       window.eruda && eruda.init();
-       eruda_show = "1"
-     }else{
-       $('#tool-bars,#tool_bar_jf').animate({right:"-100px"},1000);
-       window.eruda && eruda.destroy();
-       eruda_show = "0"
-     }
-     localStorage.setItem("eruda_show",eruda_show)
-   }
 <\/script>
 `;
 }
+
+function createHeader() {
+ return `
+ <meta name="viewport" content="width=device-width,initial-scale=1.0,minimum-scale=1.0,maximum-scale=1.0,user-scalable=no" />
+ <link rel="stylesheet" type="text/css" href="//at.alicdn.com/t/font_2100531_8vma5eluuga.css" charset="utf-8"/>
+ <script type="text/javascript" src="https://cdn.staticfile.org/jquery/1.10.0/jquery.min.js"><\/script>  
+ <script src="//cdn.bootcdn.net/ajax/libs/eruda/2.5.0/eruda.min.js"><\/script>
+ <script>
+ 
+ var eruda_show = localStorage.getItem("eruda_show")||"0";
+ if (eruda_show === "1") {
+   window.eruda && eruda.init();
+ }
+ // 记录点击次数
+ var clickCount = 0,initCount = 0;
+ // 设置连点监听
+ $(document).on('click', function() {
+     clickCount++;
+     if(initCount){
+     clearTimeout(initCount)
+     initCount = null
+     }
+     initCount = setTimeout(function() {
+       clickCount = 0
+     }, 200)
+     if(clickCount === 3) showConsole();
+ })
+ 
+ function showConsole() {
+   if (eruda_show === "0"){
+     $('#tool-bars,#tool_bar_jf').animate({right:"0"},1000);
+     window.eruda && eruda.init();
+     eruda_show = "1"
+   }else{
+     $('#tool-bars,#tool_bar_jf').animate({right:"-100px"},1000);
+     window.eruda && eruda.destroy();
+     eruda_show = "0"
+   }
+   localStorage.setItem("eruda_show",eruda_show)
+ }
+ </script>`;
+}
+
 
 (async () => {
  if (typeof $.html === 'string' && $.html.indexOf('</body>') > -1) {
@@ -1337,7 +1344,7 @@ function createScript() {
        ``
      );
    }
-
+   $.html = $.html.replace(/(<head>)/, `$1${createHeader()}`);
    if ($.url.indexOf(`h5.m.jd.com`) !== -1) {
      $.html = $.html.replace(/(<\/title>)/, `$1${i}`);
    } else {
