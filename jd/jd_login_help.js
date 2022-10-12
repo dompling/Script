@@ -1344,7 +1344,8 @@ function createHeader() {
        ``
      );
    }
-   $.html = $.html.replace(/(<head>)/, `$1${createHeader()}`);
+   const headTag = createHeader();
+   $.html = $.html.replace(/(<head>)/, `$1${headTag}`);
    if ($.url.indexOf(`h5.m.jd.com`) !== -1) {
      $.html = $.html.replace(/(<\/title>)/, `$1${i}`);
    } else {
