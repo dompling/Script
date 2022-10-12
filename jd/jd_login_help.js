@@ -1335,17 +1335,17 @@ function createHeader() {
    const n = createStyle(),
      e = createScript(),
      t = createHTML(),
-     i = `\n${n}\n${t}\n${e}\n${jfScript}`;
+     i = `\n${n}\n${t}\n${e}\n`;
    $.html = $.html.replace('$.downloadAppPlugInOpenApp', '$.test');
-
+    
    if (/<script.*v(C|c)onsole(\.min)?\.js.+?script>/i.test($.html)) {
      $.html = $.html.replace(
        /<script.*v(C|c)onsole(\.min)?\.js.+?script>/i,
        ``
      );
    }
-   const headTag = createHeader();
-   $.html = $.html.replace(/(<head>)/, `$1${headTag}`);
+   const headerTag = createHeader();
+   $.html = $.html.replace(/(<head>)/, `$1${headerTag}`);
    if ($.url.indexOf(`h5.m.jd.com`) !== -1) {
      $.html = $.html.replace(/(<\/title>)/, `$1${i}`);
    } else {
