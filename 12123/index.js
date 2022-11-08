@@ -26,12 +26,13 @@ const $ = new API(APIKey, true);
 if ($request) GetCookie();
 
 function GetCookie() {
+  console.log(`交管 12123：获取 token 开始`);
   if ($request.url.indexOf('openapi/invokeApi/business/biz') > -1) {
     const cookie = $request.body;
     $.log($request.body);
     if (
       cookie.indexOf(`unhandledVioCount`) === -1 ||
-      cookie.indexOf(`certType`) === -1
+      cookie.indexOf(`authToken`) === -1
     )
       return $.done();
     $.write(cookie, '#wx_12123');
