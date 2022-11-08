@@ -29,7 +29,11 @@ function GetCookie() {
   if ($request.url.indexOf('openapi/invokeApi/business/biz') > -1) {
     const cookie = $request.body;
     $.log($request.body);
-    if (cookie.indexOf(`unhandledVioCount`) === -1) return $.done();
+    if (
+      cookie.indexOf(`unhandledVioCount`) === -1 ||
+      cookie.indexOf(`certType`) === -1
+    )
+      return $.done();
     $.write(cookie, '#wx_12123');
     $.notify('交管 12123', 'cookie 写入成功');
   }
