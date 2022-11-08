@@ -2,22 +2,22 @@
 
 
 脚本名称：获取12123_token
-获取方式：打开  微信小程序 交管12123 【官方版】-> 登录获取
+获取方式：打开支付宝 交管12123 【官方版】-> 登录获取
 更新时间：2022-11-08
 ====================================================================================================
 配置 (QuanX)
 [rewrite_local]
-^https:\/\/miniappwx\.122\.gov\.cn:8553\/openapi\/invokeApi\/business\/biz url script-request-body https://raw.githubusercontent.com/dompling/Script/master/12123/index.js
+^https:\/\/miniappcsfw\.122\.gov\.cn:8443\/openapi\/invokeApi\/business\/biz url script-request-body https://raw.githubusercontent.com/dompling/Script/master/12123/index.js
 
 [MITM]
-hostname = miniappwx.122.gov.cn:8553
+hostname = miniappcsfw.122.gov.cn:8443
 ====================================================================================================
 配置 (Surge)
 [Script]
-12123_Token = type=http-request,pattern=^https:\/\/miniappwx\.122\.gov\.cn:8553\/openapi\/invokeApi\/business\/biz,requires-body=1,max-size=0,timeout=1000,script-path=https://raw.githubusercontent.com/dompling/Script/master/12123/index.js,script-update-interval=0
+12123_Token = type=http-request,pattern=^https:\/\/miniappcsfw\.122\.gov\.cn:8443\/openapi\/invokeApi\/business\/biz,requires-body=1,max-size=0,timeout=1000,script-path=https://raw.githubusercontent.com/dompling/Script/master/12123/index.js,script-update-interval=0
 
 [MITM]
-hostname = %APPEND% miniappwx.122.gov.cn:8553
+hostname = %APPEND% miniappcsfw.122.gov.cn:8443
 ====================================================================================================
  */
 
