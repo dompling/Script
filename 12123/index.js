@@ -28,7 +28,7 @@ if ($request) GetCookie();
 function GetCookie() {
   if ($request.url.indexOf('openapi/invokeApi/business/biz') > -1) {
     const cookie = $request.body;
-    $.log($request.headers);
+    $.log($request.body);
     if (cookie && cookie.indexOf('JSESSIONID') > -1) {
       $.write(cookie, '#wx_12123');
       $.notify('交管 12123', 'cookie 写入成功');
