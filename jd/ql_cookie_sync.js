@@ -12,7 +12,7 @@ const jd_cookies = JSON.parse($.read('#CookiesJD') || '[]');
 let remark = {};
 try {
   const _remark = JSON.parse(
-    JSON.parse($.read('#jd_ck_remark') || '{}').remark || '[]',
+    JSON.parse($.read('#jd_ck_remark') || '{}').remark || '[]'
   );
 
   _remark.forEach((item) => {
@@ -65,7 +65,10 @@ async function getScriptUrl() {
       wsCookie.push({
         name: 'JD_WSCK',
         remarks: remarks.split('&')[0],
-        value: `${jd_cookie.wskey}pt_pin=${encodeURI(username)};`,
+        value:
+          jd_cookie.wskey.indexOf('pt_pin') !== -1
+            ? jd_cookie.wskey
+            : `${jd_cookie.wskey}pt_pin=${encodeURI(username)};`,
       });
     }
   }
@@ -85,7 +88,7 @@ async function getScriptUrl() {
     console.log(
       `过期账号：${_ids
         .map((item) => item.remarks || getUsername(item.value))
-        .join(`\n`)}`,
+        .join(`\n`)}`
     );
     await $.ql.disabled(ids);
   }
@@ -233,7 +236,7 @@ function HTTP(defaultOptions = { baseURL: '' }) {
           timeoutid = setTimeout(() => {
             events.onTimeout();
             return reject(
-              `${method} URL: ${options.url} exceeds the timeout ${timeout} ms`,
+              `${method} URL: ${options.url} exceeds the timeout ${timeout} ms`
             );
           }, timeout);
         })
@@ -252,7 +255,7 @@ function HTTP(defaultOptions = { baseURL: '' }) {
   const http = {};
   methods.forEach(
     (method) =>
-      (http[method.toLowerCase()] = (options) => send(method, options)),
+      (http[method.toLowerCase()] = (options) => send(method, options))
   );
   return http;
 }
@@ -308,7 +311,7 @@ function API(name = 'untitled', debug = false) {
             fpath,
             JSON.stringify({}),
             { flag: 'wx' },
-            (err) => console.log(err),
+            (err) => console.log(err)
           );
         }
         this.root = {};
@@ -320,12 +323,12 @@ function API(name = 'untitled', debug = false) {
             fpath,
             JSON.stringify({}),
             { flag: 'wx' },
-            (err) => console.log(err),
+            (err) => console.log(err)
           );
           this.cache = {};
         } else {
           this.cache = JSON.parse(
-            this.node.fs.readFileSync(`${this.name}.json`),
+            this.node.fs.readFileSync(`${this.name}.json`)
           );
         }
       }
@@ -341,13 +344,13 @@ function API(name = 'untitled', debug = false) {
           `${this.name}.json`,
           data,
           { flag: 'w' },
-          (err) => console.log(err),
+          (err) => console.log(err)
         );
         this.node.fs.writeFileSync(
           'root.json',
           JSON.stringify(this.root),
           { flag: 'w' },
-          (err) => console.log(err),
+          (err) => console.log(err)
         );
       }
     }
@@ -421,7 +424,7 @@ function API(name = 'untitled', debug = false) {
           content + `${mediaURL ? '\n多媒体:' + mediaURL : ''}`,
           {
             url: openURL,
-          },
+          }
         );
       }
       if (isLoon) {
