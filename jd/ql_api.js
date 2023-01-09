@@ -1,4 +1,3 @@
-
 $.ql = {
   type: 'api',
   headers: {
@@ -67,7 +66,8 @@ try {
 }
 
 $.ql_url = $.ql_config.ip;
-if (!$.ql_url.match(/^(http|https)/)) $.ql_url = `http://${$.ql_url}`;
+if ($.ql_url && !$.ql_url.match(/^(http|https)/))
+  $.ql_url = `http://${$.ql_url}`;
 
 $.application = {
   client_id: $.ql_config.client_id,
@@ -96,7 +96,7 @@ if ($.ql_config.is_pwd === 'true') {
           'Content-Type': `application/json;charset=UTF-8`,
         },
       };
-      
+
       let response = await $.http.post(options);
       response = JSON.parse(response.body);
       if (response.code === 200) {
