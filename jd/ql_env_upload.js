@@ -32,12 +32,15 @@ async function getScriptUrl() {
   const delIds = response.data.map((item) => item.id);
   await $.ql.delete(delIds);
   console.log(`=======================清空环境变量=======================`);
+  
   await $.ql.add(
-    envs.map((env) => ({
-      name: `${env.name}`,
-      value: `${env.value}`,
-      remarks: `${env.remarks}`,
-    }))
+    envs
+      .filter((item) => item.status === 0)
+      .map((env) => ({
+        name: `${env.name}`,
+        value: `${env.value}`,
+        remarks: `${env.remarks}`,
+      }))
   );
   console.log(`=======================恢复环境变量=======================`);
   if ($.read('mute') !== 'true') {
