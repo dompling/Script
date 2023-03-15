@@ -606,6 +606,14 @@ margin-right:${getRem(0.3)} !important;
  background:linear-gradient(180deg,#fff,#efefef);
  box-sizing: border-box;
 }
+#tool-bars-left{
+  left:0;
+  top:20%;
+  display:none;
+  width: fit-content;
+  height: fit-content;
+}
+
 #eidt-form{
  padding:0 10px;
 }
@@ -826,6 +834,8 @@ function createHTML() {
 <div class="cus-mask" id="jf_mask">
  <div class="cus-mask_view" style="overflow: hidden;"></div>
 </div>
+
+<div class="tool_bars tool-left" id="tool-bars-left"></div>
 
 <div class="tool_bars tool-right" id="tool-bars">
   <div id="boxjs" class="tool_bar">
@@ -1334,31 +1344,25 @@ function createScript() {
 
 
   if(avatarItem){
-
-    let farmColor="#f8eed7";
-    if(avatarItem.fruit.indexOf('100')!==-1){
-      farmColor="#3ccab5";
-    }
-
-    $("body").append(\`
-      <div class='tool_bar_farm tool-left' id='tool_bar_farm' style="display:none" onclick="navigation('alook:\/\/h5.m.jd.com/babelDiy/Zeus/3KSjXqQabiTuD1cJ28QskrpWoBKT/index.html')"> 
-        <div id="farm" class="tool_bar rightRadius" style="background:\${farmColor}">
-          <img src="https://raw.githubusercontent.com/Former-Years/icon/master/jdnc.png" />
-        </div>
+     if(location.origin.indexOf(\`https://item\`)>-1){
+      $("#tool-bars-left").append(\`
+          <div id="smzdm" class="tool_bar rightRadius" style="background:#f04139" onclick="copyToClip('${
+            $.url
+          }','链接复制成功');location.href='smzdm:\/\/'">
+            <img src="https://pinpai.smzdm.com/favicon.ico" />
+          </div>\`);
+          $("#tool-bars-left").show();  
+      }
+      
+      let farmColor="#f8eed7";
+      if(avatarItem.fruit.indexOf('100')!==-1){
+        farmColor="#3ccab5";
+      }
+  
+      $("#tool-bars-left").append(\`
+      <div id="farm" class="tool_bar rightRadius" style="background:\${farmColor}" onclick="navigation('alook:\/\/h5.m.jd.com/babelDiy/Zeus/3KSjXqQabiTuD1cJ28QskrpWoBKT/index.html')">
+        <img src="https://raw.githubusercontent.com/Former-Years/icon/master/jdnc.png" />
       </div>\`)
-
-
-  if(location.origin.indexOf(\`https://item\`)>-1){
-    $("body").append(\`
-      <div class='tool_bar_smzdm tool-left' id='tool_bar_smzdm' onclick="copyToClip('${
-              $.url
-            }','链接复制成功');location.href='smzdm:\/\/'"> 
-        <div id="smzdm" class="tool_bar rightRadius" style="background:#f04139">
-          <img src="https://pinpai.smzdm.com/favicon.ico" />
-        </div>
-      </div>\`)
-      $("#tool_bar_farm").show();
-    }
   }
 
   function navigation(url){
@@ -1398,19 +1402,19 @@ function createHeader() {
         clickCount = 0
       }, 200)
 
-      if(clickCount === 2) $('.tool-left').show();
+      if(clickCount === 2) $('#tool-bars-left').show();
       if(clickCount === 3) showConsole();
   })
   
   function showConsole() {
     if (eruda_show === "0"){
       $('.tool-right').animate({right:"0"},1000);
-      $('.tool-left').animate({left:"0"},1000);
+      $('#tool-bars-left').animate({left:"0"},1000);
       window.eruda && eruda.init();
       eruda_show = "1"
     }else{
       $('.tool-right').animate({right:"-100px"},1000);
-      $('.tool-left').animate({left:"-100px"},1000);
+      $('#tool-bars-left').animate({left:"-100px"},1000);
       window.eruda && eruda.destroy();
       eruda_show = "0"
     }
@@ -1421,6 +1425,7 @@ function createHeader() {
 
 (async () => {
   if (typeof $.html === 'string' && $.html.indexOf('</body>') > -1) {
+    
     
     console.log(`重写URL：${$.url}`);
     const n = createStyle(),
