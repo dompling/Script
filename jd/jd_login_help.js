@@ -114,6 +114,7 @@ body div.bottom_tips_wrapper
  transform: translateY(-50%);
 }
 .tool_bar{
+ box-sizing: unset;
  display: flex;
  height:33px;
  width:33px;
