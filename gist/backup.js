@@ -47,17 +47,18 @@ $.http = new HTTP({
   headers: {
     Authorization: `token ${$.token}`,
     Accept: 'application/vnd.github.v3+json',
-    'User-Agent': 'Mozilla/5.0 (iPhone; CPU iPhone OS 13_2_3 like Mac OS X) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/13.0.3 Mobile/15E148 Safari/604.1',
+    'User-Agent':
+      'Mozilla/5.0 (iPhone; CPU iPhone OS 13_2_3 like Mac OS X) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/13.0.3 Mobile/15E148 Safari/604.1',
   },
 });
 
 const cacheArr = {
-  'datas': '用户数据',
-  'usercfgs': '用户偏好',
-  'sessions': '应用会话',
-  'curSessions': '当前会话',
-  'globalbaks': '备份索引',
-  'appSubCaches': '应用订阅缓存',
+  datas: '用户数据',
+  usercfgs: '用户偏好',
+  sessions: '应用会话',
+  curSessions: '当前会话',
+  globalbaks: '备份索引',
+  appSubCaches: '应用订阅缓存',
 };
 
 (async () => {
@@ -65,8 +66,12 @@ const cacheArr = {
 
   const backup = getBoxJSData();
   const gistList = await getGist();
+  if (!gistList) throw new Error('请检查 Gist 账号配置');
+  if (gistList.message)
+    throw new Error(`Gist 列表请求失败:${gistList.message}\n请检查 Gist 账号配置`);
+  console.log(gistList);
 
-  const commonParams = {description: $.desc, public: false};
+  const commonParams = { description: $.desc, public: false };
   const all_params = {};
   const isBackup = {};
   for (const cacheArrKey in cacheArr) {
@@ -79,15 +84,17 @@ const cacheArr = {
         },
       },
     };
-    isBackup[cacheArrKey] = gistList.find(item => !!item.files[saveKey]);
+    isBackup[cacheArrKey] = gistList.find((item) => !!item.files[saveKey]);
   }
 
   for (const isBackupKey in isBackup) {
     const item = isBackup[isBackupKey];
     const label = cacheArr[isBackupKey];
-    console.log(isBackup[isBackupKey]
-      ? `${label}：gist 找到备份，开始更新备份`
-      : `${label}：gist 未找到备份，开始创建备份`);
+    console.log(
+      isBackup[isBackupKey]
+        ? `${label}：gist 找到备份，开始更新备份`
+        : `${label}：gist 未找到备份，开始创建备份`
+    );
 
     const response = await backGist(all_params[isBackupKey], item);
     if (response.message) {
@@ -98,31 +105,34 @@ const cacheArr = {
       $.msg += `${label}：gist 备份成功 \n`;
     }
   }
-})().then(() => {
-  $.notify('gist 备份', '', `${$.username}：\n${$.msg}`);
-}).catch(e => {
-  $.log(e);
-}).finally(() => {
-  $.done();
-});
+})()
+  .then(() => {
+    $.notify('gist 备份', '', `${$.username}：\n${$.msg}`);
+  })
+  .catch((e) => {
+    $.log(e);
+    $.notify('gist 备份', '', `❌${e.message || e}`);
+  })
+  .finally(() => {
+    $.done();
+  });
 
 function getGistUrl(api) {
   return `${api}`;
 }
 
 function getGist() {
-  return $.http.get({url: getGistUrl(`/users/${$.username}/gists`)}).then(
-    response => JSON.parse(response.body));
+  return $.http
+    .get({ url: getGistUrl(`/users/${$.username}/gists`) })
+    .then((response) => JSON.parse(response.body));
 }
 
 function backGist(params, backup) {
   const method = backup ? 'patch' : 'post';
-  return $.http[method](
-    {
-      url: getGistUrl(`/gists${backup ? '/' + backup.id : ''}`),
-      body: JSON.stringify(params),
-    }).
-    then(response => JSON.parse(response.body));
+  return $.http[method]({
+    url: getGistUrl(`/gists${backup ? '/' + backup.id : ''}`),
+    body: JSON.stringify(params),
+  }).then((response) => JSON.parse(response.body));
 }
 
 function getUserCfgs() {
@@ -380,23 +390,23 @@ function ENV() {
   };
 }
 
-function HTTP(defaultOptions = {
-  baseURL: '',
-}) {
-  const {
-    isQX,
-    isLoon,
-    isSurge,
-    isScriptable,
-    isNode,
-  } = ENV();
+function HTTP(
+  defaultOptions = {
+    baseURL: '',
+  }
+) {
+  const { isQX, isLoon, isSurge, isScriptable, isNode } = ENV();
   const methods = ['GET', 'POST', 'PUT', 'DELETE', 'HEAD', 'OPTIONS', 'PATCH'];
-  const URL_REGEX = /https?:\/\/(www\.)?[-a-zA-Z0-9@:%._\+~#=]{1,256}\.[a-zA-Z0-9()]{1,6}\b([-a-zA-Z0-9()@:%_\+.~#?&//=]*)/;
+  const URL_REGEX =
+    /https?:\/\/(www\.)?[-a-zA-Z0-9@:%._\+~#=]{1,256}\.[a-zA-Z0-9()]{1,6}\b([-a-zA-Z0-9()@:%_\+.~#?&//=]*)/;
 
   function send(method, options) {
-    options = typeof options === 'string' ? {
-      url: options,
-    } : options;
+    options =
+      typeof options === 'string'
+        ? {
+            url: options,
+          }
+        : options;
     const baseURL = defaultOptions.baseURL;
     if (baseURL && !URL_REGEX.test(options.url || '')) {
       options.url = baseURL ? baseURL + options.url : options.url;
@@ -445,54 +455,51 @@ function HTTP(defaultOptions = {
       request.headers = options.headers;
       request.body = options.body;
       worker = new Promise((resolve, reject) => {
-        request.loadString().then((body) => {
-          resolve({
-            statusCode: request.response.statusCode,
-            headers: request.response.headers,
-            body,
-          });
-        }).catch((err) => reject(err));
+        request
+          .loadString()
+          .then((body) => {
+            resolve({
+              statusCode: request.response.statusCode,
+              headers: request.response.headers,
+              body,
+            });
+          })
+          .catch((err) => reject(err));
       });
     }
 
     let timeoutid;
-    const timer = timeout ?
-      new Promise((_, reject) => {
-        timeoutid = setTimeout(() => {
-          events.onTimeout();
-          return reject(
-            `${method} URL: ${options.url} exceeds the timeout ${timeout} ms`,
-          );
-        }, timeout);
-      }) :
-      null;
+    const timer = timeout
+      ? new Promise((_, reject) => {
+          timeoutid = setTimeout(() => {
+            events.onTimeout();
+            return reject(
+              `${method} URL: ${options.url} exceeds the timeout ${timeout} ms`
+            );
+          }, timeout);
+        })
+      : null;
 
-    return (timer ?
-        Promise.race([timer, worker]).then((res) => {
-          clearTimeout(timeoutid);
-          return res;
-        }) :
-        worker
+    return (
+      timer
+        ? Promise.race([timer, worker]).then((res) => {
+            clearTimeout(timeoutid);
+            return res;
+          })
+        : worker
     ).then((resp) => events.onResponse(resp));
   }
 
   const http = {};
   methods.forEach(
     (method) =>
-      (http[method.toLowerCase()] = (options) => send(method, options)),
+      (http[method.toLowerCase()] = (options) => send(method, options))
   );
   return http;
 }
 
 function API(name = 'untitled', debug = false) {
-  const {
-    isQX,
-    isLoon,
-    isSurge,
-    isNode,
-    isJSBox,
-    isScriptable,
-  } = ENV();
+  const { isQX, isLoon, isSurge, isNode, isJSBox, isScriptable } = ENV();
   return new (class {
     constructor(name, debug) {
       this.name = name;
@@ -515,12 +522,12 @@ function API(name = 'untitled', debug = false) {
       this.initCache();
 
       const delay = (t, v) =>
-        new Promise(function(resolve) {
+        new Promise(function (resolve) {
           setTimeout(resolve.bind(null, v), t);
         });
 
-      Promise.prototype.delay = function(t) {
-        return this.then(function(v) {
+      Promise.prototype.delay = function (t) {
+        return this.then(function (v) {
           return delay(t, v);
         });
       };
@@ -539,10 +546,11 @@ function API(name = 'untitled', debug = false) {
         if (!this.node.fs.existsSync(fpath)) {
           this.node.fs.writeFileSync(
             fpath,
-            JSON.stringify({}), {
+            JSON.stringify({}),
+            {
               flag: 'wx',
             },
-            (err) => console.log(err),
+            (err) => console.log(err)
           );
         }
         this.root = {};
@@ -552,15 +560,16 @@ function API(name = 'untitled', debug = false) {
         if (!this.node.fs.existsSync(fpath)) {
           this.node.fs.writeFileSync(
             fpath,
-            JSON.stringify({}), {
+            JSON.stringify({}),
+            {
               flag: 'wx',
             },
-            (err) => console.log(err),
+            (err) => console.log(err)
           );
           this.cache = {};
         } else {
           this.cache = JSON.parse(
-            this.node.fs.readFileSync(`${this.name}.json`),
+            this.node.fs.readFileSync(`${this.name}.json`)
           );
         }
       }
@@ -574,17 +583,19 @@ function API(name = 'untitled', debug = false) {
       if (isNode) {
         this.node.fs.writeFileSync(
           `${this.name}.json`,
-          data, {
+          data,
+          {
             flag: 'w',
           },
-          (err) => console.log(err),
+          (err) => console.log(err)
         );
         this.node.fs.writeFileSync(
           'root.json',
-          JSON.stringify(this.root, null, 2), {
+          JSON.stringify(this.root, null, 2),
+          {
             flag: 'w',
           },
-          (err) => console.log(err),
+          (err) => console.log(err)
         );
       }
     }
@@ -655,9 +666,10 @@ function API(name = 'untitled', debug = false) {
         $notification.post(
           title,
           subtitle,
-          content + `${mediaURL ? '\n多媒体:' + mediaURL : ''}`, {
+          content + `${mediaURL ? '\n多媒体:' + mediaURL : ''}`,
+          {
             url: openURL,
-          },
+          }
         );
       }
       if (isLoon) {
