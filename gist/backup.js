@@ -334,10 +334,10 @@ function getAppDatas(app) {
 function getBoxJSData() {
   const datas = {};
   const usercfgs = getUserCfgs();
-  const sessions = JSON.parse($.read($.KEY_sessions) || '{}');
+  const sessions = JSON.parse($.read($.KEY_sessions) || '[]');
   const curSessions = JSON.parse($.read($.KEY_cursessions) || '{}');
   const appSubCaches = JSON.parse($.read($.KEY_app_subCaches) || '{}');
-  const globalbaks = JSON.parse($.read($.KEY_backups) || '{}');
+  const globalbaks = JSON.parse($.read($.KEY_backups) || '[]');
   const sysapps = getSystemApps();
 
   // 把 `内置应用`和`订阅应用` 里需要持久化属性放到`datas`
