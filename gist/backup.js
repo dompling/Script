@@ -68,7 +68,9 @@ const cacheArr = {
   const gistList = await getGist();
   if (!gistList) throw new Error('请检查 Gist 账号配置');
   if (gistList.message)
-    throw new Error(`Gist 列表请求失败:${gistList.message}\n请检查 Gist 账号配置`);
+    throw new Error(
+      `Gist 列表请求失败:${gistList.message}\n请检查 Gist 账号配置`
+    );
   console.log(gistList);
 
   const commonParams = { description: $.desc, public: false };
@@ -144,7 +146,7 @@ function getUserCfgs() {
     httpapi: 'examplekey@127.0.0.1:6166',
     http_backend: '',
   };
-  return Object.assign(defcfgs, JSON.parse($.read($.KEY_usercfgs)));
+  return Object.assign(defcfgs, JSON.parse($.read($.KEY_usercfgs || '{}')));
 }
 
 function getSystemApps() {
@@ -312,7 +314,7 @@ function getAppDatas(app) {
       if (/^@/.test(key)) {
         const [, objkey, path] = /^@(.*?)\.(.*?)$/.exec(key);
         try {
-          const val = JSON.parse($.read(`#${objkey}`));
+          const val = JSON.parse($.read(`#${objkey}`) || '{}');
           datas[key] = nulls.includes(val) ? null : val[path];
         } catch (e) {
           datas[key] = null;
@@ -329,7 +331,7 @@ function getAppDatas(app) {
       if (/^@/.test(key)) {
         const [, objkey, path] = /^@(.*?)\.(.*?)$/.exec(key);
         try {
-          const val = JSON.parse($.read(`#${objkey}`));
+          const val = JSON.parse($.read(`#${objkey}`) || '{}');
           datas[key] = nulls.includes(val) ? null : val[path];
         } catch (e) {
           datas[key] = null;
@@ -346,10 +348,10 @@ function getAppDatas(app) {
 function getBoxJSData() {
   const datas = {};
   const usercfgs = getUserCfgs();
-  const sessions = JSON.parse($.read($.KEY_sessions));
-  const curSessions = JSON.parse($.read($.KEY_cursessions));
-  const appSubCaches = JSON.parse($.read($.KEY_app_subCaches));
-  const globalbaks = JSON.parse($.read($.KEY_backups));
+  const sessions = JSON.parse($.read($.KEY_sessions) || '{}');
+  const curSessions = JSON.parse($.read($.KEY_cursessions) || '{}');
+  const appSubCaches = JSON.parse($.read($.KEY_app_subCaches) || '{}');
+  const globalbaks = JSON.parse($.read($.KEY_backups) || '{}');
   const sysapps = getSystemApps();
 
   // 把 `内置应用`和`订阅应用` 里需要持久化属性放到`datas`
