@@ -40,7 +40,7 @@ $.token = $.read('token');
 $.username = $.read('username');
 $.boxjsDomain = $.read('#boxjs_host');
 $.cacheKey = 'BoxJS-Data';
-$.desc = 'Auto Generated BoxJS-Data Backup';
+$.desc = 'BoxJS-Data Backup';
 $.msg = '';
 $.http = new HTTP({
   baseURL: `https://api.github.com`,
@@ -66,46 +66,32 @@ const cacheArr = {
 
   const backup = getBoxJSData();
   const gistList = await getGist();
+  console.log(gistList);
   if (!gistList) throw new Error('请检查 Gist 账号配置');
   if (gistList.message)
     throw new Error(
       `Gist 列表请求失败:${gistList.message}\n请检查 Gist 账号配置`
     );
-  console.log(gistList);
 
   const commonParams = { description: $.desc, public: false };
-  const all_params = {};
-  const isBackup = {};
+  const all_params = { ...commonParams };
+  const files = {};
   for (const cacheArrKey in cacheArr) {
-    const saveKey = `${$.cacheKey}_${cacheArrKey}`;
-    all_params[cacheArrKey] = {
-      ...commonParams,
-      files: {
-        [saveKey]: {
-          content: JSON.stringify(backup[cacheArrKey]),
-        },
-      },
-    };
-    isBackup[cacheArrKey] = gistList.find((item) => !!item.files[saveKey]);
+    const label = cacheArr[cacheArrKey];
+    const saveKey = `${cacheArrKey}.json`;
+    $.msg += `${label}：${saveKey}\n`;
+    files[saveKey] = { content: JSON.stringify(backup[cacheArrKey]) };
   }
+  const isBackUp = gistList.find((item) => item.description === $.desc);
+  all_params.files = files;
+  const response = await backGist(all_params, isBackUp);
 
-  for (const isBackupKey in isBackup) {
-    const item = isBackup[isBackupKey];
-    const label = cacheArr[isBackupKey];
-    console.log(
-      isBackup[isBackupKey]
-        ? `${label}：gist 找到备份，开始更新备份`
-        : `${label}：gist 未找到备份，开始创建备份`
-    );
-
-    const response = await backGist(all_params[isBackupKey], item);
-    if (response.message) {
-      console.log(`${label}：gist 备份失败（${response.message}`);
-      $.msg += `${label}：gist 备份失败（${response.message}） \n`;
-    } else {
-      console.log(`${label}：gist 备份成功 \n`);
-      $.msg += `${label}：gist 备份成功 \n`;
-    }
+  if (response.message) {
+    console.log(`结果：gist 备份失败（${response.message}❌`);
+    throw `结果：gist 备份失败（${response.message}）❌ \n`;
+  } else {
+    console.log(`gist 备份成功 ✅\n`);
+    $.msg += `结果：gist（${$.desc}） 备份成功 ✅\n`;
   }
 })()
   .then(() => {

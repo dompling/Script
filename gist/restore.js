@@ -40,6 +40,7 @@ $.token = $.read('token');
 $.username = $.read('username');
 $.boxjsDomain = $.read('#boxjs_host');
 $.cacheKey = 'BoxJS-Data';
+$.desc = 'BoxJS-Data Backup';
 $.msg = '';
 $.error = '';
 
@@ -66,20 +67,26 @@ $.http = new HTTP({
   const gistList = await getGist();
   if (!gistList) throw new Error('请检查 Gist 账号配置');
   if (gistList.message)
-    throw new Error(`Gist 列表请求失败:${gistList.message}\n请检查 Gist 账号配置`);
-  console.log(gistList);
+    throw new Error(
+      `Gist 列表请求失败:${gistList.message}\n请检查 Gist 账号配置`
+    );
+
+  const boxjsdata = gistList.find((item) => item.description === $.desc);
+  if (!boxjsdata) throw '未找到 Gist 备份信息，请先备份';
 
   for (const cacheArrKey in cacheArr) {
     const item = cacheArr[cacheArrKey];
-    const saveKey = `${$.cacheKey}_${cacheArrKey}`;
-    const isBackUp = gistList.find((item) => !!item.files[saveKey]);
-    if (isBackUp) {
+    const saveKey = `${cacheArrKey}.json`;
+    let fielUri = boxjsdata.files[saveKey].raw_url.replace(
+      /\/raw\/(.*)\//,
+      '/raw/'
+    );
+    console.log(fielUri);
+    const content = await getBackGist(fielUri);
+
+    if (content) {
       console.log(`${item.label}：已找到备份-开始恢复到设备中...`);
-      const response = await getBackGist(isBackUp);
-      if (!response) continue;
       try {
-        let content = response.files[saveKey].content;
-        content = JSON.parse(content);
         if (!item.key) {
           const datas = {};
           for (const contentKey in content) {
@@ -137,10 +144,8 @@ function getGist() {
     .then((response) => JSON.parse(response.body));
 }
 
-function getBackGist(backup) {
-  return $.http
-    .get({ url: getGistUrl(`/gists/${backup.id}`) })
-    .then((response) => JSON.parse(response.body));
+function getBackGist(url) {
+  return $.http.get({ url }).then((response) => JSON.parse(response.body));
 }
 
 function saveBoxJSData(data) {
