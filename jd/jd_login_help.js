@@ -13,36 +13,42 @@
  *
  */
 
-const $ = new API('jd_ck_remark'),
-  APIKey = 'CookiesJD',
+const $ = new API("jd_ck_remark"),
+  APIKey = "CookiesJD",
   CacheKey = `#${APIKey}`,
-  remark_key = `remark`,
-  searchKey = 'keyword';
+  remark_key = `remark`;
+
 ($.url = $request.url), ($.html = $response.body);
 
-const cookieIndex = $.read(`#CookieIndex`) || 0;
-const boxjs_host = $.read('#boxjs_host').indexOf('com') !== -1 ? 'com' : 'net';
-const qlConfig = $.read('#ql');
+let extraAction = [];
+try {
+  extraAction = JSON.parse($.read("actions") || "[]");
+} catch (error) {
+  console.log(`快捷跳转格式错误，请重新设置!` + error);
+}
 
-const isLogin = $.url.indexOf('/login/login') > -1;
+const cookieIndex = $.read(`#CookieIndex`) || 0;
+const boxjs_host = $.read("#boxjs_host").indexOf("com") !== -1 ? "com" : "net";
+const qlConfig = $.read("#ql");
+
+const isLogin = $.url.indexOf("/login/login") > -1;
 
 function getRem(n) {
   return `${25 * n}vw`;
 }
 
 function getUsername(str) {
-  if (!str) return '';
+  if (!str) return "";
   return decodeURIComponent(str);
 }
 
 // 初始化 boxjs 数据
 function initBoxJSData() {
-  const CookiesJD = JSON.parse($.read(CacheKey) || '[]').map((item) => {
+  const CookiesJD = JSON.parse($.read(CacheKey) || "[]").map((item) => {
     return { ...item, userName: getUsername(item.userName) };
   });
 
-  let cookiesRemark = JSON.parse($.read(remark_key) || '[]');
-  const keyword = ($.read(searchKey) || '').split(',');
+  let cookiesRemark = JSON.parse($.read(remark_key) || "[]");
 
   const cookiesFormat = {};
 
@@ -57,15 +63,6 @@ function initBoxJSData() {
     ...item,
     username: getUsername(item.userName),
   })).filter((item) => !!item.cookie);
-
-  cookiesRemark = cookiesRemark.filter((item, index) => {
-    return keyword[0]
-      ? keyword.indexOf(`${index}`) > -1 ||
-          keyword.indexOf(item.username) > -1 ||
-          keyword.indexOf(item.nickname) > -1 ||
-          keyword.indexOf(item.status) > -1
-      : true;
-  });
 
   return cookiesRemark;
 }
@@ -117,13 +114,14 @@ body div.bottom_tips_wrapper
  box-sizing: unset;
  display: flex;
  height:33px;
- width:33px;
+ width: max-content;
  align-items: center;
+ justify-content: start;
  background: #f7bb10;
  padding-left: 2px;
  border-top-left-radius: 50%;
  border-bottom-left-radius: 50%;
- padding-right: 3px;
+ padding-right: 6px;
  color: #fff;
  font-size: ${getRem(0.1)};
  margin-bottom: ${getRem(0.1)};
@@ -162,9 +160,10 @@ body div.bottom_tips_wrapper
   border-top-right-radius: 50%;
   border-bottom-right-radius: 50%;
   left: 0;
-  padding-left:3px;
-  padding-right:0;
+  padding-right:2px;
+  padding-left:6px;
   border-left:unset;
+  justify-content:end;
   border-right:1px solid #e8e8e8;
 }
 
@@ -609,7 +608,6 @@ margin-right:${getRem(0.3)} !important;
 #tool-bars-left{
   left:0;
   top:20%;
-  display:none;
   width: fit-content;
   height: fit-content;
 }
@@ -730,23 +728,23 @@ to {
 }
 const accounts = cookiesRemark
   .map((n, e) => {
-    const t = '正常' === n.status;
+    const t = "正常" === n.status;
     const beanNum = n.beanNum
       ? `<b class="ant-ribbon beanNum">京豆：${n.beanNum}</b>`
-      : '';
+      : "";
     return `
-<div class="cus-avatar" data-value="${n.mobile || ''}" data-name="${
+<div class="cus-avatar" data-value="${n.mobile || ""}" data-name="${
       n.username
     }">
 
-<div class="avatar_container ${'1' === n.isPlusVip ? 'plus' : ''}">
+<div class="avatar_container ${"1" === n.isPlusVip ? "plus" : ""}">
  <div class="avatar_img">
    <img src="${
      n.avatar ||
-     '//img11.360buyimg.com/jdphoto/s120x120_jfs/t21160/90/706848746/2813/d1060df5/5b163ef9N4a3d7aa6.png'
+     "//img11.360buyimg.com/jdphoto/s120x120_jfs/t21160/90/706848746/2813/d1060df5/5b163ef9N4a3d7aa6.png"
    }" alt="${n.username}" />
  </div>
- ${'1' === n.isPlusVip ? `<div class="isPlus"></div>` : ''}
+ ${"1" === n.isPlusVip ? `<div class="isPlus"></div>` : ""}
 </div>
 <div class="cususer_info">
   <p>${decodeURIComponent(n.nickname)}</p>
@@ -762,7 +760,7 @@ const accounts = cookiesRemark
    <img src="https://raw.githubusercontent.com/Former-Years/icon/master/jdnc.png" alt="fruit" />
    <b class="ant-ribbon beanNum">${parseInt(n.fruit)}%</b>
  </div>`
-       : ''
+       : ""
    }
    ${
      n.jdPet
@@ -770,14 +768,14 @@ const accounts = cookiesRemark
    <img src="https://raw.githubusercontent.com/Former-Years/icon/master/jdmc.png" alt="pet" />
    <b class="ant-ribbon beanNum">${parseInt(n.jdPet)}%</b>
  </div>`
-       : ''
+       : ""
    }
  </div>
 </div>
-<span class="cus-icon ${t ? '' : 'cus-err'}"></span>
+<span class="cus-icon ${t ? "" : "cus-err"}"></span>
 </div>`;
   })
-  .join('');
+  .join("");
 
 function createHTML() {
   return `
@@ -825,7 +823,7 @@ function createHTML() {
        <span class="abtn border-btn iconfont icon-fuzhi" id="copyCk"></span>
        <span class="abtn border-btn iconfont icon-shouye" id="fill-input" style="display:none"></span>
        <span class="abtn btn-ok iconfont ${
-         isLogin ? 'icon-denglu' : 'icon-zhuanhuan'
+         isLogin ? "icon-denglu" : "icon-zhuanhuan"
        }" id="cus-mask-ok" ></span>
      </div>
  </div>
@@ -1341,37 +1339,24 @@ function createScript() {
   }
   })
 
-
-
   if(avatarItem){
-     if(location.origin.indexOf(\`https://item\`)>-1){
-      $("#tool-bars-left").append(\`
-          <div id="smzdm" class="tool_bar rightRadius" style="background:#f04139" onclick="copyToClip('${
-            $.url
-          }','链接复制成功');location.href='smzdm:\/\/'">
-            <img src="https://pinpai.smzdm.com/favicon.ico" />
-          </div>\`);
-          $("#tool-bars-left").show();  
+    const extraAction = ${JSON.stringify(extraAction)};
+    extraAction.map(item=>{
+      if(item.url.indexOf("3KSjXqQabiTuD1cJ28QskrpWoBKT")>-1) item.color = avatarItem.fruit.indexOf('100')!==-1?"#3ccab5":"#f8eed7";
+      if(!item.where||(item.where&&location.origin.indexOf(item.where)>-1)){
+        $("#tool-bars-left").append(\`
+        <div class="tool_bar rightRadius" style="background:\${item.color||'#f7bb10'}" data-url="\${item.url}">
+          <img src="\${item.icon}" />
+        </div>\`)
       }
-      
-      let farmColor="#f8eed7";
-      if(avatarItem.fruit.indexOf('100')!==-1){
-        farmColor="#3ccab5";
-      }
-  
-      $("#tool-bars-left").append(\`
-      <div id="farm" class="tool_bar rightRadius" style="background:\${farmColor}" onclick="navigation('alook:\/\/h5.m.jd.com/babelDiy/Zeus/3KSjXqQabiTuD1cJ28QskrpWoBKT/index.html')">
-        <img src="https://raw.githubusercontent.com/Former-Years/icon/master/jdnc.png" />
-      </div>\`)
+    })
   }
 
-  function navigation(url){
-    try{
-      location.href = url+'?ptKey=' + encodeURIComponent(getCookie(\`pt_pin\`))
-    }catch(e){
-      console.log(e);
-    }
-  }
+  $('.tool_bar.rightRadius').on('click',function(){
+    const url = $(this).data('url');
+    copyToClip('${$.url}','链接复制成功');
+    window.open(url+'?ptKey=' + encodeURIComponent(getCookie(\`pt_pin\`)));
+  })
 
 <\/script>
 `;
@@ -1401,8 +1386,6 @@ function createHeader() {
       initCount = setTimeout(function() {
         clickCount = 0
       }, 200)
-
-      if(clickCount === 2) $('#tool-bars-left').show();
       if(clickCount === 3) showConsole();
   })
   
@@ -1424,8 +1407,7 @@ function createHeader() {
 }
 
 (async () => {
-  if (typeof $.html === 'string' && $.html.indexOf('</body>') > -1) {
-    
+  if (typeof $.html === "string" && $.html.indexOf("</body>") > -1) {
     
     console.log(`重写URL：${$.url}`);
     const n = createStyle(),
@@ -1433,7 +1415,7 @@ function createHeader() {
       t = createHTML(),
       i = `\n${n}\n${t}\n${e}\n`;
 
-    $.html = $.html.replace('$.downloadAppPlugInOpenApp', '$.test');
+    $.html = $.html.replace("$.downloadAppPlugInOpenApp", "$.test");
     // if (/<script.*v(C|c)onsole(\.min)?\.js.+?script>/i.test($.html)) {
     // $.html = $.html.replace(
     //   /<script.*v(C|c)onsole(\.min)?\.js.+?script>/i,
