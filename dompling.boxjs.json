@@ -161,14 +161,14 @@
     },
     {
       "id": "JD_Cookies_remark",
-      "name": "登陆助手",
+      "name": "登录助手",
       "keys": ["CookieIndex", "@jd_ck_remark.remark", "@jd_ck_remark.mute"],
       "descs_html": [
         "请勿随意在输入框修改内容，建议通过脚本去获取cookie，若要修改，请按照JSON 格式修改（<a href=\"https://www.bejson.com/json/format\">可使用此JSON校验</a> ，或点击右上角按钮🔘进行校验(如有弹窗提示则为异常JSON)）。",
         "脚本地址【<a href=\"https://jdsharedresourcescdn.azureedge.net/jdresource/JD_extra_cookie.js\">京东多 CK获取</a>】,并按照此脚本注释进行配置",
-        "可以修改的字段，nickname,mobile",
-        "示例：[{username:\"yaya\",nickname:\"I'm YaYa man\",mobile:\"1234567890\"}]",
-        "可以根据 下标、username、nickname、status 字段检索京东多账号 ck"
+        "【CK 备注列表】可以修改的字段，nickname,mobile",
+        "【CK 备注列表】示例：[{username:\"yaya\",nickname:\"I'm YaYa man\",mobile:\"1234567890\"}]",
+        "【快捷跳转】示例值：[{icon:\"https://raw.githubusercontent.com/Former-Years/icon/master/jdnc.png\",url:\"alook://h5.m.jd.com/babelDiy/Zeus/3KSjXqQabiTuD1cJ28QskrpWoBKT/index.html\"}]"
       ],
       "settings": [
         {
@@ -188,13 +188,13 @@
           "placeholder": "cookie 下标（0）"
         },
         {
-          "id": "@jd_ck_remark.keyword",
-          "name": "检索条件",
-          "val": null,
+          "id": "@jd_ck_remark.action",
+          "name": "快捷跳转",
+          "val": "",
           "type": "text",
           "autoGrow": false,
           "rows": 2,
-          "placeholder": "下标（0）、username、nickname、status 的值"
+          "desc": "快捷跳转 (JSON 格式)"
         },
         {
           "id": "@jd_ck_remark.remark",
