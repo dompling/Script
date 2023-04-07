@@ -188,7 +188,7 @@
           "placeholder": "cookie 下标（0）"
         },
         {
-          "id": "@jd_ck_remark.action",
+          "id": "@jd_ck_remark.actions",
           "name": "快捷跳转",
           "val": "",
           "type": "text",
