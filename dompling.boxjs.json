@@ -168,8 +168,8 @@
         "脚本地址【<a href=\"https://jdsharedresourcescdn.azureedge.net/jdresource/JD_extra_cookie.js\">京东多 CK获取</a>】,并按照此脚本注释进行配置",
         "【CK备注列表】可以修改的字段，nickname,mobile",
         "【CK备注列表】示例：[{username:\"yaya\",nickname:\"I'm YaYa man\",mobile:\"1234567890\"}]",
-        "【 快捷跳转 】示例值：[{icon:\"https://raw.githubusercontent.com/Former-Years/icon/master/jdnc.png\",url:\"alook://h5.m.jd.com/babelDiy/Zeus/3KSjXqQabiTuD1cJ28QskrpWoBKT/index.html\",where:\"item.m.jd.com\"}]",
-        "【 快捷跳转 】icon:图标，url：跳转的 url 地址, where:匹配页面显示的条件(网页地址某部分)"
+        "【 快捷跳转 】示例值：[{icon:\"https://pinpai.smzdm.com/favicon.ico\",url:\"smzdm://\",where:\"https://item\",color:\"#f04139\"}]",
+        "【 快捷跳转 】icon:图标，url：跳转的 url 地址, where:匹配页面显示的条件(网页地址某部分),color:背景色"
       ],
       "settings": [
         {
@@ -192,9 +192,9 @@
           "id": "@jd_ck_remark.actions",
           "name": "快捷跳转",
           "val": "",
-          "type": "text",
+          "type": "textarea",
           "autoGrow": false,
-          "rows": 2,
+          "rows": 4,
           "desc": "快捷跳转 (JSON 格式)"
         },
         {
