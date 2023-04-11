@@ -18,7 +18,7 @@ task : 每日九点检查 ck 过期状态
 0 9 * * * https://raw.githubusercontent.com/dompling/Script/master/jd/jd_cookie_search.js
 
 */
-const noTitle = '登陆助手'
+const noTitle = '登录助手'
 const $ = new API('jd_ck_remark')
 $.msg = ''
 const APIKey = 'CookiesJD'
@@ -68,7 +68,7 @@ cookiesRemark.forEach((item) => {
       console.log('帐号昵称：' + nickname)
       if (!mobile) mobile = await getPhoneNumber(cookie)
       fruit = await getFruit(cookie)
-      jdPet = await PetRequest('energyCollect', cookie)
+      // jdPet = await PetRequest('energyCollect', cookie)
     }
 
     console.log(`检查结束：账号【${ckIndex}】 ${username}【${status}】`)
@@ -225,7 +225,6 @@ async function getFruit(cookie) {
       cookie: cookie,
       origin: 'https://home.m.jd.com',
       referer: 'https://home.m.jd.com/myJd/newhome.action',
-
       'content-type': 'application/x-www-form-urlencoded',
     },
   }
@@ -233,6 +232,7 @@ async function getFruit(cookie) {
   return $.http.post(option).then((response) => {
     try {
       const data = JSON.parse(response.body)
+      if(!data.farmUserPro)console.log(data)
       if (data.code === '0')
         return (
           (data.farmUserPro.treeEnergy / data.farmUserPro.treeTotalEnergy) *
