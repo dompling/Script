@@ -35,8 +35,6 @@ async function getScriptUrl() {
   const cookiesRes = await $.ql.select();
   const wskeyRes = await $.ql.select('JD_WSCK');
 
-  const JD_CACHE_INFO = await $.ql.select('JD_CACHE_INFO');
-
   const wskey = {};
   wskeyRes.data.forEach((item) => {
     const pin = getUsername(item.value);
@@ -60,23 +58,6 @@ async function getScriptUrl() {
   cookies.forEach((ql) => {
     if (userNames.indexOf(ql.userName) === -1) saveCookie.push(ql);
   });
-
-  if (JD_CACHE_INFO.data.length) {
-    const cache_info = JSON.parse(JD_CACHE_INFO.data[0].value);
-    jd_reamrk.remark = JSON.parse(jd_reamrk.remark || '[]');
-
-    if (jd_reamrk.remark.length) {
-      jd_reamrk.remark = jd_reamrk.remark.map((item, index) => {
-        if (cache_info[item.username]) {
-          return { ...item, ...cache_info[item.username], index };
-        }
-        return item;
-      });
-      jd_reamrk.remark = JSON.stringify(jd_reamrk.remark, null, `\t`);
-      $.write(JSON.stringify(jd_reamrk), `#jd_ck_remark`);
-    }
-
-  }
 
   $.write(JSON.stringify(saveCookie, null, `\t`), cookiesKey);
   if ($.read('mute') !== 'true') {
