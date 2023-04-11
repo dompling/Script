@@ -1318,17 +1318,6 @@ function createScript() {
   }
 
   $('.async').on('click',function(){
-  const qlConfig = \`${qlConfig}\`
-  if(qlConfig){
-    $('.async').addClass('loading');
-    runBoxJSScript('https://raw.githubusercontent.com/dompling/Script/master/jd/ql_sync_box.js',(result)=>{
-      console.log(result)
-      $('.async').removeClass('loading');
-      cusShowToast("账号数据刷新成功",()=>{
-        if(result) window.location.reload();
-      })
-    });
-  }else{
     $('.async').addClass('loading');
     runBoxJSScript('https://raw.githubusercontent.com/dompling/Script/master/jd/jd_cookie_search.js',(res)=>{
       $('.async').removeClass('loading');
@@ -1336,12 +1325,11 @@ function createScript() {
         if(res) window.location.reload();
       })
     })
-  }
   })
 
   if(avatarItem){
     const extraAction = ${JSON.stringify(extraAction)};
-    extraAction.map(item=>{
+    extraAction.forEach(item=>{
       if(item.url.indexOf("3KSjXqQabiTuD1cJ28QskrpWoBKT")>-1) item.color = avatarItem.fruit.indexOf('100')!==-1?"#3ccab5":"#f8eed7";
       if(!item.where||(item.where&&location.origin.indexOf(item.where)>-1)){
         $("#tool-bars-left").append(\`
