@@ -220,7 +220,7 @@
       "name": "京东账号",
       "keys": ["CookiesJD", "cks_get_mute"],
       "descs_html": [
-        "<script type=\"text/javascript\" src=\"https://raw.githubusercontent.com/dompling/Script/master/jd/boxjs.extra.js\"/>",
+        "<script type=\"text/javascript\" src=\"https://raw.githubusercontent.com/dompling/Script/master/jd/boxjs.extra.js\"></script>",
         "请勿随意在输入框修改内容，建议通过脚本去获取cookie，若要修改，请按照JSON 格式修改（<a href=\"https://www.bejson.com/json/format\">可使用此JSON校验</a> ，或点击右上角按钮🔘进行校验(如有弹窗提示则为异常JSON)）。",
         "示例：[{\"userName\":\"jd_xxx\",\"cookie\":\"pt_key=AAJ;pt_pin=jd_xxx;\"},{\"userName\":\"jd_66\",\"cookie\":\"pt_key=AAJ;pt_pin=jd_66;\"}]",
         "脚本地址【<a href=\"https://jdsharedresourcescdn.azureedge.net/jdresource/JD_extra_cookie.js\">京东多 CK获取</a>】,并按照此脚本注释进行配置",
