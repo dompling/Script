@@ -198,6 +198,11 @@
           "desc": "快捷跳转 (JSON 格式)",
           "child": [
             {
+              "id": "title",
+              "name": "标题",
+              "type": "text"
+            },
+            {
               "id": "icon",
               "name": "图标",
               "type": "text"
@@ -339,7 +344,8 @@
           "type": "textarea",
           "autoGrow": false,
           "rows": 8,
-          "desc": "CK 列表 (JSON 格式)"
+          "desc": "CK 列表 (JSON 格式)",
+          "child": []
         }
       ],
       "icons": [
