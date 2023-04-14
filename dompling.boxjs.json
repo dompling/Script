@@ -227,7 +227,74 @@
           "autoGrow": false,
           "rows": 8,
           "desc": "CK 备注列表 (JSON 格式)",
-          "primary": "nickname"
+          "primary": ["nickname", "status"],
+          "child": [
+            {
+              "id": "index",
+              "name": "下标",
+              "type": "text",
+              "disabled": true
+            },
+            {
+              "id": "username",
+              "name": "用户 pin",
+              "disabled": true,
+              "type": "text"
+            },
+            {
+              "id": "nickname",
+              "name": "昵称",
+              "type": "text"
+            },
+            {
+              "id": "qywxUserId",
+              "name": "企业微信通知 ID",
+              "type": "text"
+            },
+            {
+              "id": "cardId",
+              "name": "身份证",
+              "type": "text"
+            },
+            {
+              "id": "paymentCode",
+              "name": "支付密码",
+              "type": "text"
+            },
+            {
+              "id": "avatar",
+              "name": "头像",
+              "type": "text"
+            },
+            {
+              "id": "mobile",
+              "name": "手机号",
+              "type": "text"
+            },
+            {
+              "id": "remark",
+              "name": "备注",
+              "type": "text"
+            },
+            {
+              "id": "isPlusVip",
+              "name": "是否是 VIP",
+              "disabled": true,
+              "type": "text"
+            },
+            {
+              "id": "beanNum",
+              "name": "京豆数量",
+              "disabled": true,
+              "type": "text"
+            },
+            {
+              "id": "fruit",
+              "name": "农场进度",
+              "disabled": true,
+              "type": "text"
+            }
+          ]
         }
       ],
       "icons": [
