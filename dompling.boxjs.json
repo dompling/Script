@@ -337,6 +337,7 @@
           "autoGrow": false,
           "rows": 8,
           "desc": "CK 列表 (JSON 格式)",
+          "primary":["userName"],
           "child": []
         }
       ],
