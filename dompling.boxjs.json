@@ -208,7 +208,7 @@
               "type": "text"
             },
             {
-              "id": "icon",
+              "id": "where",
               "name": "显示条件",
               "type": "text"
             },
