@@ -192,6 +192,7 @@
           "autoGrow": false,
           "rows": 4,
           "desc": "快捷跳转 (JSON 格式)",
+          "primary": ["title"],
           "child": [
             {
               "id": "title",
