@@ -196,12 +196,28 @@
           "autoGrow": false,
           "rows": 4,
           "desc": "快捷跳转 (JSON 格式)",
-          "child": {
-            "icon": "图标",
-            "url": "跳转地址",
-            "where": "显示条件",
-            "color": "图标背景"
-          }
+          "child": [
+            {
+              "id": "icon",
+              "name": "图标",
+              "type": "text"
+            },
+            {
+              "id": "url",
+              "name": "跳转地址",
+              "type": "text"
+            },
+            {
+              "id": "icon",
+              "name": "显示条件",
+              "type": "text"
+            },
+            {
+              "id": "color",
+              "name": "图标背景",
+              "type": "colorpicker"
+            }
+          ]
         },
         {
           "id": "@jd_ck_remark.remark",
@@ -255,8 +271,7 @@
           "type": "textarea",
           "autoGrow": false,
           "rows": 8,
-          "desc": "CK 列表 (JSON 格式)",
-          "child": { "userName": "用户 PIN" }
+          "desc": "CK 列表 (JSON 格式)"
         }
       ],
       "icons": [
