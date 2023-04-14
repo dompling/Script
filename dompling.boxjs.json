@@ -165,7 +165,7 @@
       "keys": ["CookieIndex", "@jd_ck_remark.remark", "@jd_ck_remark.mute"],
       "descs_html": [
         "若需要方便浏览：右上角菜单->打开调试模式->调试页面地址",
-        "<a href='https://raw.githubusercontent.com/dompling/chavyleung-boxjs/boxjs/box/chavy.boxjs.html'>调试页面地址</a>"
+        "<a href='https://raw.githubusercontent.com/dompling/chavyleung-boxjs/boxjs/box/chavy.boxjs.html' target='_blank'>调试页面地址</a>"
       ],
       "settings": [
         {
@@ -312,7 +312,7 @@
       "keys": ["CookiesJD", "cks_get_mute"],
       "descs_html": [
         "若需要方便浏览：右上角菜单->打开调试模式->调试页面地址",
-        "<a href='https://raw.githubusercontent.com/dompling/chavyleung-boxjs/boxjs/box/chavy.boxjs.html'>调试页面地址</a>"
+        "<a href='https://raw.githubusercontent.com/dompling/chavyleung-boxjs/boxjs/box/chavy.boxjs.html' target='_blank'>调试页面地址</a>"
       ],
       "settings": [
         {
