@@ -164,12 +164,8 @@
       "name": "登录助手",
       "keys": ["CookieIndex", "@jd_ck_remark.remark", "@jd_ck_remark.mute"],
       "descs_html": [
-        "请勿随意在输入框修改内容，建议通过脚本去获取cookie，若要修改，请按照JSON 格式修改（<a href=\"https://www.bejson.com/json/format\">可使用此JSON校验</a> ，或点击右上角按钮🔘进行校验(如有弹窗提示则为异常JSON)）。",
-        "脚本地址【<a href=\"https://jdsharedresourcescdn.azureedge.net/jdresource/JD_extra_cookie.js\">京东多 CK获取</a>】,并按照此脚本注释进行配置",
-        "【CK备注列表】可以修改的字段，nickname,mobile",
-        "【CK备注列表】示例：[{username:\"yaya\",nickname:\"I'm YaYa man\",mobile:\"1234567890\"}]",
-        "【 快捷跳转 】示例值：[{icon:\"https://pinpai.smzdm.com/favicon.ico\",url:\"smzdm://\",where:\"https://item\",color:\"#f04139\"}]",
-        "【 快捷跳转 】icon:图标，url：跳转的 url 地址, where:匹配页面显示的条件(网页地址某部分),color:背景色"
+        "若需要方便浏览：右上角菜单->打开调试模式->调试页面地址",
+        "<a href='https://raw.githubusercontent.com/dompling/chavyleung-boxjs/boxjs/box/chavy.boxjs.html'>调试页面地址</a>"
       ],
       "settings": [
         {
@@ -315,12 +311,8 @@
       "name": "京东账号",
       "keys": ["CookiesJD", "cks_get_mute"],
       "descs_html": [
-        "请勿随意在输入框修改内容，建议通过脚本去获取cookie，若要修改，请按照JSON 格式修改（<a href=\"https://www.bejson.com/json/format\">可使用此JSON校验</a> ，或点击右上角按钮🔘进行校验(如有弹窗提示则为异常JSON)）。",
-        "示例：[{\"userName\":\"jd_xxx\",\"cookie\":\"pt_key=AAJ;pt_pin=jd_xxx;\"},{\"userName\":\"jd_66\",\"cookie\":\"pt_key=AAJ;pt_pin=jd_66;\"}]",
-        "脚本地址【<a href=\"https://jdsharedresourcescdn.azureedge.net/jdresource/JD_extra_cookie.js\">京东多 CK获取</a>】,并按照此脚本注释进行配置",
-        "使用方式【<a href=\"https://home.m.jd.com/myJd/newhome.action\">个人中心</a>】获取对应的数据Code",
-        "注1：如与NobyDa的京东cookie重复，建议在此处删除重复的cookie",
-        "注2：删除条件，是用来清除不需要的ck，条件值为京东 ck 的第几个，如第一个：1，第二个：2；多个请使用,分割。删除ck 脚本不会去清理野比的ck，请谨慎使用。删除成功之后，请手动刷新 boxjs"
+        "若需要方便浏览：右上角菜单->打开调试模式->调试页面地址",
+        "<a href='https://raw.githubusercontent.com/dompling/chavyleung-boxjs/boxjs/box/chavy.boxjs.html'>调试页面地址</a>"
       ],
       "settings": [
         {
