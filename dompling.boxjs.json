@@ -195,7 +195,13 @@
           "type": "textarea",
           "autoGrow": false,
           "rows": 4,
-          "desc": "快捷跳转 (JSON 格式)"
+          "desc": "快捷跳转 (JSON 格式)",
+          "child": {
+            "icon": "图标",
+            "url": "跳转地址",
+            "where": "显示条件",
+            "color": "图标背景"
+          }
         },
         {
           "id": "@jd_ck_remark.remark",
@@ -249,7 +255,8 @@
           "type": "textarea",
           "autoGrow": false,
           "rows": 8,
-          "desc": "CK 列表 (JSON 格式)"
+          "desc": "CK 列表 (JSON 格式)",
+          "child": { "userName": "用户 PIN" }
         }
       ],
       "icons": [
