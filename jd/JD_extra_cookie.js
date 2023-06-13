@@ -21,20 +21,20 @@ hostname = me-api.jd.com
 【Surge脚本配置】:
 ===================
 [Script]
-获取京东Cookie = type=http-request,pattern=^https:\/\/me-api\.jd\.com\/user_new\/info\/GetJDUserInfoUnion,requires-body=1,max-size=0,script-path=https://raw.githubusercontent.com/dompling/Script/master/jd/JD_extra_cookie.js,script-update-interval=0
+获取京东Cookie = type=http-request,pattern=^https:\/\/api\.m\.jd\.com\/client\.action\?functionId=newUserInfo,requires-body=1,max-size=0,script-path=https://raw.githubusercontent.com/dompling/Script/master/jd/JD_extra_cookie.js,script-update-interval=0
 
 ===================
 【Loon脚本配置】:
 ===================
 [Script]
-http-request ^https:\/\/me-api\.jd\.com\/user_new\/info\/GetJDUserInfoUnion tag=获取京东Cookie, script-path=https://raw.githubusercontent.com/dompling/Script/master/jd/JD_extra_cookie.js
+http-request ^https:\/\/api\.m\.jd\.com\/client\.action\?functionId=newUserInfo tag=获取京东Cookie, script-path=https://raw.githubusercontent.com/dompling/Script/master/jd/JD_extra_cookie.js
 
 ===================
 【 QX  脚本配置 】 :
 ===================
 
 [rewrite_local]
-^https:\/\/me-api\.jd\.com\/user_new\/info\/GetJDUserInfoUnion  url script-request-header https://raw.githubusercontent.com/dompling/Script/master/jd/JD_extra_cookie.js
+^https:\/\/api\.m\.jd\.com\/client\.action\?functionId=newUserInfo  url script-request-header https://raw.githubusercontent.com/dompling/Script/master/jd/JD_extra_cookie.js
 
  */
 const APIKey = 'CookiesJD';
@@ -239,7 +239,7 @@ async function GetCookie() {
     } else {
       console.log('ck 写入失败，未找到相关 ck');
     }
-  } else if ($request.headers && $request.url.indexOf('getSessionLog') > -1) {
+  } else if ($request.headers && $request.url.indexOf('GetJDUserInfoUnion') > -1) {
     if (CV.match(/wskey=.+?;/) && CV.match(/pin=.+?;/)) {
       const code = CV.match(/wskey=.+?;/)[0] + `pt_${CV.match(/pin=.+?;/)[0]}`;
       const wskey = CV.match(/wskey=.+?;/)[0];
