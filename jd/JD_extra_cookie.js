@@ -37,6 +37,7 @@ http-request ^https:\/\/api\.m\.jd\.com\/client\.action\?functionId=newUserInfo 
 ^https:\/\/api\.m\.jd\.com\/client\.action\?functionId=newUserInfo  url script-request-header https://raw.githubusercontent.com/dompling/Script/master/jd/JD_extra_cookie.js
 
  */
+
 const APIKey = 'CookiesJD';
 const $ = new API('ql', false);
 const CacheKey = `#${APIKey}`;
@@ -242,7 +243,8 @@ async function GetCookie() {
   } else if ($request.headers && $request.url.indexOf('newUserInfo') > -1) {
     if (CV.match(/wskey=([^=;]+?);/)[1]) {
       const wskey = CV.match(/wskey=([^=;]+?);/)[1];
-      const respBody = JSON.parse(($response.body));
+      console.log($response);
+      const respBody = JSON.parse($response.body);
       const pin = respBody.userInfoSns.unickName;
       const code = `wskey=${wskey};pt_pin=${pin};`;
       
