@@ -18,6 +18,8 @@ const $ = new API("jd_ck_remark"),
   CacheKey = `#${APIKey}`,
   remark_key = `remark`;
 
+$.CryptoJS = $.isNode ? require("crypto-js") : initCryptoJS();
+
 ($.url = $request.url), ($.html = $response.body);
 
 let extraAction = [];
@@ -851,6 +853,7 @@ function createScript() {
 <script type="text/javascript">
   var pk = getCookie("pt_key");
   var pp = decodeURIComponent(getCookie("pt_pin"));
+  
   var isLogin = window.location.href.indexOf("/login/login")>-1;
   let jd_ck = ${JSON.stringify(cookiesRemark)};
 
@@ -864,22 +867,22 @@ function createScript() {
   console.log(jd_ck)
   registerClick();
 
-  $("#cu_search").on("click",function(){
-    $(this).toggleClass("hidden");
-    $("#cus-username").toggleClass("hidden");
-    $("#cu_search_input").toggleClass("hidden");
-    $("#cus_cancel").toggleClass("hidden");
+  $Query("#cu_search").on("click",function(){
+    $Query(this).toggleClass("hidden");
+    $Query("#cus-username").toggleClass("hidden");
+    $Query("#cu_search_input").toggleClass("hidden");
+    $Query("#cus_cancel").toggleClass("hidden");
   })
 
-  $("#cus_cancel").on("click",function(){
-    $("#cu_search").click();
-    $("#cu_search_close").click();
+  $Query("#cus_cancel").on("click",function(){
+    $Query("#cu_search").click();
+    $Query("#cu_search_close").click();
     registerClick();
   })
 
-  $("#cu_search_close").on("click",function(){
-    $("#cu_search_input input")[0].value="";
-    $("#account_list").html(getAccountList(jd_ck));
+  $Query("#cu_search_close").on("click",function(){
+    $Query("#cu_search_input input")[0].value="";
+    $Query("#account_list").html(getAccountList(jd_ck));
     registerClick();
   })
 
@@ -930,7 +933,7 @@ function createScript() {
   }
 
   let timer = null;
-  $("#cu_search_input input").on('input',function(event){
+  $Query("#cu_search_input input").on('input',function(event){
     console.log(event)
     const value = event.target.value;
     if(!value) return;
@@ -939,7 +942,7 @@ function createScript() {
     timer = setTimeout(()=>{ 
       newList = jd_ck.filter(item=>item.username.indexOf(value)>-1 || item.nickname.indexOf(value)>-1)
       if(!newList.length) return;
-      $("#account_list").html(getAccountList(newList));
+      $Query("#account_list").html(getAccountList(newList));
       registerClick()
     },500);
   })
@@ -947,16 +950,16 @@ function createScript() {
 
   const avatarItem = jd_ck.find(item=> item.username === pp);
   if(avatarItem && avatarItem.avatar){
-    $('#boxjs').html("<img src='"+ avatarItem.avatar +"' />");
+    $Query('#boxjs').html("<img src='"+ avatarItem.avatar +"' />");
   }
 
   if(pk === "" || !pk){
-    $("#copyCk").hide();
-    $("#clear-ck").hide();
+    $Query("#copyCk").hide();
+    $Query("#clear-ck").hide();
   }
 
   if(pp){
-      $("#cus-username").html(pp)
+      $Query("#cus-username").html(pp)
       var preIndex = null;
       var nextIndex = null;
       var current = null
@@ -968,22 +971,22 @@ function createScript() {
         }
       })
       if(preIndex!==null){
-        $("#boxjs").before('<div id="preCK" class="tool_bar"><span class="iconfont icon-shangjiantou" /></div>')
+        $Query("#boxjs").before('<div id="preCK" class="tool_bar"><span class="iconfont icon-shangjiantou" /></div>')
       }
       if(nextIndex!==null){
-        $("#boxjs").after('<div id="nextCK" class="tool_bar"><span class="iconfont icon-xiajiantou" /></div>')
+        $Query("#boxjs").after('<div id="nextCK" class="tool_bar"><span class="iconfont icon-xiajiantou" /></div>')
       }
       if(current) animateScroll(current);
   };
 
   function animateScroll(key) {
     try{
-    if($('.cus-now_active').position()) $("#account_list").animate({scrollTop: $('.cus-now_active').position().top - $('.cus-now_active').height() * 4 },1000);
+    if($Query('.cus-now_active').position()) $Query("#account_list").animate({scrollTop: $Query('.cus-now_active').position().top - $Query('.cus-now_active').height() * 4 },1000);
     }catch(e){console.log(e)}
   }
 
-  var preCK = $("#preCK");
-  var nextCK = $("#nextCK");
+  var preCK = $Query("#preCK");
+  var nextCK = $Query("#nextCK");
   if(preCK){
     preCK.on('click',function() {
       if(preIndex !== null) changeIndex(preIndex);
@@ -997,35 +1000,35 @@ function createScript() {
   }
 
   function changeIndex(key){
-      $('.cus-avatar').attr("id","");
-      $('.cus-avatar').attr("class","cus-avatar");
-      $('.cus-avatar').each(function(index){
+      $Query('.cus-avatar').attr("id","");
+      $Query('.cus-avatar').attr("class","cus-avatar");
+      $Query('.cus-avatar').each(function(index){
         if(index === key){
-          $(this).addClass("cus-active");
-          $(this).attr("id","jd_account");
+          $Query(this).addClass("cus-active");
+          $Query(this).attr("id","jd_account");
         }
       })
       btnSubmit();
   }
 
-  $(document).on('click','.cus-avatar',function(){
-    $('.cus-avatar').removeClass("cus-active");
-    $('.cus-avatar').attr("id","");
-    $(this).attr("id","jd_account");
-    $(this).addClass("cus-active");
-    $("#edit-row").show();
-    $("#form-title").html($(this).data('name'));
-    $("#fill-input").hide();
-    if($(this).data("value"))$("#fill-input").show();
+  $Query(document).on('click','.cus-avatar',function(){
+    $Query('.cus-avatar').removeClass("cus-active");
+    $Query('.cus-avatar').attr("id","");
+    $Query(this).attr("id","jd_account");
+    $Query(this).addClass("cus-active");
+    $Query("#edit-row").show();
+    $Query("#form-title").html($Query(this).data('name'));
+    $Query("#fill-input").hide();
+    if($Query(this).data("value"))$Query("#fill-input").show();
   })
 
-  $("#fill-input").on('click',function(){
+  $Query("#fill-input").on('click',function(){
     if(isLogin) fillInput();
-    const mobile = $('#jd_account').data('value');
+    const mobile = $Query('#jd_account').data('value');
     copyToClip(mobile,'手机号复制成功')
   })
 
-  $("#clear-ck").on('click',function(){
+  $Query("#clear-ck").on('click',function(){
     sessionStorage.clear();
     localStorage.clear();
     setCookie('pt_key',"");
@@ -1034,29 +1037,29 @@ function createScript() {
   })
 
     function registerClick(){
-      $('.cus-avatar').each(function(){
-        const username = $(this).data('name') + '';
-        if(username === pp) $(this).addClass("cus-now_active");
+      $Query('.cus-avatar').each(function(){
+        const username = $Query(this).data('name') + '';
+        if(username === pp) $Query(this).addClass("cus-now_active");
       })
     }
     
-    const $container = $("#tool-bars");
+    const $container = $Query("#tool-bars");
     var nx,
       ny,
       wxX,
       wxY,
       isDown = false; //X Y坐标
     // H5页面
-    $("#boxjs")
+    $Query("#boxjs")
       .bind("touchstart", function (e) {
         //点击触发
         e.preventDefault();
-        $(this).css("transform", "translate(0)");
+        $Query(this).css("transform", "translate(0)");
         var touch = event.targetTouches[0];
         wxX = touch.clientX;
         wxY = touch.clientY;
         isDown = true;
-        $(document).bind("touchmove", function (ev) {
+        $Query(document).bind("touchmove", function (ev) {
           if (!isDown) return;
           //滑动触发
           e.preventDefault();
@@ -1064,7 +1067,7 @@ function createScript() {
           var touch = event.targetTouches[0];
           ny = touch.clientY;
           nx = touch.clientX;
-          $container.css("top", ny / ($(window).height() / 100) + "%");
+          $container.css("top", ny / ($Query(window).height() / 100) + "%");
         });
       })
       .bind("touchend", function (e) {
@@ -1074,16 +1077,16 @@ function createScript() {
         if (wxX === touch.clientX && wxY === touch.clientY) {
           maskVisible(true);
         } else {
-          if ($(window).height() * 0.9 - $container.height() < ny) {
+          if ($Query(window).height() * 0.9 - $container.height() < ny) {
             $container.css({top: "90%"});
-          } else if ($(window).height() * 0.1 > ny) {
+          } else if ($Query(window).height() * 0.1 > ny) {
             $container.css({ top: "12%" });
           }
         }
-        isDown = false; //$('.service_s').hide()
+        isDown = false; //$Query('.service_s').hide()
       });
 
-    $("#cus-mask-ok").on('click', function(){
+    $Query("#cus-mask-ok").on('click', function(){
       btnSubmit();
     });
 
@@ -1115,10 +1118,10 @@ function createScript() {
         }
     };
 
-    $("#edit-row").on('click',function(){
-      $(".edit-form").show();
-      $(".edit-form").animate({bottom:0});
-      const selectPin = $("#jd_account").data("name")+'';
+    $Query("#edit-row").on('click',function(){
+      $Query(".edit-form").show();
+      $Query(".edit-form").animate({bottom:0});
+      const selectPin = $Query("#jd_account").data("name")+'';
       const current = jd_ck.find(item=>item.username === \`\${selectPin}\`);
       if(!current)return;
       let form_html = \`
@@ -1143,11 +1146,11 @@ function createScript() {
                       </label>
                     </p>\`
       })
-      $("#eidt-form").html(form_html);
+      $Query("#eidt-form").html(form_html);
     });
     
-    $('#form-ok').on('click',function(){
-      const updateArr = $('#eidt-form').serializeArray();
+    $Query('#form-ok').on('click',function(){
+      const updateArr = $Query('#eidt-form').serializeArray();
       let updateItem = {};
       updateArr.forEach((item)=>{
         updateItem[item.name]=item.value;
@@ -1165,62 +1168,62 @@ function createScript() {
       });
       
       const val = JSON.stringify(formValue, null, \`\t\`);
-      $.ajax({
+      $Query.ajax({
         method:"post",
         url:"//boxjs.${boxjs_host}/api/saveData/",
         data:JSON.stringify({key:"@jd_ck_remark.remark",val:val}),
         contentType:'application/x-www-form-urlencoded; charset=UTF-8',
         success:(response)=>{
           jd_ck = new_jd_ck;
-          $("#account_list").html(getAccountList(jd_ck))
+          $Query("#account_list").html(getAccountList(jd_ck))
           registerClick()
           cusShowToast('保存成功',()=>{
             formHide();
-            $("#edit-row").hide();
+            $Query("#edit-row").hide();
           })
         }
       })
     })
 
     function formHide(){
-      $('.edit-form').animate({bottom:"-500vh"},function(){
-        $(".edit-form").hide();
+      $Query('.edit-form').animate({bottom:"-500vh"},function(){
+        $Query(".edit-form").hide();
       });
     }
 
-    $('#form-cancel').on('click',function(){
+    $Query('#form-cancel').on('click',function(){
       formHide();
     })
 
-    $("#copyCk").on('click',function(){
-      const username = $(".cus-active").data("name")+'';
+    $Query("#copyCk").on('click',function(){
+      const username = $Query(".cus-active").data("name")+'';
       const copyValue = jd_ck.find(item=>item.userName===username);
       copyToClip(copyValue.cookie,\`\${copyValue.nickname||username}-CK复制成功\`);
     })
     
     function cusShowToast(message,callback){
-      $("#toast").html(\`<li class="info">\${message}</li>\`).fadeIn();
+      $Query("#toast").html(\`<li class="info">\${message}</li>\`).fadeIn();
       setTimeout(function() {
-        $("#toast").html("").fadeOut();
+        $Query("#toast").html("").fadeOut();
         if(callback)callback()
       },2000);
     }
 
     function maskVisible(visible){
       if(visible){
-        $('#mask').show();
+        $Query('#mask').show();
       }
-      $('#cus-mask').animate({top:visible?"50%":"-500vh"},function(){
+      $Query('#cus-mask').animate({top:visible?"50%":"-500vh"},function(){
         if(!visible){
-          $('#mask').hide();
-          $('.edit-form').hide();
-          $('.edit-form').animate({bottom:"-500vh"});
+          $Query('#mask').hide();
+          $Query('.edit-form').hide();
+          $Query('.edit-form').animate({bottom:"-500vh"});
         }
       });
     }
 
     function fillInput(){
-      const sbBtn = $('#jd_account');
+      const sbBtn = $Query('#jd_account');
       const cuMobile = sbBtn.data('value');
       console.log('快速填充号码：'+ cuMobile);
       const input = document.getElementsByClassName('acc-input mobile J_ping')[0];
@@ -1244,7 +1247,7 @@ function createScript() {
     let cuName;
 
     if(!ptKey){
-      const sbBtn = $('#jd_account');
+      const sbBtn = $Query('#jd_account');
       if(!sbBtn) return alert("请选择需要登陆的账号");
       cuName = sbBtn.data('name');
     }
@@ -1268,8 +1271,11 @@ function createScript() {
       const mt = ed.getMonth()+1;
       ed.setMonth(mt);
       var expires = "expires="+ed.toGMTString();
+      var after = window.location.host.split(".");
+      after = after[after.length-1];
       document.cookie = cname+"="+cvalue+"; "+expires+"; path=/; domain=.jingxi.com";
       document.cookie = cname+"="+cvalue+"; "+expires+"; path=/; domain=.jd.com";
+      document.cookie = cname+"="+cvalue+"; "+expires+"; path=/; domain=.jd." + after;
   }
 
   function getQueryVariable(variable){
@@ -1298,16 +1304,16 @@ function createScript() {
     if(notify)cusShowToast(notify);
   }
 
-  $('#mask').on('click',function(){
-    $("#jf_mask,#cus-mask").animate({top:"-500vh"},function(){
+  $Query('#mask').on('click',function(){
+    $Query("#jf_mask,#cus-mask").animate({top:"-500vh"},function(){
       formHide();
-      $('#mask').hide();
+      $Query('#mask').hide();
     }) 
   })
 
   function runBoxJSScript(url,callback){
   const body = {"url":url,"isRemote":true};
-  $.ajax({
+  $Query.ajax({
     method:"post",
     timeout: 10000,
     url:"//boxjs.${boxjs_host}/api/runScript",
@@ -1317,22 +1323,34 @@ function createScript() {
   })
   }
 
-  $('.async').on('click',function(){
-    $('.async').addClass('loading');
-    runBoxJSScript('https://raw.githubusercontent.com/dompling/Script/master/jd/jd_cookie_search.js',(res)=>{
-      $('.async').removeClass('loading');
-      cusShowToast("账号数据刷新成功",()=>{
-        if(res) window.location.reload();
+  $Query('.async').on('click',function(){
+    const qlConfig = \`${qlConfig}\`
+    if(qlConfig){
+      $Query('.async').addClass('loading');
+      runBoxJSScript('https://raw.githubusercontent.com/dompling/Script/master/jd/ql_sync_box.js',(result)=>{
+        console.log(result)
+        $Query('.async').removeClass('loading');
+        cusShowToast("账号数据刷新成功",()=>{
+          if(result) window.location.reload();
+        })
+      });
+    }else{
+      $Query('.async').addClass('loading');
+      runBoxJSScript('https://raw.githubusercontent.com/dompling/Script/master/jd/jd_cookie_search.js',(res)=>{
+        $Query('.async').removeClass('loading');
+        cusShowToast("账号数据刷新成功",()=>{
+          if(res) window.location.reload();
+        })
       })
+    }
     })
-  })
 
   if(avatarItem){
     const extraAction = ${JSON.stringify(extraAction)};
     extraAction.forEach(item=>{
       if(item.url.indexOf("3KSjXqQabiTuD1cJ28QskrpWoBKT")>-1) item.color = avatarItem.fruit.indexOf('100')!==-1?"#3ccab5":"#f8eed7";
       if(!item.where||(item.where&&location.origin.indexOf(item.where)>-1)){
-        $("#tool-bars-left").append(\`
+        $Query("#tool-bars-left").append(\`
         <div class="tool_bar rightRadius" style="background:\${item.color||'#f7bb10'}" data-url="\${item.url}">
           <img src="\${item.icon}" />
         </div>\`)
@@ -1340,8 +1358,8 @@ function createScript() {
     })
   }
 
-  $('.tool_bar.rightRadius').on('click',function(){
-    const url = $(this).data('url');
+  $Query('.tool_bar.rightRadius').on('click',function(){
+    const url = $Query(this).data('url');
     copyToClip('${$.url}','链接复制成功');
     window.open(url+'?ptKey=' + encodeURIComponent(getCookie(\`pt_pin\`)));
   })
@@ -1352,9 +1370,16 @@ function createScript() {
 
 function createHeader() {
   return `
+  <meta http-equiv="content-type" content="text/html; charset=utf-8">
   <meta name="viewport" content="width=device-width,initial-scale=1.0,minimum-scale=1.0,maximum-scale=1.0,user-scalable=no" />
   <link rel="stylesheet" type="text/css" href="//at.alicdn.com/t/font_2100531_8vma5eluuga.css" charset="utf-8"/>
-  <script type="text/javascript" src="https://cdn.staticfile.org/jquery/1.10.0/jquery.min.js"><\/script>  
+  <script type="text/javascript" src="https://cdn.staticfile.org/jquery/1.10.0/jquery.min.js"><\/script>
+  <script>
+    if(window.$) {
+      window.$Query=window.$;
+      delete window.$
+    }
+  </script>
   <script src="//cdn.bootcdn.net/ajax/libs/eruda/2.5.0/eruda.min.js"><\/script>
   <script>
   
@@ -1365,7 +1390,7 @@ function createHeader() {
   // 记录点击次数
   var clickCount = 0,initCount = 0;
   // 设置连点监听
-  $(document).on('click', function() {
+  $Query(document).on('click', function() {
       clickCount++;
       if(initCount){
       clearTimeout(initCount)
@@ -1379,13 +1404,13 @@ function createHeader() {
   
   function showConsole() {
     if (eruda_show === "0"){
-      $('.tool-right').animate({right:"0"},1000);
-      $('#tool-bars-left').animate({left:"0"},1000);
+      $Query('.tool-right').animate({right:"0"},1000);
+      $Query('#tool-bars-left').animate({left:"0"},1000);
       window.eruda && eruda.init();
       eruda_show = "1"
     }else{
-      $('.tool-right').animate({right:"-100px"},1000);
-      $('#tool-bars-left').animate({left:"-100px"},1000);
+      $Query('.tool-right').animate({right:"-100px"},1000);
+      $Query('#tool-bars-left').animate({left:"-100px"},1000);
       window.eruda && eruda.destroy();
       eruda_show = "0"
     }
@@ -1404,12 +1429,7 @@ function createHeader() {
       i = `\n${n}\n${t}\n${e}\n`;
 
     $.html = $.html.replace("$.downloadAppPlugInOpenApp", "$.test");
-    // if (/<script.*v(C|c)onsole(\.min)?\.js.+?script>/i.test($.html)) {
-    // $.html = $.html.replace(
-    //   /<script.*v(C|c)onsole(\.min)?\.js.+?script>/i,
-    //   ``
-    // );
-    // }
+
     const headerTag = createHeader();
     $.html = $.html.replace(/(<head>)/, `$1${headerTag}`);
     if ($.url.indexOf(`h5.m.jd.com`) !== -1) {
@@ -1417,6 +1437,8 @@ function createHeader() {
     } else {
       $.html = $.html.replace(/(<\/body>)(?![\s\S]*\1)/, `${i}$1`);
     }
+  } else {
+    $.done({ body: $.html });
   }
 })()
   .catch((n) => {
