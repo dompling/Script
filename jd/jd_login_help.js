@@ -18,8 +18,6 @@ const $ = new API("jd_ck_remark"),
   CacheKey = `#${APIKey}`,
   remark_key = `remark`;
 
-$.CryptoJS = $.isNode ? require("crypto-js") : initCryptoJS();
-
 ($.url = $request.url), ($.html = $response.body);
 
 let extraAction = [];
