@@ -18,6 +18,8 @@ const $ = new API("jd_ck_remark"),
   CacheKey = `#${APIKey}`,
   remark_key = `remark`;
 
+$.CryptoJS = $.isNode ? require("crypto-js") : initCryptoJS();
+
 ($.url = $request.url), ($.html = $response.body);
 
 let extraAction = [];
@@ -100,14 +102,14 @@ body div.bottom_tips_wrapper
  position: fixed;
  top:50%;
  right: 0;
- z-index: 999;
+ z-index: 9990;
  transform: translateY(-50%);
 }
 .tool_bar_jf{
  position: fixed;
  top: 80%;
  right: 0;
- z-index: 999;
+ z-index: 9990;
  transform: translateY(-50%);
 }
 .tool_bar{
@@ -135,14 +137,14 @@ body div.bottom_tips_wrapper
  position: fixed;
  top: 80%;
  right: 0;
- z-index: 999;
+ z-index: 99901;
  transform: translateY(-50%);
 }
 
 .tool_bar_smzdm{
   position: fixed;
   top: 20%;
-  z-index: 999;
+  z-index: 9991;
   transform: translateY(-50%);
  }
 
@@ -150,7 +152,7 @@ body div.bottom_tips_wrapper
 .tool_bar_farm{
   position: fixed;
   top: 28%;
-  z-index: 999;
+  z-index: 9991;
   transform: translateY(-50%);
  }
 
@@ -207,7 +209,7 @@ body div.bottom_tips_wrapper
  background: #fff;
  left: 50%;
  transform: translateX(-50%);
- z-index: 999;
+ z-index: 9991;
  display:flex;
  align-items: center;
  border-radius: ${getRem(0.1)};
@@ -849,518 +851,520 @@ function createScript() {
   return `
 
 <script type="text/javascript">
-  var pk = getCookie("pt_key");
-  var pp = decodeURIComponent(getCookie("pt_pin"));
-  
-  var isLogin = window.location.href.indexOf("/login/login")>-1;
-  let jd_ck = ${JSON.stringify(cookiesRemark)};
-
-
-  let defaultUserName = getQueryVariable("ptKey");  
-  if(defaultUserName) {
-    window.history.replaceState(null,"",window.location.href.replace("ptKey="+defaultUserName,""))
-    btnSubmit(decodeURIComponent(defaultUserName));
-  }
-
-  console.log(jd_ck)
-  registerClick();
-
-  $Query("#cu_search").on("click",function(){
-    $Query(this).toggleClass("hidden");
-    $Query("#cus-username").toggleClass("hidden");
-    $Query("#cu_search_input").toggleClass("hidden");
-    $Query("#cus_cancel").toggleClass("hidden");
-  })
-
-  $Query("#cus_cancel").on("click",function(){
-    $Query("#cu_search").click();
-    $Query("#cu_search_close").click();
-    registerClick();
-  })
-
-  $Query("#cu_search_close").on("click",function(){
-    $Query("#cu_search_input input")[0].value="";
-    $Query("#account_list").html(getAccountList(jd_ck));
-    registerClick();
-  })
-
-  function getAccountList(cks){
-  return  cks.map((item,index) => {
-  const status = item.status === '正常';
-  const beanNum = item.beanNum? \`<b class="ant-ribbon beanNum">京豆：\${item.beanNum}</b>\`:'';
-  return \`
-  <div class="cus-avatar" data-value="\${item.mobile||''}" data-name="\${item.username}">
-  <div class="avatar_container \${item.isPlusVip==='1' ? 'plus' : ''}">
-    <div class="avatar_img">
-      <img src="\${
-        item.avatar ||
-        '//img11.360buyimg.com/jdphoto/s120x120_jfs/t21160/90/706848746/2813/d1060df5/5b163ef9N4a3d7aa6.png'
-      }" alt="\${item.username}" />
-    </div>
-    \${item.isPlusVip==='1' ? \`<div class="isPlus"></div>\` : ''}
-  </div>
-
-  <div class="cususer_info">
-    <p>\${decodeURIComponent(item.nickname)}</p>
-    <span><b class="ant-ribbon">\${index + 1}</b>\${item.username}</span>
-  </div>
-  <div class="beanNumValue">
-    \${beanNum}
-    <div class="fruit_pet">
-    \${
-      item.fruit
-        ? \`<div class="hb_process">
-    <img src="https://raw.githubusercontent.com/Former-Years/icon/master/jdnc.png" alt="fruit" />
-    <b class="ant-ribbon beanNum">\${parseInt(item.fruit)}%</b>
-  </div>\`
-        : ''
-    }
-    \${
-      item.jdPet
-        ? \`<div class="hb_process">
-    <img src="https://raw.githubusercontent.com/Former-Years/icon/master/jdmc.png" alt="pet" />
-    <b class="ant-ribbon beanNum">\${parseInt(item.jdPet)}%</b>
-  </div>\`
-        : ''
-    }
-  </div>
-  </div>
-  <span class="cus-icon \${status ? '' : 'cus-err'}"></span>
-  </div>\`;
-  }).join('')
-  }
-
-  let timer = null;
-  $Query("#cu_search_input input").on('input',function(event){
-    console.log(event)
-    const value = event.target.value;
-    if(!value) return;
-    let newList = [];
-    if(timer) clearTimeout(timer);
-    timer = setTimeout(()=>{ 
-      newList = jd_ck.filter(item=>item.username.indexOf(value)>-1 || item.nickname.indexOf(value)>-1)
-      if(!newList.length) return;
-      $Query("#account_list").html(getAccountList(newList));
-      registerClick()
-    },500);
-  })
-
-
-  const avatarItem = jd_ck.find(item=> item.username === pp);
-  if(avatarItem && avatarItem.avatar){
-    $Query('#boxjs').html("<img src='"+ avatarItem.avatar +"' />");
-  }
-
-  if(pk === "" || !pk){
-    $Query("#copyCk").hide();
-    $Query("#clear-ck").hide();
-  }
-
-  if(pp){
-      $Query("#cus-username").html(pp)
-      var preIndex = null;
-      var nextIndex = null;
-      var current = null
-      jd_ck.forEach((item,index)=>{
-        if(decodeURIComponent(item.username) === pp){
-          current = index;
-          preIndex = index !== 0 ? index - 1 : null;
-          nextIndex = index !== jd_ck.length - 1 ? index + 1 : null;
-        }
-      })
-      if(preIndex!==null){
-        $Query("#boxjs").before('<div id="preCK" class="tool_bar"><span class="iconfont icon-shangjiantou" /></div>')
-      }
-      if(nextIndex!==null){
-        $Query("#boxjs").after('<div id="nextCK" class="tool_bar"><span class="iconfont icon-xiajiantou" /></div>')
-      }
-      if(current) animateScroll(current);
-  };
-
-  function animateScroll(key) {
-    try{
-    if($Query('.cus-now_active').position()) $Query("#account_list").animate({scrollTop: $Query('.cus-now_active').position().top - $Query('.cus-now_active').height() * 4 },1000);
-    }catch(e){console.log(e)}
-  }
-
-  var preCK = $Query("#preCK");
-  var nextCK = $Query("#nextCK");
-  if(preCK){
-    preCK.on('click',function() {
-      if(preIndex !== null) changeIndex(preIndex);
-    });
-  }
-
-  if(nextCK){
-    nextCK.on('click',function() {
-      if(nextIndex !== null) changeIndex(nextIndex);
-    });
-  }
-
-  function changeIndex(key){
-      $Query('.cus-avatar').attr("id","");
-      $Query('.cus-avatar').attr("class","cus-avatar");
-      $Query('.cus-avatar').each(function(index){
-        if(index === key){
-          $Query(this).addClass("cus-active");
-          $Query(this).attr("id","jd_account");
-        }
-      })
-      btnSubmit();
-  }
-
-  $Query(document).on('click','.cus-avatar',function(){
-    $Query('.cus-avatar').removeClass("cus-active");
-    $Query('.cus-avatar').attr("id","");
-    $Query(this).attr("id","jd_account");
-    $Query(this).addClass("cus-active");
-    $Query("#edit-row").show();
-    $Query("#form-title").html($Query(this).data('name'));
-    $Query("#fill-input").hide();
-    if($Query(this).data("value"))$Query("#fill-input").show();
-  })
-
-  $Query("#fill-input").on('click',function(){
-    if(isLogin) fillInput();
-    const mobile = $Query('#jd_account').data('value');
-    copyToClip(mobile,'手机号复制成功')
-  })
-
-  $Query("#clear-ck").on('click',function(){
-    sessionStorage.clear();
-    localStorage.clear();
-    setCookie('pt_key',"");
-    setCookie("pt_pin","");
-    window.location.reload();
-  })
-
-    function registerClick(){
-      $Query('.cus-avatar').each(function(){
-        const username = $Query(this).data('name') + '';
-        if(username === pp) $Query(this).addClass("cus-now_active");
-      })
-    }
+  (function($Query){
+    var pk = getCookie("pt_key");
+    var pp = decodeURIComponent(getCookie("pt_pin"));
     
-    const $container = $Query("#tool-bars");
-    var nx,
-      ny,
-      wxX,
-      wxY,
-      isDown = false; //X Y坐标
-    // H5页面
-    $Query("#boxjs")
-      .bind("touchstart", function (e) {
-        //点击触发
-        e.preventDefault();
-        $Query(this).css("transform", "translate(0)");
-        var touch = event.targetTouches[0];
-        wxX = touch.clientX;
-        wxY = touch.clientY;
-        isDown = true;
-        $Query(document).bind("touchmove", function (ev) {
-          if (!isDown) return;
-          //滑动触发
-          e.preventDefault();
+    var isLogin = window.location.href.indexOf("/login/login")>-1;
+    let jd_ck = ${JSON.stringify(cookiesRemark)};
 
-          var touch = event.targetTouches[0];
-          ny = touch.clientY;
-          nx = touch.clientX;
-          $container.css("top", ny / ($Query(window).height() / 100) + "%");
-        });
-      })
-      .bind("touchend", function (e) {
-        //移开触发
-        var touch = event.changedTouches[0];
-        //判断跟初始坐标是否一致，一致则大概率为点击事件
-        if (wxX === touch.clientX && wxY === touch.clientY) {
-          maskVisible(true);
-        } else {
-          if ($Query(window).height() * 0.9 - $container.height() < ny) {
-            $container.css({top: "90%"});
-          } else if ($Query(window).height() * 0.1 > ny) {
-            $container.css({ top: "12%" });
+
+    let defaultUserName = getQueryVariable("ptKey");  
+    if(defaultUserName) {
+      window.history.replaceState(null,"",window.location.href.replace("ptKey="+defaultUserName,""))
+      btnSubmit(decodeURIComponent(defaultUserName));
+    }
+
+    console.log(jd_ck)
+    registerClick();
+
+    $Query("#cu_search").on("click",function(){
+      $Query(this).toggleClass("hidden");
+      $Query("#cus-username").toggleClass("hidden");
+      $Query("#cu_search_input").toggleClass("hidden");
+      $Query("#cus_cancel").toggleClass("hidden");
+    })
+
+    $Query("#cus_cancel").on("click",function(){
+      $Query("#cu_search").click();
+      $Query("#cu_search_close").click();
+      registerClick();
+    })
+
+    $Query("#cu_search_close").on("click",function(){
+      $Query("#cu_search_input input")[0].value="";
+      $Query("#account_list").html(getAccountList(jd_ck));
+      registerClick();
+    })
+
+    function getAccountList(cks){
+    return  cks.map((item,index) => {
+    const status = item.status === '正常';
+    const beanNum = item.beanNum? \`<b class="ant-ribbon beanNum">京豆：\${item.beanNum}</b>\`:'';
+    return \`
+    <div class="cus-avatar" data-value="\${item.mobile||''}" data-name="\${item.username}">
+    <div class="avatar_container \${item.isPlusVip==='1' ? 'plus' : ''}">
+      <div class="avatar_img">
+        <img src="\${
+          item.avatar ||
+          '//img11.360buyimg.com/jdphoto/s120x120_jfs/t21160/90/706848746/2813/d1060df5/5b163ef9N4a3d7aa6.png'
+        }" alt="\${item.username}" />
+      </div>
+      \${item.isPlusVip==='1' ? \`<div class="isPlus"></div>\` : ''}
+    </div>
+
+    <div class="cususer_info">
+      <p>\${decodeURIComponent(item.nickname)}</p>
+      <span><b class="ant-ribbon">\${index + 1}</b>\${item.username}</span>
+    </div>
+    <div class="beanNumValue">
+      \${beanNum}
+      <div class="fruit_pet">
+      \${
+        item.fruit
+          ? \`<div class="hb_process">
+      <img src="https://raw.githubusercontent.com/Former-Years/icon/master/jdnc.png" alt="fruit" />
+      <b class="ant-ribbon beanNum">\${parseInt(item.fruit)}%</b>
+    </div>\`
+          : ''
+      }
+      \${
+        item.jdPet
+          ? \`<div class="hb_process">
+      <img src="https://raw.githubusercontent.com/Former-Years/icon/master/jdmc.png" alt="pet" />
+      <b class="ant-ribbon beanNum">\${parseInt(item.jdPet)}%</b>
+    </div>\`
+          : ''
+      }
+    </div>
+    </div>
+    <span class="cus-icon \${status ? '' : 'cus-err'}"></span>
+    </div>\`;
+    }).join('')
+    }
+
+    let timer = null;
+    $Query("#cu_search_input input").on('input',function(event){
+      console.log(event)
+      const value = event.target.value;
+      if(!value) return;
+      let newList = [];
+      if(timer) clearTimeout(timer);
+      timer = setTimeout(()=>{ 
+        newList = jd_ck.filter(item=>item.username.indexOf(value)>-1 || item.nickname.indexOf(value)>-1)
+        if(!newList.length) return;
+        $Query("#account_list").html(getAccountList(newList));
+        registerClick()
+      },500);
+    })
+
+
+    const avatarItem = jd_ck.find(item=> item.username === pp);
+    if(avatarItem && avatarItem.avatar){
+      $Query('#boxjs').html("<img src='"+ avatarItem.avatar +"' />");
+    }
+
+    if(pk === "" || !pk){
+      $Query("#copyCk").hide();
+      $Query("#clear-ck").hide();
+    }
+
+    if(pp){
+        $Query("#cus-username").html(pp)
+        var preIndex = null;
+        var nextIndex = null;
+        var current = null
+        jd_ck.forEach((item,index)=>{
+          if(decodeURIComponent(item.username) === pp){
+            current = index;
+            preIndex = index !== 0 ? index - 1 : null;
+            nextIndex = index !== jd_ck.length - 1 ? index + 1 : null;
           }
+        })
+        if(preIndex!==null){
+          $Query("#boxjs").before('<div id="preCK" class="tool_bar"><span class="iconfont icon-shangjiantou" /></div>')
         }
-        isDown = false; //$Query('.service_s').hide()
-      });
-
-    $Query("#cus-mask-ok").on('click', function(){
-      btnSubmit();
-    });
-
-    const form_field = {
-        "avatar": {
-            "label": "头像",
-            "remark": "请输入头像链接"
-        },
-        "nickname": {
-            "label": "姓名"
-        },
-        "mobile": {
-            "label": "手机号"
-        },
-        "paymentCode": {
-          "label": "支付密码"
-        },
-        "cardId": {
-            "label": "身份证",
-            "remark": "请输入身份证前两位和后四位"
-        },
-        "isPlusVip": {
-            "label": "VIP",
-            "remark": "1vip ，0 非 vip"
-        },
-        "qywxUserId": {
-            "label": "企业微信",
-            "remark": "企业微信 ID&（all 推送所有）"
+        if(nextIndex!==null){
+          $Query("#boxjs").after('<div id="nextCK" class="tool_bar"><span class="iconfont icon-xiajiantou" /></div>')
         }
+        if(current) animateScroll(current);
     };
 
-    $Query("#edit-row").on('click',function(){
-      $Query(".edit-form").show();
-      $Query(".edit-form").animate({bottom:0});
-      const selectPin = $Query("#jd_account").data("name")+'';
-      const current = jd_ck.find(item=>item.username === \`\${selectPin}\`);
-      if(!current)return;
-      let form_html = \`
-            <input 
-              type="hidden"
-              name="userName" 
-              class="form-item-input" 
-              value="\${selectPin}" 
-            />
-        \`;
-      Object.keys(form_field).forEach((name)=>{
-        const field = form_field[name];
-        form_html+=\`<p class="form-item">
-                      <label class="form-item-label" for="\${name}">
-                        <span>\${field.label}</span>
-                        <input 
-                            name="\${name}" 
-                            class="form-item-input" 
-                            value="\${current[name]||""}" 
-                            placeholder="\${field.remark||"请输入"}"
-                        />
-                      </label>
-                    </p>\`
-      })
-      $Query("#eidt-form").html(form_html);
-    });
-    
-    $Query('#form-ok').on('click',function(){
-      const updateArr = $Query('#eidt-form').serializeArray();
-      let updateItem = {};
-      updateArr.forEach((item)=>{
-        updateItem[item.name]=item.value;
-      })
-      const new_jd_ck = []
-      const formValue = jd_ck.map((item,index)=>{
-          const {wskey,cookie,userName,...temp} = item;
-          if(item.userName === updateItem.userName){
-            updateItem = {...temp , ...updateItem};
-            new_jd_ck.push({...item , ...updateItem});
-            return { index , ...updateItem}
+    function animateScroll(key) {
+      try{
+      if($Query('.cus-now_active').position()) $Query("#account_list").animate({scrollTop: $Query('.cus-now_active').position().top - $Query('.cus-now_active').height() * 4 },1000);
+      }catch(e){console.log(e)}
+    }
+
+    var preCK = $Query("#preCK");
+    var nextCK = $Query("#nextCK");
+    if(preCK){
+      preCK.on('click',function() {
+        if(preIndex !== null) changeIndex(preIndex);
+      });
+    }
+
+    if(nextCK){
+      nextCK.on('click',function() {
+        if(nextIndex !== null) changeIndex(nextIndex);
+      });
+    }
+
+    function changeIndex(key){
+        $Query('.cus-avatar').attr("id","");
+        $Query('.cus-avatar').attr("class","cus-avatar");
+        $Query('.cus-avatar').each(function(index){
+          if(index === key){
+            $Query(this).addClass("cus-active");
+            $Query(this).attr("id","jd_account");
           }
-          new_jd_ck.push(item);
-          return { index, ...temp}
+        })
+        btnSubmit();
+    }
+
+    $Query(document).on('click','.cus-avatar',function(){
+      $Query('.cus-avatar').removeClass("cus-active");
+      $Query('.cus-avatar').attr("id","");
+      $Query(this).attr("id","jd_account");
+      $Query(this).addClass("cus-active");
+      $Query("#edit-row").show();
+      $Query("#form-title").html($Query(this).data('name'));
+      $Query("#fill-input").hide();
+      if($Query(this).data("value"))$Query("#fill-input").show();
+    })
+
+    $Query("#fill-input").on('click',function(){
+      if(isLogin) fillInput();
+      const mobile = $Query('#jd_account').data('value');
+      copyToClip(mobile,'手机号复制成功')
+    })
+
+    $Query("#clear-ck").on('click',function(){
+      sessionStorage.clear();
+      localStorage.clear();
+      setCookie('pt_key',"");
+      setCookie("pt_pin","");
+      window.location.reload();
+    })
+
+      function registerClick(){
+        $Query('.cus-avatar').each(function(){
+          const username = $Query(this).data('name') + '';
+          if(username === pp) $Query(this).addClass("cus-now_active");
+        })
+      }
+      
+      const $container = $Query("#tool-bars");
+      var nx,
+        ny,
+        wxX,
+        wxY,
+        isDown = false; //X Y坐标
+      // H5页面
+      $Query("#boxjs")
+        .bind("touchstart", function (e) {
+          //点击触发
+          e.preventDefault();
+          $Query(this).css("transform", "translate(0)");
+          var touch = event.targetTouches[0];
+          wxX = touch.clientX;
+          wxY = touch.clientY;
+          isDown = true;
+          $Query(document).bind("touchmove", function (ev) {
+            if (!isDown) return;
+            //滑动触发
+            e.preventDefault();
+
+            var touch = event.targetTouches[0];
+            ny = touch.clientY;
+            nx = touch.clientX;
+            $container.css("top", ny / ($Query(window).height() / 100) + "%");
+          });
+        })
+        .bind("touchend", function (e) {
+          //移开触发
+          var touch = event.changedTouches[0];
+          //判断跟初始坐标是否一致，一致则大概率为点击事件
+          if (wxX === touch.clientX && wxY === touch.clientY) {
+            maskVisible(true);
+          } else {
+            if ($Query(window).height() * 0.9 - $container.height() < ny) {
+              $container.css({top: "90%"});
+            } else if ($Query(window).height() * 0.1 > ny) {
+              $container.css({ top: "12%" });
+            }
+          }
+          isDown = false; //$Query('.service_s').hide()
+        });
+
+      $Query("#cus-mask-ok").on('click', function(){
+        btnSubmit();
+      });
+
+      const form_field = {
+          "avatar": {
+              "label": "头像",
+              "remark": "请输入头像链接"
+          },
+          "nickname": {
+              "label": "姓名"
+          },
+          "mobile": {
+              "label": "手机号"
+          },
+          "paymentCode": {
+            "label": "支付密码"
+          },
+          "cardId": {
+              "label": "身份证",
+              "remark": "请输入身份证前两位和后四位"
+          },
+          "isPlusVip": {
+              "label": "VIP",
+              "remark": "1vip ，0 非 vip"
+          },
+          "qywxUserId": {
+              "label": "企业微信",
+              "remark": "企业微信 ID&（all 推送所有）"
+          }
+      };
+
+      $Query("#edit-row").on('click',function(){
+        $Query(".edit-form").show();
+        $Query(".edit-form").animate({bottom:0});
+        const selectPin = $Query("#jd_account").data("name")+'';
+        const current = jd_ck.find(item=>item.username === \`\${selectPin}\`);
+        if(!current)return;
+        let form_html = \`
+              <input 
+                type="hidden"
+                name="userName" 
+                class="form-item-input" 
+                value="\${selectPin}" 
+              />
+          \`;
+        Object.keys(form_field).forEach((name)=>{
+          const field = form_field[name];
+          form_html+=\`<p class="form-item">
+                        <label class="form-item-label" for="\${name}">
+                          <span>\${field.label}</span>
+                          <input 
+                              name="\${name}" 
+                              class="form-item-input" 
+                              value="\${current[name]||""}" 
+                              placeholder="\${field.remark||"请输入"}"
+                          />
+                        </label>
+                      </p>\`
+        })
+        $Query("#eidt-form").html(form_html);
       });
       
-      const val = JSON.stringify(formValue, null, \`\t\`);
-      $Query.ajax({
-        method:"post",
-        url:"//boxjs.${boxjs_host}/api/saveData/",
-        data:JSON.stringify({key:"@jd_ck_remark.remark",val:val}),
-        contentType:'application/x-www-form-urlencoded; charset=UTF-8',
-        success:(response)=>{
-          jd_ck = new_jd_ck;
-          $Query("#account_list").html(getAccountList(jd_ck))
-          registerClick()
-          cusShowToast('保存成功',()=>{
-            formHide();
-            $Query("#edit-row").hide();
-          })
-        }
-      })
-    })
-
-    function formHide(){
-      $Query('.edit-form').animate({bottom:"-500vh"},function(){
-        $Query(".edit-form").hide();
-      });
-    }
-
-    $Query('#form-cancel').on('click',function(){
-      formHide();
-    })
-
-    $Query("#copyCk").on('click',function(){
-      const username = $Query(".cus-active").data("name")+'';
-      const copyValue = jd_ck.find(item=>item.userName===username);
-      copyToClip(copyValue.cookie,\`\${copyValue.nickname||username}-CK复制成功\`);
-    })
-    
-    function cusShowToast(message,callback){
-      $Query("#toast").html(\`<li class="info">\${message}</li>\`).fadeIn();
-      setTimeout(function() {
-        $Query("#toast").html("").fadeOut();
-        if(callback)callback()
-      },2000);
-    }
-
-    function maskVisible(visible){
-      if(visible){
-        $Query('#mask').show();
-      }
-      $Query('#cus-mask').animate({top:visible?"50%":"-500vh"},function(){
-        if(!visible){
-          $Query('#mask').hide();
-          $Query('.edit-form').hide();
-          $Query('.edit-form').animate({bottom:"-500vh"});
-        }
-      });
-    }
-
-    function fillInput(){
-      const sbBtn = $Query('#jd_account');
-      const cuMobile = sbBtn.data('value');
-      console.log('快速填充号码：'+ cuMobile);
-      const input = document.getElementsByClassName('acc-input mobile J_ping')[0];
-      input.value = cuMobile;
-      ev = document.createEvent("HTMLEvents");
-      ev.initEvent("input", true,false );
-      input.dispatchEvent(ev);
-      maskVisible(false);
-    }
-
-    function clearAllCookie() {
-        var keys = document.cookie.match(/[^ =;]+(?=\\=)/g);
-        if (keys) {
-            for (var i = keys.length; i--;){
-              document.cookie = keys[i] + '=;path=/;domain=.jd.com;expires=' + new Date(0).toUTCString()
+      $Query('#form-ok').on('click',function(){
+        const updateArr = $Query('#eidt-form').serializeArray();
+        let updateItem = {};
+        updateArr.forEach((item)=>{
+          updateItem[item.name]=item.value;
+        })
+        const new_jd_ck = []
+        const formValue = jd_ck.map((item,index)=>{
+            const {wskey,cookie,userName,...temp} = item;
+            if(item.userName === updateItem.userName){
+              updateItem = {...temp , ...updateItem};
+              new_jd_ck.push({...item , ...updateItem});
+              return { index , ...updateItem}
             }
-        }
-    }
-
-  function btnSubmit(ptKey=false){
-    let cuName;
-
-    if(!ptKey){
-      const sbBtn = $Query('#jd_account');
-      if(!sbBtn) return alert("请选择需要登陆的账号");
-      cuName = sbBtn.data('name');
-    }
-    
-    const userName = ptKey||cuName;
-    const login_ck = jd_ck.find(item=>item.username===\`\${userName}\`);
-    if(!login_ck) return alert("未找到相关账号");
-
-    let [ pt_key , pt_pin ] = login_ck.cookie.split(";");
-    pt_key = pt_key.split("=");
-    pt_pin = pt_pin.split("=");
-    clearAllCookie();
-    setCookie(pt_key[0],pt_key[1]);
-    setCookie(pt_pin[0],pt_pin[1]);
-    window.location.reload();
-  }
-
-
-  function setCookie(cname,cvalue){
-      var ed = new Date();
-      const mt = ed.getMonth()+1;
-      ed.setMonth(mt);
-      var expires = "expires="+ed.toGMTString();
-      var after = window.location.host.split(".");
-      after = after[after.length-1];
-      document.cookie = cname+"="+cvalue+"; "+expires+"; path=/; domain=.jingxi.com";
-      document.cookie = cname+"="+cvalue+"; "+expires+"; path=/; domain=.jd.com";
-      document.cookie = cname+"="+cvalue+"; "+expires+"; path=/; domain=.jd." + after;
-  }
-
-  function getQueryVariable(variable){
-    var query = window.location.search.substring(1);
-    var vars = query.split("&");
-    for (var i=0;i<vars.length;i++) {
-            var pair = vars[i].split("=");
-            if(pair[0] == variable){return pair[1];}
-    }
-    return false;
-  }
-
-  function getCookie(cname){
-      var name = cname + "=";
-      var ca = document.cookie.split(';');
-      for(var i=0; i<ca.length; i++) {
-          var c = ca[i].trim();
-          if (c.indexOf(name)==0) { return c.substring(name.length,c.length); }
-      }
-      return "";
-  }
-
-
-  function copyToClip(text,notify=false){
-    navigator.clipboard.writeText(text);
-    if(notify)cusShowToast(notify);
-  }
-
-  $Query('#mask').on('click',function(){
-    $Query("#jf_mask,#cus-mask").animate({top:"-500vh"},function(){
-      formHide();
-      $Query('#mask').hide();
-    }) 
-  })
-
-  function runBoxJSScript(url,callback){
-  const body = {"url":url,"isRemote":true};
-  $Query.ajax({
-    method:"post",
-    timeout: 10000,
-    url:"//boxjs.${boxjs_host}/api/runScript",
-    data:JSON.stringify(body),
-    contentType:'application/x-www-form-urlencoded; charset=UTF-8',
-    success:callback
-  })
-  }
-
-  $Query('.async').on('click',function(){
-    const qlConfig = \`${qlConfig}\`
-    if(qlConfig){
-      $Query('.async').addClass('loading');
-      runBoxJSScript('https://raw.githubusercontent.com/dompling/Script/master/jd/ql_sync_box.js',(result)=>{
-        console.log(result)
-        $Query('.async').removeClass('loading');
-        cusShowToast("账号数据刷新成功",()=>{
-          if(result) window.location.reload();
-        })
-      });
-    }else{
-      $Query('.async').addClass('loading');
-      runBoxJSScript('https://raw.githubusercontent.com/dompling/Script/master/jd/jd_cookie_search.js',(res)=>{
-        $Query('.async').removeClass('loading');
-        cusShowToast("账号数据刷新成功",()=>{
-          if(res) window.location.reload();
+            new_jd_ck.push(item);
+            return { index, ...temp}
+        });
+        
+        const val = JSON.stringify(formValue, null, \`\t\`);
+        $Query.ajax({
+          method:"post",
+          url:"//boxjs.${boxjs_host}/api/saveData/",
+          data:JSON.stringify({key:"@jd_ck_remark.remark",val:val}),
+          contentType:'application/x-www-form-urlencoded; charset=UTF-8',
+          success:(response)=>{
+            jd_ck = new_jd_ck;
+            $Query("#account_list").html(getAccountList(jd_ck))
+            registerClick()
+            cusShowToast('保存成功',()=>{
+              formHide();
+              $Query("#edit-row").hide();
+            })
+          }
         })
       })
-    }
-    })
 
-  if(avatarItem){
-    const extraAction = ${JSON.stringify(extraAction)};
-    extraAction.forEach(item=>{
-      if(item.url.indexOf("3KSjXqQabiTuD1cJ28QskrpWoBKT")>-1) item.color = avatarItem.fruit.indexOf('100')!==-1?"#3ccab5":"#f8eed7";
-      if(!item.where||(item.where&&location.origin.indexOf(item.where)>-1)){
-        $Query("#tool-bars-left").append(\`
-        <div class="tool_bar rightRadius" style="background:\${item.color||'#f7bb10'}" data-url="\${item.url}">
-          <img src="\${item.icon}" />
-        </div>\`)
+      function formHide(){
+        $Query('.edit-form').animate({bottom:"-500vh"},function(){
+          $Query(".edit-form").hide();
+        });
       }
-    })
-  }
 
-  $Query('.tool_bar.rightRadius').on('click',function(){
-    const url = $Query(this).data('url');
-    copyToClip('${$.url}','链接复制成功');
-    window.open(url+'?ptKey=' + encodeURIComponent(getCookie(\`pt_pin\`)));
-  })
+      $Query('#form-cancel').on('click',function(){
+        formHide();
+      })
+
+      $Query("#copyCk").on('click',function(){
+        const username = $Query(".cus-active").data("name")+'';
+        const copyValue = jd_ck.find(item=>item.userName===username);
+        copyToClip(copyValue.cookie,\`\${copyValue.nickname||username}-CK复制成功\`);
+      })
+      
+      function cusShowToast(message,callback){
+        $Query("#toast").html(\`<li class="info">\${message}</li>\`).fadeIn();
+        setTimeout(function() {
+          $Query("#toast").html("").fadeOut();
+          if(callback)callback()
+        },2000);
+      }
+
+      function maskVisible(visible){
+        if(visible){
+          $Query('#mask').show();
+        }
+        $Query('#cus-mask').animate({top:visible?"50%":"-500vh"},function(){
+          if(!visible){
+            $Query('#mask').hide();
+            $Query('.edit-form').hide();
+            $Query('.edit-form').animate({bottom:"-500vh"});
+          }
+        });
+      }
+
+      function fillInput(){
+        const sbBtn = $Query('#jd_account');
+        const cuMobile = sbBtn.data('value');
+        console.log('快速填充号码：'+ cuMobile);
+        const input = document.getElementsByClassName('acc-input mobile J_ping')[0];
+        input.value = cuMobile;
+        ev = document.createEvent("HTMLEvents");
+        ev.initEvent("input", true,false );
+        input.dispatchEvent(ev);
+        maskVisible(false);
+      }
+
+      function clearAllCookie() {
+          var keys = document.cookie.match(/[^ =;]+(?=\\=)/g);
+          if (keys) {
+              for (var i = keys.length; i--;){
+                document.cookie = keys[i] + '=;path=/;domain=.jd.com;expires=' + new Date(0).toUTCString()
+              }
+          }
+      }
+
+    function btnSubmit(ptKey=false){
+      let cuName;
+
+      if(!ptKey){
+        const sbBtn = $Query('#jd_account');
+        if(!sbBtn) return alert("请选择需要登陆的账号");
+        cuName = sbBtn.data('name');
+      }
+      
+      const userName = ptKey||cuName;
+      const login_ck = jd_ck.find(item=>item.username===\`\${userName}\`);
+      if(!login_ck) return alert("未找到相关账号");
+
+      let [ pt_key , pt_pin ] = login_ck.cookie.split(";");
+      pt_key = pt_key.split("=");
+      pt_pin = pt_pin.split("=");
+      clearAllCookie();
+      setCookie(pt_key[0],pt_key[1]);
+      setCookie(pt_pin[0],pt_pin[1]);
+      window.location.reload();
+    }
+
+
+    function setCookie(cname,cvalue){
+        var ed = new Date();
+        const mt = ed.getMonth()+1;
+        ed.setMonth(mt);
+        var expires = "expires="+ed.toGMTString();
+        var after = window.location.host.split(".");
+        after = after[after.length-1];
+        document.cookie = cname+"="+cvalue+"; "+expires+"; path=/; domain=.jingxi.com";
+        document.cookie = cname+"="+cvalue+"; "+expires+"; path=/; domain=.jd.com";
+        document.cookie = cname+"="+cvalue+"; "+expires+"; path=/; domain=.jd." + after;
+    }
+
+    function getQueryVariable(variable){
+      var query = window.location.search.substring(1);
+      var vars = query.split("&");
+      for (var i=0;i<vars.length;i++) {
+              var pair = vars[i].split("=");
+              if(pair[0] == variable){return pair[1];}
+      }
+      return false;
+    }
+
+    function getCookie(cname){
+        var name = cname + "=";
+        var ca = document.cookie.split(';');
+        for(var i=0; i<ca.length; i++) {
+            var c = ca[i].trim();
+            if (c.indexOf(name)==0) { return c.substring(name.length,c.length); }
+        }
+        return "";
+    }
+
+
+    function copyToClip(text,notify=false){
+      navigator.clipboard.writeText(text);
+      if(notify)cusShowToast(notify);
+    }
+
+    $Query('#mask').on('click',function(){
+      $Query("#jf_mask,#cus-mask").animate({top:"-500vh"},function(){
+        formHide();
+        $Query('#mask').hide();
+      }) 
+    })
+
+    function runBoxJSScript(url,callback){
+    const body = {"url":url,"isRemote":true};
+    $Query.ajax({
+      method:"post",
+      timeout: 10000,
+      url:"//boxjs.${boxjs_host}/api/runScript",
+      data:JSON.stringify(body),
+      contentType:'application/x-www-form-urlencoded; charset=UTF-8',
+      success:callback
+    })
+    }
+
+    $Query('.async').on('click',function(){
+      const qlConfig = \`${qlConfig}\`
+      if(qlConfig){
+        $Query('.async').addClass('loading');
+        runBoxJSScript('https://raw.githubusercontent.com/dompling/Script/master/jd/ql_sync_box.js',(result)=>{
+          console.log(result)
+          $Query('.async').removeClass('loading');
+          cusShowToast("账号数据刷新成功",()=>{
+            if(result) window.location.reload();
+          })
+        });
+      }else{
+        $Query('.async').addClass('loading');
+        runBoxJSScript('https://raw.githubusercontent.com/dompling/Script/master/jd/jd_cookie_search.js',(res)=>{
+          $Query('.async').removeClass('loading');
+          cusShowToast("账号数据刷新成功",()=>{
+            if(res) window.location.reload();
+          })
+        })
+      }
+      })
+
+    if(avatarItem){
+      const extraAction = ${JSON.stringify(extraAction)};
+      extraAction.forEach(item=>{
+        if(item.url.indexOf("3KSjXqQabiTuD1cJ28QskrpWoBKT")>-1) item.color = avatarItem.fruit.indexOf('100')!==-1?"#3ccab5":"#f8eed7";
+        if(!item.where||(item.where&&location.origin.indexOf(item.where)>-1)){
+          $Query("#tool-bars-left").append(\`
+          <div class="tool_bar rightRadius" style="background:\${item.color||'#f7bb10'}" data-url="\${item.url}">
+            <img src="\${item.icon}" />
+          </div>\`)
+        }
+      })
+    }
+
+    $Query('.tool_bar.rightRadius').on('click',function(){
+      const url = $Query(this).data('url');
+      copyToClip('${$.url}','链接复制成功');
+      window.open(url+'?ptKey=' + encodeURIComponent(getCookie(\`pt_pin\`)));
+    })
+  }($Query))
 
 <\/script>
 `;
