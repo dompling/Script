@@ -23,51 +23,52 @@ token 获取方式 :
 
  */
 
-const $ = new API('gist');
+const $ = new API("gist");
 
 // 存储`用户偏好`
-$.KEY_usercfgs = '#chavy_boxjs_userCfgs';
+$.KEY_usercfgs = "#chavy_boxjs_userCfgs";
 // 存储`应用会话`
-$.KEY_sessions = '#chavy_boxjs_sessions';
+$.KEY_sessions = "#chavy_boxjs_sessions";
 // 存储`应用订阅缓存`
-$.KEY_app_subCaches = '#chavy_boxjs_app_subCaches';
+$.KEY_app_subCaches = "#chavy_boxjs_app_subCaches";
 // 存储`备份索引`
-$.KEY_backups = '#chavy_boxjs_backups';
+$.KEY_backups = "#chavy_boxjs_backups";
 // 存储`当前会话` (配合切换会话, 记录当前切换到哪个会话)
-$.KEY_cursessions = '#chavy_boxjs_cur_sessions';
+$.KEY_cursessions = "#chavy_boxjs_cur_sessions";
 
-$.token = $.read('token');
-$.username = $.read('username');
-$.boxjsDomain = $.read('#boxjs_host');
-$.cacheKey = 'BoxJS-Data';
-$.desc = 'BoxJS-Data Backup';
-$.msg = '';
+$.token = $.read("token");
+$.username = $.read("username");
+$.boxjsDomain = $.read("#boxjs_host");
+$.cacheKey = "BoxJS-Data";
+$.desc = "BoxJS-Data Backup";
+$.msg = "";
+
 $.http = new HTTP({
   baseURL: `https://api.github.com`,
+  accept: `application/vnd.github+json`,
   headers: {
     Authorization: `token ${$.token}`,
-    Accept: 'application/vnd.github.v3+json',
-    'User-Agent':
-      'Mozilla/5.0 (iPhone; CPU iPhone OS 13_2_3 like Mac OS X) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/13.0.3 Mobile/15E148 Safari/604.1',
+    "User-Agent":
+      "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_4) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/81.0.4044.141 Safari/537.36",
   },
 });
 
 const cacheArr = {
-  datas: '用户数据',
-  usercfgs: '用户偏好',
-  sessions: '应用会话',
-  curSessions: '当前会话',
-  globalbaks: '备份索引',
-  appSubCaches: '应用订阅缓存',
+  datas: "用户数据",
+  usercfgs: "用户偏好",
+  sessions: "应用会话",
+  curSessions: "当前会话",
+  globalbaks: "备份索引",
+  appSubCaches: "应用订阅缓存",
 };
 
 (async () => {
-  if (!$.token || !$.username) throw '请去 boxjs 完善信息';
+  if (!$.token || !$.username) throw "请去 boxjs 完善信息";
 
   const backup = getBoxJSData();
   const gistList = await getGist();
-  console.log(gistList);
-  if (!gistList) throw new Error('请检查 Gist 账号配置');
+
+  if (!gistList) throw new Error("请检查 Gist 账号配置");
   if (gistList.message)
     throw new Error(
       `Gist 列表请求失败:${gistList.message}\n请检查 Gist 账号配置`
@@ -83,43 +84,42 @@ const cacheArr = {
     files[saveKey] = { content: JSON.stringify(backup[cacheArrKey]) };
   }
   const isBackUp = gistList.find((item) => item.description === $.desc);
+
   all_params.files = files;
+
   const response = await backGist(all_params, isBackUp);
 
   if (response.message) {
-    console.log(`结果：gist 备份失败（${response.message}❌`);
-    throw `结果：gist 备份失败（${response.message}）❌ \n`;
+    console.log(`结果：gist 备份失败（${JSON.stringify(response)}❌`);
+    throw `结果：gist 备份失败（${JSON.stringify(response)}）❌ \n`;
   } else {
     console.log(`gist 备份成功 ✅\n`);
     $.msg += `结果：gist（${$.desc}） 备份成功 ✅\n`;
   }
 })()
   .then(() => {
-    $.notify('gist 备份', '', `${$.username}：\n${$.msg}`);
+    $.notify("gist 备份", "", `${$.username}：\n${$.msg}`);
   })
   .catch((e) => {
     $.log(e);
-    $.notify('gist 备份', '', `❌${e.message || e}`);
+    $.notify("gist 备份", "", `❌${e.message || e}`);
   })
   .finally(() => {
     $.done();
   });
 
-function getGistUrl(api) {
-  return `${api}`;
-}
-
 function getGist() {
   return $.http
-    .get({ url: getGistUrl(`/users/${$.username}/gists`) })
+    .get({ url: `/users/${$.username}/gists` })
     .then((response) => JSON.parse(response.body));
 }
 
 function backGist(params, backup) {
-  const method = backup ? 'patch' : 'post';
+  const method = backup ? "patch" : "post";
+
   return $.http[method]({
-    url: getGistUrl(`/gists${backup ? '/' + backup.id : ''}`),
-    body: JSON.stringify(params),
+    url: `/gists${backup ? "/" + backup.id : ""}`,
+    body: JSON.stringify(method === "patch" ? { files: params.files } : params),
   }).then((response) => JSON.parse(response.body));
 }
 
@@ -129,10 +129,10 @@ function getUserCfgs() {
     appsubs: [],
     viewkeys: [],
     isPinedSearchBar: true,
-    httpapi: 'examplekey@127.0.0.1:6166',
-    http_backend: '',
+    httpapi: "examplekey@127.0.0.1:6166",
+    http_backend: "",
   };
-  return Object.assign(defcfgs, JSON.parse($.read($.KEY_usercfgs || '{}')));
+  return Object.assign(defcfgs, JSON.parse($.read($.KEY_usercfgs || "{}")));
 }
 
 function getSystemApps() {
@@ -294,13 +294,13 @@ function getSystemApps() {
 
 function getAppDatas(app) {
   const datas = {};
-  const nulls = [null, undefined, 'null', 'undefined'];
+  const nulls = [null, undefined, "null", "undefined"];
   if (app.keys && Array.isArray(app.keys)) {
     app.keys.forEach((key) => {
       if (/^@/.test(key)) {
         const [, objkey, path] = /^@(.*?)\.(.*?)$/.exec(key);
         try {
-          const val = JSON.parse($.read(`#${objkey}`) || '{}');
+          const val = JSON.parse($.read(`#${objkey}`) || "{}");
           datas[key] = nulls.includes(val) ? null : val[path];
         } catch (e) {
           datas[key] = null;
@@ -317,7 +317,7 @@ function getAppDatas(app) {
       if (/^@/.test(key)) {
         const [, objkey, path] = /^@(.*?)\.(.*?)$/.exec(key);
         try {
-          const val = JSON.parse($.read(`#${objkey}`) || '{}');
+          const val = JSON.parse($.read(`#${objkey}`) || "{}");
           datas[key] = nulls.includes(val) ? null : val[path];
         } catch (e) {
           datas[key] = null;
@@ -334,10 +334,10 @@ function getAppDatas(app) {
 function getBoxJSData() {
   const datas = {};
   const usercfgs = getUserCfgs();
-  const sessions = JSON.parse($.read($.KEY_sessions) || '[]');
-  const curSessions = JSON.parse($.read($.KEY_cursessions) || '{}');
-  const appSubCaches = JSON.parse($.read($.KEY_app_subCaches) || '{}');
-  const globalbaks = JSON.parse($.read($.KEY_backups) || '[]');
+  const sessions = JSON.parse($.read($.KEY_sessions) || "[]");
+  const curSessions = JSON.parse($.read($.KEY_cursessions) || "{}");
+  const appSubCaches = JSON.parse($.read($.KEY_app_subCaches) || "{}");
+  const globalbaks = JSON.parse($.read($.KEY_backups) || "[]");
   const sysapps = getSystemApps();
 
   // 把 `内置应用`和`订阅应用` 里需要持久化属性放到`datas`
@@ -360,13 +360,13 @@ function getBoxJSData() {
 }
 
 function ENV() {
-  const isQX = typeof $task !== 'undefined';
-  const isLoon = typeof $loon !== 'undefined';
-  const isSurge = typeof $httpClient !== 'undefined' && !isLoon;
-  const isJSBox = typeof require == 'function' && typeof $jsbox != 'undefined';
-  const isNode = typeof require == 'function' && !isJSBox;
-  const isRequest = typeof $request !== 'undefined';
-  const isScriptable = typeof importModule !== 'undefined';
+  const isQX = typeof $task !== "undefined";
+  const isLoon = typeof $loon !== "undefined";
+  const isSurge = typeof $httpClient !== "undefined" && !isLoon;
+  const isJSBox = typeof require == "function" && typeof $jsbox != "undefined";
+  const isNode = typeof require == "function" && !isJSBox;
+  const isRequest = typeof $request !== "undefined";
+  const isScriptable = typeof importModule !== "undefined";
   return {
     isQX,
     isLoon,
@@ -380,27 +380,27 @@ function ENV() {
 
 function HTTP(
   defaultOptions = {
-    baseURL: '',
+    baseURL: "",
   }
 ) {
   const { isQX, isLoon, isSurge, isScriptable, isNode } = ENV();
-  const methods = ['GET', 'POST', 'PUT', 'DELETE', 'HEAD', 'OPTIONS', 'PATCH'];
+  const methods = ["GET", "POST", "PUT", "DELETE", "HEAD", "OPTIONS", "PATCH"];
   const URL_REGEX =
     /https?:\/\/(www\.)?[-a-zA-Z0-9@:%._\+~#=]{1,256}\.[a-zA-Z0-9()]{1,6}\b([-a-zA-Z0-9()@:%_\+.~#?&//=]*)/;
 
   function send(method, options) {
     options =
-      typeof options === 'string'
+      typeof options === "string"
         ? {
             url: options,
           }
         : options;
     const baseURL = defaultOptions.baseURL;
-    if (baseURL && !URL_REGEX.test(options.url || '')) {
+    if (baseURL && !URL_REGEX.test(options.url || "")) {
       options.url = baseURL ? baseURL + options.url : options.url;
     }
-    if (options.body && options.headers && !options.headers['Content-Type']) {
-      options.headers['Content-Type'] = 'application/x-www-form-urlencoded';
+    if (options.body && options.headers && !options.headers["Content-Type"]) {
+      options.headers["Content-Type"] = "application/x-www-form-urlencoded";
     }
     options = {
       ...defaultOptions,
@@ -426,7 +426,7 @@ function HTTP(
       });
     } else if (isLoon || isSurge || isNode) {
       worker = new Promise((resolve, reject) => {
-        const request = isNode ? require('request') : $httpClient;
+        const request = isNode ? require("request") : $httpClient;
         request[method.toLowerCase()](options, (err, response, body) => {
           if (err) reject(err);
           else
@@ -486,7 +486,7 @@ function HTTP(
   return http;
 }
 
-function API(name = 'untitled', debug = false) {
+function API(name = "untitled", debug = false) {
   const { isQX, isLoon, isSurge, isNode, isJSBox, isScriptable } = ENV();
   return new (class {
     constructor(name, debug) {
@@ -498,7 +498,7 @@ function API(name = 'untitled', debug = false) {
 
       this.node = (() => {
         if (isNode) {
-          const fs = require('fs');
+          const fs = require("fs");
 
           return {
             fs,
@@ -524,19 +524,19 @@ function API(name = 'untitled', debug = false) {
     // persistence
     // initialize cache
     initCache() {
-      if (isQX) this.cache = JSON.parse($prefs.valueForKey(this.name) || '{}');
+      if (isQX) this.cache = JSON.parse($prefs.valueForKey(this.name) || "{}");
       if (isLoon || isSurge)
-        this.cache = JSON.parse($persistentStore.read(this.name) || '{}');
+        this.cache = JSON.parse($persistentStore.read(this.name) || "{}");
 
       if (isNode) {
         // create a json for root cache
-        let fpath = 'root.json';
+        let fpath = "root.json";
         if (!this.node.fs.existsSync(fpath)) {
           this.node.fs.writeFileSync(
             fpath,
             JSON.stringify({}),
             {
-              flag: 'wx',
+              flag: "wx",
             },
             (err) => console.log(err)
           );
@@ -550,7 +550,7 @@ function API(name = 'untitled', debug = false) {
             fpath,
             JSON.stringify({}),
             {
-              flag: 'wx',
+              flag: "wx",
             },
             (err) => console.log(err)
           );
@@ -573,15 +573,15 @@ function API(name = 'untitled', debug = false) {
           `${this.name}.json`,
           data,
           {
-            flag: 'w',
+            flag: "w",
           },
           (err) => console.log(err)
         );
         this.node.fs.writeFileSync(
-          'root.json',
+          "root.json",
           JSON.stringify(this.root, null, 2),
           {
-            flag: 'w',
+            flag: "w",
           },
           (err) => console.log(err)
         );
@@ -590,7 +590,7 @@ function API(name = 'untitled', debug = false) {
 
     write(data, key) {
       this.log(`SET ${key}`);
-      if (key.indexOf('#') !== -1) {
+      if (key.indexOf("#") !== -1) {
         key = key.substr(1);
         if (isSurge || isLoon) {
           return $persistentStore.write(data, key);
@@ -609,7 +609,7 @@ function API(name = 'untitled', debug = false) {
 
     read(key) {
       this.log(`READ ${key}`);
-      if (key.indexOf('#') !== -1) {
+      if (key.indexOf("#") !== -1) {
         key = key.substr(1);
         if (isSurge || isLoon) {
           return $persistentStore.read(key);
@@ -627,7 +627,7 @@ function API(name = 'untitled', debug = false) {
 
     delete(key) {
       this.log(`DELETE ${key}`);
-      if (key.indexOf('#') !== -1) {
+      if (key.indexOf("#") !== -1) {
         key = key.substr(1);
         if (isSurge || isLoon) {
           return $persistentStore.write(null, key);
@@ -645,16 +645,16 @@ function API(name = 'untitled', debug = false) {
     }
 
     // notification
-    notify(title, subtitle = '', content = '', options = {}) {
-      const openURL = options['open-url'];
-      const mediaURL = options['media-url'];
+    notify(title, subtitle = "", content = "", options = {}) {
+      const openURL = options["open-url"];
+      const mediaURL = options["media-url"];
 
       if (isQX) $notify(title, subtitle, content, options);
       if (isSurge) {
         $notification.post(
           title,
           subtitle,
-          content + `${mediaURL ? '\n多媒体:' + mediaURL : ''}`,
+          content + `${mediaURL ? "\n多媒体:" + mediaURL : ""}`,
           {
             url: openURL,
           }
@@ -662,9 +662,9 @@ function API(name = 'untitled', debug = false) {
       }
       if (isLoon) {
         let opts = {};
-        if (openURL) opts['openUrl'] = openURL;
-        if (mediaURL) opts['mediaUrl'] = mediaURL;
-        if (JSON.stringify(opts) === '{}') {
+        if (openURL) opts["openUrl"] = openURL;
+        if (mediaURL) opts["mediaUrl"] = mediaURL;
+        if (JSON.stringify(opts) === "{}") {
           $notification.post(title, subtitle, content);
         } else {
           $notification.post(title, subtitle, content, opts);
@@ -673,13 +673,13 @@ function API(name = 'untitled', debug = false) {
       if (isNode || isScriptable) {
         const content_ =
           content +
-          (openURL ? `\n点击跳转: ${openURL}` : '') +
-          (mediaURL ? `\n多媒体: ${mediaURL}` : '');
+          (openURL ? `\n点击跳转: ${openURL}` : "") +
+          (mediaURL ? `\n多媒体: ${mediaURL}` : "");
         if (isJSBox) {
-          const push = require('push');
+          const push = require("push");
           push.schedule({
             title: title,
-            body: (subtitle ? subtitle + '\n' : '') + content_,
+            body: (subtitle ? subtitle + "\n" : "") + content_,
           });
         } else {
           console.log(`${title}\n${subtitle}\n${content_}\n\n`);
@@ -708,7 +708,7 @@ function API(name = 'untitled', debug = false) {
       if (isQX || isLoon || isSurge) {
         $done(value);
       } else if (isNode && !isJSBox) {
-        if (typeof $context !== 'undefined') {
+        if (typeof $context !== "undefined") {
           $context.headers = value.headers;
           $context.statusCode = value.statusCode;
           $context.body = value.body;
@@ -717,13 +717,13 @@ function API(name = 'untitled', debug = false) {
     }
 
     stringify(obj_or_str) {
-      if (typeof obj_or_str === 'string' || obj_or_str instanceof String)
+      if (typeof obj_or_str === "string" || obj_or_str instanceof String)
         return obj_or_str;
       else
         try {
           return JSON.stringify(obj_or_str, null, 2);
         } catch (err) {
-          return '[object Object]';
+          return "[object Object]";
         }
     }
   })(name, debug);
