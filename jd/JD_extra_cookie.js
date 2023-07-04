@@ -38,59 +38,59 @@ http-request ^https:\/\/api\.m\.jd\.com\/client\.action\?functionId=newUserInfo 
 
  */
 
-const APIKey = 'CookiesJD';
-const $ = new API('ql', false);
+const APIKey = "CookiesJD";
+const $ = new API("ql", false);
 const CacheKey = `#${APIKey}`;
-$.KEY_sessions = '#chavy_boxjs_sessions';
+$.KEY_sessions = "#chavy_boxjs_sessions";
 
-const jdHelp = JSON.parse($.read('#jd_ck_remark') || '{}');
+const jdHelp = JSON.parse($.read("#jd_ck_remark") || "{}");
 let remark = [];
 try {
-  remark = JSON.parse(jdHelp.remark || '[]');
+  remark = JSON.parse(jdHelp.remark || "[]");
 } catch (e) {
   console.log(e);
 }
 
 function getUsername(ck) {
-  if (!ck) return '';
+  if (!ck) return "";
   return decodeURIComponent(ck.match(/pin=(.+?);/)[1]);
 }
 
 async function getScriptUrl() {
   const response = await $.http.get({
-    url: 'https://raw.githubusercontent.com/dompling/Script/master/jd/ql_api.js',
+    url: "https://raw.githubusercontent.com/dompling/Script/master/jd/ql_api.js",
   });
   return response.body;
 }
 
-const mute = '#cks_get_mute';
+const mute = "#cks_get_mute";
 $.mute = $.read(mute);
 
 function getSessions() {
   const sessionstr = $.read($.KEY_sessions);
-  const sessions = ![undefined, null, 'null', ''].includes(sessionstr)
+  const sessions = ![undefined, null, "null", ""].includes(sessionstr)
     ? JSON.parse(sessionstr)
     : [];
   return Array.isArray(sessions) ? sessions : [];
 }
 
 const allConfig = getSessions()
-  .filter((item) => item.appId === 'ql')
+  .filter((item) => item && item.appId === "ql")
   .map((item) => {
     const temp = {};
     item.datas.forEach((data) => {
-      const [, idKey] = data.key.replace('@').split('.');
-      if (idKey !== 'env') temp[idKey] = data.val;
+      const [, idKey] = data.key.replace("@").split(".");
+      if (idKey !== "env") temp[idKey] = data.val;
     });
     return temp;
   });
 
 (async () => {
-  const ql_script = (await getScriptUrl()) || '';
+  const ql_script = (await getScriptUrl()) || "";
   eval(ql_script);
 
   if ($.ql) {
-    $.ql.asyncCookie = async (cookieValue, name = 'JD_WSCK') => {
+    $.ql.asyncCookie = async (cookieValue, name = "JD_WSCK") => {
       try {
         await $.ql.login();
         console.log(`青龙${name}登陆同步`);
@@ -102,15 +102,15 @@ const allConfig = getSessions()
           (item) => getUsername(item.value) === DecodeName
         );
         if (current && current.value === cookieValue) {
-          console.log('该账号无需更新');
+          console.log("该账号无需更新");
           return;
         }
 
-        let remarks = '';
+        let remarks = "";
         remarks = remark.find((item) => item.username === DecodeName);
         if (remarks) {
           remarks =
-            name === 'JD_WSCK'
+            name === "JD_WSCK"
               ? remarks.nickname
               : `${remarks.nickname}&${remarks.remark}&${remarks.qywxUserId}`;
         }
@@ -132,18 +132,18 @@ const allConfig = getSessions()
           ]);
         }
         console.log(JSON.stringify(response));
-        if ($.mute === 'true' && response.code === 200) {
+        if ($.mute === "true" && response.code === 200) {
           return console.log(
-            '用户名: ' + DecodeName + `同步${name}更新青龙成功🎉`
+            "用户名: " + DecodeName + `同步${name}更新青龙成功🎉`
           );
         } else if (response.code === 200) {
           $.notify(
-            '用户名: ' + DecodeName,
+            "用户名: " + DecodeName,
             $.ql_config.ip,
             `同步${name}更新青龙成功🎉`
           );
         } else {
-          console.log('青龙同步失败');
+          console.log("青龙同步失败");
         }
       } catch (e) {
         console.log(e);
@@ -160,33 +160,33 @@ const allConfig = getSessions()
   });
 
 function getCache() {
-  return JSON.parse($.read(CacheKey) || '[]');
+  return JSON.parse($.read(CacheKey) || "[]");
 }
 
 function updateJDHelp(username) {
   if (remark.length) {
     const newRemark = remark.map((item) => {
       if (item.username === username) {
-        return { ...item, status: '正常' };
+        return { ...item, status: "正常" };
       }
       return item;
     });
     jdHelp.remark = JSON.stringify(newRemark, null, `\t`);
-    $.write(JSON.stringify(jdHelp), '#jd_ck_remark');
+    $.write(JSON.stringify(jdHelp), "#jd_ck_remark");
   }
 }
 
 async function GetCookie() {
-  const CV = `${$request.headers['Cookie'] || $request.headers['cookie']};`;
+  const CV = `${$request.headers["Cookie"] || $request.headers["cookie"]};`;
 
   if (
-    ($request.url.indexOf('GetJDUserInfoUnion') > -1 &&
-      $request.url.indexOf('isLogin') === -1) ||
-    $request.url.indexOf('openUpgrade') > -1
+    ($request.url.indexOf("GetJDUserInfoUnion") > -1 &&
+      $request.url.indexOf("isLogin") === -1) ||
+    $request.url.indexOf("openUpgrade") > -1
   ) {
     if (CV.match(/(pt_key=.+?pt_pin=|pt_pin=.+?pt_key=)/)) {
       const CookieValue = CV.match(/pt_key=.+?;/) + CV.match(/pt_pin=.+?;/);
-      if (CookieValue.indexOf('fake_') > -1) return console.log('异常账号');
+      if (CookieValue.indexOf("fake_") > -1) return console.log("异常账号");
       const DecodeName = getUsername(CookieValue);
       let updateIndex = null,
         CookieName,
@@ -203,7 +203,7 @@ async function GetCookie() {
         for (const item of allConfig) {
           $.ql_config = item;
           $.ql.initial();
-          await $.ql.asyncCookie(CookieValue, 'JD_COOKIE');
+          await $.ql.asyncCookie(CookieValue, "JD_COOKIE");
         }
       }
 
@@ -212,42 +212,42 @@ async function GetCookie() {
         // if (response && response.retcode === '0')
         //   return console.log('cookie 未过期，无需更新')
         updateCookiesData[updateIndex].cookie = CookieValue;
-        CookieName = '【账号' + (updateIndex + 1) + '】';
-        tipPrefix = '更新京东';
+        CookieName = "【账号" + (updateIndex + 1) + "】";
+        tipPrefix = "更新京东";
       } else {
         updateCookiesData.push({
           userName: DecodeName,
           cookie: CookieValue,
         });
-        CookieName = '【账号' + updateCookiesData.length + '】';
-        tipPrefix = '首次写入京东';
+        CookieName = "【账号" + updateCookiesData.length + "】";
+        tipPrefix = "首次写入京东";
       }
       const cacheValue = JSON.stringify(updateCookiesData, null, `\t`);
       $.write(cacheValue, CacheKey);
       updateJDHelp(DecodeName);
 
-      if ($.mute === 'true') {
+      if ($.mute === "true") {
         return console.log(
-          '用户名: ' + DecodeName + tipPrefix + CookieName + 'Cookie成功 🎉'
+          "用户名: " + DecodeName + tipPrefix + CookieName + "Cookie成功 🎉"
         );
       }
       $.notify(
-        '用户名: ' + DecodeName,
-        '',
-        tipPrefix + CookieName + 'Cookie成功 🎉',
-        { 'update-pasteboard': CookieValue }
+        "用户名: " + DecodeName,
+        "",
+        tipPrefix + CookieName + "Cookie成功 🎉",
+        { "update-pasteboard": CookieValue }
       );
     } else {
-      console.log('ck 写入失败，未找到相关 ck');
+      console.log("ck 写入失败，未找到相关 ck");
     }
-  } else if ($request.headers && $request.url.indexOf('newUserInfo') > -1) {
+  } else if ($request.headers && $request.url.indexOf("newUserInfo") > -1) {
     if (CV.match(/wskey=([^=;]+?);/)[1]) {
       const wskey = CV.match(/wskey=([^=;]+?);/)[1];
       console.log($response);
       const respBody = JSON.parse($response.body);
       const pin = respBody.userInfoSns.unickName;
       const code = `wskey=${wskey};pt_pin=${pin};`;
-      
+
       const username = getUsername(code);
       const CookiesData = getCache();
       let updateIndex = false;
@@ -279,24 +279,24 @@ async function GetCookie() {
         text = `修改`;
       }
       $.write(JSON.stringify(CookiesData, null, `\t`), CacheKey);
-      if ($.mute === 'true') {
-        return console.log('用户名: ' + username + `${text}wskey成功 🎉`);
+      if ($.mute === "true") {
+        return console.log("用户名: " + username + `${text}wskey成功 🎉`);
       }
-      return $.notify('用户名: ' + username, '', `${text}wskey成功 🎉`, {
-        'update-pasteboard': code,
+      return $.notify("用户名: " + username, "", `${text}wskey成功 🎉`, {
+        "update-pasteboard": code,
       });
     }
   } else {
-    console.log('未匹配到相关信息，退出抓包');
+    console.log("未匹配到相关信息，退出抓包");
   }
 }
 
 async function TotalBean(Cookie) {
   const opt = {
-    url: 'https://me-api.jd.com/user_new/info/GetJDUserInfoUnion?sceneval=2&sceneval=2&g_login_type=1&g_ty=ls&isLogin=1',
+    url: "https://me-api.jd.com/user_new/info/GetJDUserInfoUnion?sceneval=2&sceneval=2&g_login_type=1&g_ty=ls&isLogin=1",
     headers: {
       cookie: Cookie,
-      Referer: 'https://home.m.jd.com/',
+      Referer: "https://home.m.jd.com/",
     },
   };
   return $.http.get(opt).then((response) => {
@@ -309,26 +309,26 @@ async function TotalBean(Cookie) {
 }
 
 function ENV() {
-  const isQX = typeof $task !== 'undefined';
-  const isLoon = typeof $loon !== 'undefined';
-  const isSurge = typeof $httpClient !== 'undefined' && !isLoon;
-  const isJSBox = typeof require == 'function' && typeof $jsbox != 'undefined';
-  const isNode = typeof require == 'function' && !isJSBox;
-  const isRequest = typeof $request !== 'undefined';
-  const isScriptable = typeof importModule !== 'undefined';
+  const isQX = typeof $task !== "undefined";
+  const isLoon = typeof $loon !== "undefined";
+  const isSurge = typeof $httpClient !== "undefined" && !isLoon;
+  const isJSBox = typeof require == "function" && typeof $jsbox != "undefined";
+  const isNode = typeof require == "function" && !isJSBox;
+  const isRequest = typeof $request !== "undefined";
+  const isScriptable = typeof importModule !== "undefined";
   return { isQX, isLoon, isSurge, isNode, isJSBox, isRequest, isScriptable };
 }
 
-function HTTP(defaultOptions = { baseURL: '' }) {
+function HTTP(defaultOptions = { baseURL: "" }) {
   const { isQX, isLoon, isSurge, isScriptable, isNode } = ENV();
-  const methods = ['GET', 'POST', 'PUT', 'DELETE', 'HEAD', 'OPTIONS', 'PATCH'];
+  const methods = ["GET", "POST", "PUT", "DELETE", "HEAD", "OPTIONS", "PATCH"];
   const URL_REGEX =
     /https?:\/\/(www\.)?[-a-zA-Z0-9@:%._\+~#=]{1,256}\.[a-zA-Z0-9()]{1,6}\b([-a-zA-Z0-9()@:%_\+.~#?&//=]*)/;
 
   function send(method, options) {
-    options = typeof options === 'string' ? { url: options } : options;
+    options = typeof options === "string" ? { url: options } : options;
     const baseURL = defaultOptions.baseURL;
-    if (baseURL && !URL_REGEX.test(options.url || '')) {
+    if (baseURL && !URL_REGEX.test(options.url || "")) {
       options.url = baseURL ? baseURL + options.url : options.url;
     }
     options = { ...defaultOptions, ...options };
@@ -349,7 +349,7 @@ function HTTP(defaultOptions = { baseURL: '' }) {
       worker = $task.fetch({ method, ...options });
     } else if (isLoon || isSurge || isNode) {
       worker = new Promise((resolve, reject) => {
-        const request = isNode ? require('request') : $httpClient;
+        const request = isNode ? require("request") : $httpClient;
         request[method.toLowerCase()](options, (err, response, body) => {
           if (err) reject(err);
           else
@@ -409,7 +409,7 @@ function HTTP(defaultOptions = { baseURL: '' }) {
   return http;
 }
 
-function API(name = 'untitled', debug = false) {
+function API(name = "untitled", debug = false) {
   const { isQX, isLoon, isSurge, isNode, isJSBox, isScriptable } = ENV();
   return new (class {
     constructor(name, debug) {
@@ -421,7 +421,7 @@ function API(name = 'untitled', debug = false) {
 
       this.node = (() => {
         if (isNode) {
-          const fs = require('fs');
+          const fs = require("fs");
 
           return {
             fs,
@@ -448,18 +448,18 @@ function API(name = 'untitled', debug = false) {
 
     // initialize cache
     initCache() {
-      if (isQX) this.cache = JSON.parse($prefs.valueForKey(this.name) || '{}');
+      if (isQX) this.cache = JSON.parse($prefs.valueForKey(this.name) || "{}");
       if (isLoon || isSurge)
-        this.cache = JSON.parse($persistentStore.read(this.name) || '{}');
+        this.cache = JSON.parse($persistentStore.read(this.name) || "{}");
 
       if (isNode) {
         // create a json for root cache
-        let fpath = 'root.json';
+        let fpath = "root.json";
         if (!this.node.fs.existsSync(fpath)) {
           this.node.fs.writeFileSync(
             fpath,
             JSON.stringify({}),
-            { flag: 'wx' },
+            { flag: "wx" },
             (err) => console.log(err)
           );
         }
@@ -471,7 +471,7 @@ function API(name = 'untitled', debug = false) {
           this.node.fs.writeFileSync(
             fpath,
             JSON.stringify({}),
-            { flag: 'wx' },
+            { flag: "wx" },
             (err) => console.log(err)
           );
           this.cache = {};
@@ -492,13 +492,13 @@ function API(name = 'untitled', debug = false) {
         this.node.fs.writeFileSync(
           `${this.name}.json`,
           data,
-          { flag: 'w' },
+          { flag: "w" },
           (err) => console.log(err)
         );
         this.node.fs.writeFileSync(
-          'root.json',
+          "root.json",
           JSON.stringify(this.root),
-          { flag: 'w' },
+          { flag: "w" },
           (err) => console.log(err)
         );
       }
@@ -506,7 +506,7 @@ function API(name = 'untitled', debug = false) {
 
     write(data, key) {
       this.log(`SET ${key}`);
-      if (key.indexOf('#') !== -1) {
+      if (key.indexOf("#") !== -1) {
         key = key.substr(1);
         if (isSurge || isLoon) {
           return $persistentStore.write(data, key);
@@ -525,7 +525,7 @@ function API(name = 'untitled', debug = false) {
 
     read(key) {
       this.log(`READ ${key}`);
-      if (key.indexOf('#') !== -1) {
+      if (key.indexOf("#") !== -1) {
         key = key.substr(1);
         if (isSurge || isLoon) {
           return $persistentStore.read(key);
@@ -543,7 +543,7 @@ function API(name = 'untitled', debug = false) {
 
     delete(key) {
       this.log(`DELETE ${key}`);
-      if (key.indexOf('#') !== -1) {
+      if (key.indexOf("#") !== -1) {
         key = key.substr(1);
         if (isSurge || isLoon) {
           return $persistentStore.write(null, key);
@@ -561,16 +561,16 @@ function API(name = 'untitled', debug = false) {
     }
 
     // notification
-    notify(title, subtitle = '', content = '', options = {}) {
-      const openURL = options['open-url'];
-      const mediaURL = options['media-url'];
+    notify(title, subtitle = "", content = "", options = {}) {
+      const openURL = options["open-url"];
+      const mediaURL = options["media-url"];
 
       if (isQX) $notify(title, subtitle, content, options);
       if (isSurge) {
         $notification.post(
           title,
           subtitle,
-          content + `${mediaURL ? '\n多媒体:' + mediaURL : ''}`,
+          content + `${mediaURL ? "\n多媒体:" + mediaURL : ""}`,
           {
             url: openURL,
           }
@@ -578,9 +578,9 @@ function API(name = 'untitled', debug = false) {
       }
       if (isLoon) {
         let opts = {};
-        if (openURL) opts['openUrl'] = openURL;
-        if (mediaURL) opts['mediaUrl'] = mediaURL;
-        if (JSON.stringify(opts) == '{}') {
+        if (openURL) opts["openUrl"] = openURL;
+        if (mediaURL) opts["mediaUrl"] = mediaURL;
+        if (JSON.stringify(opts) == "{}") {
           $notification.post(title, subtitle, content);
         } else {
           $notification.post(title, subtitle, content, opts);
@@ -589,13 +589,13 @@ function API(name = 'untitled', debug = false) {
       if (isNode || isScriptable) {
         const content_ =
           content +
-          (openURL ? `\n点击跳转: ${openURL}` : '') +
-          (mediaURL ? `\n多媒体: ${mediaURL}` : '');
+          (openURL ? `\n点击跳转: ${openURL}` : "") +
+          (mediaURL ? `\n多媒体: ${mediaURL}` : "");
         if (isJSBox) {
-          const push = require('push');
+          const push = require("push");
           push.schedule({
             title: title,
-            body: (subtitle ? subtitle + '\n' : '') + content_,
+            body: (subtitle ? subtitle + "\n" : "") + content_,
           });
         } else {
           console.log(`${title}\n${subtitle}\n${content_}\n\n`);
@@ -613,7 +613,7 @@ function API(name = 'untitled', debug = false) {
     }
 
     error(msg) {
-      console.log('ERROR: ' + msg);
+      console.log("ERROR: " + msg);
     }
 
     wait(millisec) {
@@ -624,7 +624,7 @@ function API(name = 'untitled', debug = false) {
       if (isQX || isLoon || isSurge) {
         $done(value);
       } else if (isNode && !isJSBox) {
-        if (typeof $context !== 'undefined') {
+        if (typeof $context !== "undefined") {
           $context.headers = value.headers;
           $context.statusCode = value.statusCode;
           $context.body = value.body;
