@@ -3,7 +3,7 @@
  * 作者：@Peng-YM，@qwerzl
  * 节点名改为花里胡哨字体，仅支持英文字符和数字
  *
- * 仓库：https://raw.githubusercontent.com/qwerzl，https://raw.githubusercontent.com/Peng-YM
+ * 仓库：https://github.com/qwerzl，https://github.com/Peng-YM
  *
  * 【字体】
  * 可参考：https://www.dute.org/weird-fonts
