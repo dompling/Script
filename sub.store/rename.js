@@ -206,20 +206,19 @@ function operator(proxies) {
         }
       });
       res.name = [...`${prefix}${resultArray.join(" ")}${suffix}`]
-        .map((c) => {
-          if (/[a-zA-Z0-9]/.test(c)) {
-            const code = c.charCodeAt(0);
-            const index = INDEX[code];
-            if (isNumber(code) && font.num) {
-              return TABLE[font.num][index];
-            } else {
-              return TABLE[font.type][index];
-            }
-          }
-          return c;
-        })
+        // .map((c) => {
+        //   if (/[a-zA-Z0-9]/.test(c)) {
+        //     const code = c.charCodeAt(0);
+        //     const index = INDEX[code];
+        //     if (isNumber(code) && font.num) {
+        //       return TABLE[font.num][index];
+        //     } else {
+        //       return TABLE[font.type][index];
+        //     }
+        //   }
+        //   return c;
+        // })
         .join("");
-        
     } catch (error) {
       console.log(error);
     }
