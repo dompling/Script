@@ -178,48 +178,51 @@ function isNumber(code) {
 // 主函数
 function operator(proxies) {
   proxies.map((res) => {
-    const resultArray = [];
-    var matched = false;
-    for (const elem of Object.keys(countries)) {
-      if (simplify(res.name).indexOf(elem) !== -1) {
-        countries[elem][1] += 1;
-        if (!autofill) {
-          resultArray.push(countries[elem][0], countries[elem][1]);
-        } else {
-          resultArray.push(
-            countries[elem][0],
-            countries[elem][1].toString().padStart(autofill, "0")
-          );
-        }
-        // console.log(resultArray);
-        matched = true;
-        break;
-      }
-    }
-    if (!matched) {
-      resultArray.push(res.name);
-    }
-    Object.keys(others).forEach((elem, index) => {
-      if (simplify(res.name).indexOf(elem) !== -1) {
-        resultArray.splice(2, 0, others[elem]);
-      }
-    });
-    res.name = `${prefix}${resultArray.join(" ")}${suffix}`;
-
-    res.name = [...res.name]
-      .map((c) => {
-        if (/[a-zA-Z0-9]/.test(c)) {
-          const code = c.charCodeAt(0);
-          const index = INDEX[code];
-          if (isNumber(code) && font.num) {
-            return TABLE[font.num][index];
+    try {
+      const resultArray = [];
+      var matched = false;
+      for (const elem of Object.keys(countries)) {
+        if (simplify(res.name).indexOf(elem) !== -1) {
+          countries[elem][1] += 1;
+          if (!autofill) {
+            resultArray.push(countries[elem][0], countries[elem][1]);
           } else {
-            return TABLE[font.type][index];
+            resultArray.push(
+              countries[elem][0],
+              countries[elem][1].toString().padStart(autofill, "0")
+            );
           }
+          // console.log(resultArray);
+          matched = true;
+          break;
         }
-        return c;
-      })
-      .join("");
+      }
+      if (!matched) {
+        resultArray.push(res.name);
+      }
+      Object.keys(others).forEach((elem, index) => {
+        if (simplify(res.name).indexOf(elem) !== -1) {
+          resultArray.splice(2, 0, others[elem]);
+        }
+      });
+      res.name = [...`${prefix}${resultArray.join(" ")}${suffix}`]
+        .map((c) => {
+          if (/[a-zA-Z0-9]/.test(c)) {
+            const code = c.charCodeAt(0);
+            const index = INDEX[code];
+            if (isNumber(code) && font.num) {
+              return TABLE[font.num][index];
+            } else {
+              return TABLE[font.type][index];
+            }
+          }
+          return c;
+        })
+        .join("");
+        
+    } catch (error) {
+      console.log(error);
+    }
   });
 
   if ($arguments.del1) proxies = stripOnes(proxies);
