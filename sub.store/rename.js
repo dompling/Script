@@ -62,6 +62,11 @@ const TABLE = {
 // prettier-ignore
 const INDEX = { "48": 0, "49": 1, "50": 2, "51": 3, "52": 4, "53": 5, "54": 6, "55": 7, "56": 8, "57": 9, "65": 36, "66": 37, "67": 38, "68": 39, "69": 40, "70": 41, "71": 42, "72": 43, "73": 44, "74": 45, "75": 46, "76": 47, "77": 48, "78": 49, "79": 50, "80": 51, "81": 52, "82": 53, "83": 54, "84": 55, "85": 56, "86": 57, "87": 58, "88": 59, "89": 60, "90": 61, "97": 10, "98": 11, "99": 12, "100": 13, "101": 14, "102": 15, "103": 16, "104": 17, "105": 18, "106": 19, "107": 20, "108": 21, "109": 22, "110": 23, "111": 24, "112": 25, "113": 26, "114": 27, "115": 28, "116": 29, "117": 30, "118": 31, "119": 32, "120": 33, "121": 34, "122": 35 };
 
+const font = {
+  type: $arguments.type || "serif-italic",
+  num: $arguments.num || "circle-regular",
+};
+
 switch ($arguments["input"]) {
   case "enShort":
     var inputList = enShort;
@@ -206,10 +211,10 @@ function operator(proxies) {
         if (/[a-zA-Z0-9]/.test(c)) {
           const code = c.charCodeAt(0);
           const index = INDEX[code];
-          if (isNumber(code) && num) {
-            return TABLE[num][index];
+          if (isNumber(code) && font.num) {
+            return TABLE[font.num][index];
           } else {
-            return TABLE[type][index];
+            return TABLE[font.type][index];
           }
         }
         return c;
