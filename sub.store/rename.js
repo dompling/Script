@@ -22,7 +22,7 @@
  *  2.【output】: zh,enShort,enShort3,enFull （默认 zh） 输出规则，如果节点名称与输入规则匹配，重命名之后为相关结果
  *  3.【prefix】: 重命名之后的前缀（可置空）
  *  4.【suffix】: 重命名之后的后缀（可置空）
- * 
+ *
  * https://raw.githubusercontent.com/dompling/Script/master/sub.store/rename.js#input=zh&output=zh&prefix={前缀}&suffix={后缀}&del1&type=serif-bold&num=circle-regular
  */
 
@@ -164,6 +164,10 @@ function simplify(cc) {
     else str += cc.charAt(i);
   }
   return str;
+}
+
+function isNumber(code) {
+  return code >= 48 && code <= 57;
 }
 
 // 主函数
