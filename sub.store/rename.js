@@ -205,7 +205,7 @@ function operator(proxies) {
           resultArray.splice(2, 0, others[elem]);
         }
       });
-      res.name = [...`${prefix}${resultArray.join(" ")}${suffix}`]
+      res.name = `${resultArray.join(" ")}`
         // .map((c) => {
         //   if (/[a-zA-Z0-9]/.test(c)) {
         //     const code = c.charCodeAt(0);
@@ -218,7 +218,7 @@ function operator(proxies) {
         //   }
         //   return c;
         // })
-        .join("");
+        // .join("");
     } catch (error) {
       console.log(error);
     }
