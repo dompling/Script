@@ -1429,7 +1429,7 @@ function createHeader() {
       t = createHTML(),
       i = `\n${n}\n${t}\n${e}\n`;
 
-    $.html = $.html.replace("$.downloadAppPlugInOpenApp", "$.test");
+    $.html = $.html.replace("$.downloadAppPlugInOpenApp", "console.log");
 
     const headerTag = createHeader();
     $.html = $.html.replace(/(<head>)/, `$1${headerTag}`);
