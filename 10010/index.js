@@ -30,7 +30,7 @@ $ = new API(APIKey, true);
 if ($request) GetCookie();
 
 function GetCookie() {
-  const cookie = $request.headers.Cookie;
+  const cookie = $request.headers.Cookie || $request.headers.cookie;
   $.log($request.headers);
   if (cookie && cookie.indexOf('JSESSIONID') > -1) {
     $.write(cookie, 'cookie');
