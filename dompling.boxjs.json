@@ -16,6 +16,38 @@
       ]
     },
     {
+      "id": "Spotify",
+      "name": "Spotify歌词翻译",
+      "keys": ["BaiDu_APP_ID", "BaiDu_SECURITY_KEY"],
+      "author": "@dompling",
+      "descs_html":[
+        "<ol>注册百度翻译个人开发者: <a href=\"http://api.fanyi.baidu.com/register\">开发者注册</a></ol>",
+        "<ol>注册后如果需要认证可自行选择是否实人认证(高级版需要验证)</ol>",
+        "<ol>开通(通用翻译)API服务: <a href=\"https://fanyi-api.baidu.com/choose\">服务开通</a></ol>",
+        "<ol>appid和密钥: <a href=\"http://api.fanyi.baidu.com/manage/developer\">获取 APP_ID、SECURITY_KEY</a></ol>"
+      ],
+      "settings": [
+        {
+          "id": "BaiDu_APP_ID",
+          "name": "百度 APP_ID",
+          "val": null,
+          "type": "text",
+          "desc": "APP_ID"
+        },
+        {
+          "id": "BaiDu_SECURITY_KEY",
+          "name": "百度 SECURITY_KEY",
+          "val": null,
+          "type": "text",
+          "desc": "SECURITY_KEY"
+        }
+      ],
+      "icons": [
+        "https://open.spotifycdn.com/cdn/images/favicon.0f31d2ea.ico",
+        "https://open.spotifycdn.com/cdn/images/favicon.0f31d2ea.ico"
+      ]
+    },
+    {
       "id": "gistBackup",
       "name": "Gist备份",
       "keys": ["@gist.token", "@gist.username"],
