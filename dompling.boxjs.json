@@ -1,15 +1,15 @@
 {
-  "id": "dompling.app.sub",
+  "id": "dompling(Stard).app.sub",
   "name": "DomplingYaYa 应用订阅",
   "author": "@DomplingYaYa",
   "icon": "https://avatars3.githubusercontent.com/u/23498579?s=460&u=1e87605e4abc4e6ecf3edd8b1d730227f54db4d4&v=4",
-  "repo": "https://github.com/dompling/Script",
+  "repo": "https://github.com/zmyLiuFeng/Script",
   "apps": [
     {
       "id": "10010Ck",
       "name": "中国联通",
       "keys": ["@YaYa_10010.cookie"],
-      "author": "@dompling",
+      "author": "@zmyLiuFeng",
       "icons": [
         "https://raw.githubusercontent.com/Orz-3/mini/master/Alpha/10010.png",
         "https://raw.githubusercontent.com/Orz-3/mini/master/Color/10010.png"
@@ -19,7 +19,7 @@
       "id": "Spotify",
       "name": "Spotify歌词翻译",
       "keys": ["BaiDu_APP_ID", "BaiDu_SECURITY_KEY"],
-      "author": "@dompling",
+      "author": "@zmyLiuFeng",
       "descs_html":[
         "<ol>注册百度翻译个人开发者: <a href=\"http://api.fanyi.baidu.com/register\">开发者注册</a></ol>",
         "<ol>注册后如果需要认证可自行选择是否实人认证(高级版需要验证)</ol>",
@@ -51,7 +51,7 @@
       "id": "gistBackup",
       "name": "Gist备份",
       "keys": ["@gist.token", "@gist.username"],
-      "author": "@dompling",
+      "author": "@zmyLiuFeng",
       "icons": [
         "https://raw.githubusercontent.com/Former-Years/icon/master/github-bf.png",
         "https://raw.githubusercontent.com/Former-Years/icon/master/github-bf.png"
@@ -63,11 +63,11 @@
       "scripts": [
         {
           "name": "备份 Gist",
-          "script": "https://raw.githubusercontent.com/dompling/Script/master/gist/backup.js"
+          "script": "https://raw.githubusercontent.com/zmyLiuFeng/Script/master/gist/backup.js"
         },
         {
           "name": "从 Gist 恢复",
-          "script": "https://raw.githubusercontent.com/dompling/Script/master/gist/restore.js"
+          "script": "https://raw.githubusercontent.com/zmyLiuFeng/Script/master/gist/restore.js"
         }
       ],
       "settings": [
@@ -97,7 +97,7 @@
         "https://scriptablejs.gitee.io/store/favicon.ico",
         "https://scriptablejs.gitee.io/store/favicon.ico"
       ],
-      "author": "@dompling",
+      "author": "@zmyLiuFeng",
       "repo": ""
     },
     {
@@ -161,27 +161,27 @@
         }
       ],
       "icons": [
-        "https://raw.githubusercontent.com/dompling/Script/master/image/ql.png",
-        "https://raw.githubusercontent.com/dompling/Script/master/image/ql.png"
+        "https://raw.githubusercontent.com/zmyLiuFeng/Script/master/image/ql.png",
+        "https://raw.githubusercontent.com/zmyLiuFeng/Script/master/image/ql.png"
       ],
-      "author": "@dompling",
-      "repo": "https://github.com/dompling/Script/blob/master/jd/ql_cookie_sync.js",
+      "author": "@zmyLiuFeng",
+      "repo": "https://github.com/zmyLiuFeng/Script/blob/master/jd/ql_cookie_sync.js",
       "scripts": [
         {
           "name": "青龙同步到BoxJS(京东 Ck)",
-          "script": "https://raw.githubusercontent.com/dompling/Script/master/jd/ql_sync_box.js"
+          "script": "https://raw.githubusercontent.com/zmyLiuFeng/Script/master/jd/ql_sync_box.js"
         },
         {
           "name": "BoxJS同步到青龙(京东 Ck)",
-          "script": "https://raw.githubusercontent.com/dompling/Script/master/jd/ql_cookie_sync.js"
+          "script": "https://raw.githubusercontent.com/zmyLiuFeng/Script/master/jd/ql_cookie_sync.js"
         },
         {
           "name": "备份环境变量",
-          "script": "https://raw.githubusercontent.com/dompling/Script/master/jd/ql_env_back.js"
+          "script": "https://raw.githubusercontent.com/zmyLiuFeng/Script/master/jd/ql_env_back.js"
         },
         {
           "name": "恢复备份环境变量",
-          "script": "https://raw.githubusercontent.com/dompling/Script/master/jd/ql_env_upload.js"
+          "script": "https://raw.githubusercontent.com/zmyLiuFeng/Script/master/jd/ql_env_upload.js"
         }
       ],
       "descs_html": [
@@ -197,7 +197,7 @@
       "keys": ["CookieIndex", "@jd_ck_remark.remark", "@jd_ck_remark.mute"],
       "descs_html": [
         "若需要方便浏览：右上角菜单->打开调试模式->调试页面地址",
-        "<a href='https://raw.githubusercontent.com/dompling/chavyleung-boxjs/boxjs/box/chavy.boxjs.html' target='_blank'>调试页面地址</a>"
+        "<a href='https://raw.githubusercontent.com/zmyLiuFeng/chavyleung-boxjs/boxjs/box/chavy.boxjs.html' target='_blank'>调试页面地址</a>"
       ],
       "settings": [
         {
@@ -335,9 +335,9 @@
         "https://raw.githubusercontent.com/Orz-3/mini/master/jd.png",
         "https://raw.githubusercontent.com/Orz-3/task/master/jd.png"
       ],
-      "author": "@dompling",
-      "repo": "https://github.com/dompling/Script/blob/master/jd/jd_cookie_search.js",
-      "script": "https://raw.githubusercontent.com/dompling/Script/master/jd/jd_cookie_search.js"
+      "author": "@zmyLiuFeng",
+      "repo": "https://github.com/zmyLiuFeng/Script/blob/master/jd/jd_cookie_search.js",
+      "script": "https://raw.githubusercontent.com/zmyLiuFeng/Script/master/jd/jd_cookie_search.js"
     },
     {
       "id": "JD_Cookies",
@@ -345,7 +345,7 @@
       "keys": ["CookiesJD", "cks_get_mute"],
       "descs_html": [
         "若需要方便浏览：右上角菜单->打开调试模式->调试页面地址",
-        "<a href='https://raw.githubusercontent.com/dompling/chavyleung-boxjs/boxjs/box/chavy.boxjs.html' target='_blank'>调试页面地址</a>"
+        "<a href='https://raw.githubusercontent.com/zmyLiuFeng/chavyleung-boxjs/boxjs/box/chavy.boxjs.html' target='_blank'>调试页面地址</a>"
       ],
       "settings": [
         {
@@ -378,16 +378,16 @@
         "https://raw.githubusercontent.com/Orz-3/mini/master/jd.png",
         "https://raw.githubusercontent.com/Orz-3/task/master/jd.png"
       ],
-      "author": "@dompling",
-      "repo": "https://github.com/dompling/Script/blob/master/jd/JD_extra.js",
+      "author": "@zmyLiuFeng",
+      "repo": "https://github.com/zmyLiuFeng/Script/blob/master/jd/JD_extra.js",
       "scripts": [
         {
           "name": "京东签到",
-          "script": "https://raw.githubusercontent.com/dompling/Script/master/jd/JD_extra_sign.js"
+          "script": "https://raw.githubusercontent.com/zmyLiuFeng/Script/master/jd/JD_extra_sign.js"
         },
         {
           "name": "删除相关 ck",
-          "script": "https://raw.githubusercontent.com/dompling/Script/master/jd/jd_ck_del.js"
+          "script": "https://raw.githubusercontent.com/zmyLiuFeng/Script/master/jd/jd_ck_del.js"
         }
       ]
     },
@@ -395,7 +395,7 @@
       "id": "ftms",
       "name": "丰田汽车",
       "keys": ["@ftms.headers", "@ftms.mute"],
-      "author": "@dompling",
+      "author": "@zmyLiuFeng",
       "settings": [
         {
           "id": "@ftms.mute",
@@ -406,8 +406,8 @@
         }
       ],
       "icons": [
-        "https://raw.githubusercontent.com/dompling/Scriptable/master/images/ftms.png",
-        "https://raw.githubusercontent.com/dompling/Scriptable/master/images/ftms.png"
+        "https://raw.githubusercontent.com/zmyLiuFeng/Scriptable/master/images/ftms.png",
+        "https://raw.githubusercontent.com/zmyLiuFeng/Scriptable/master/images/ftms.png"
       ]
     }
   ]
