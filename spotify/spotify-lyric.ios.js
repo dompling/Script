@@ -75,7 +75,7 @@ class ColorLyricsResponse$Type extends MessageType{constructor(){super("ColorLyr
     return $done({});
   }
 
-  const binaryBody = $.isQX ? new Uint8Array($response.bodyBytes) : $response.body;
+  const binaryBody = $.env.isQX ? new Uint8Array($response.bodyBytes) : $response.body;
 
   if (!binaryBody) return $done({});
 
@@ -153,7 +153,7 @@ class ColorLyricsResponse$Type extends MessageType{constructor(){super("ColorLyr
   colorLyricsResponseObj.lyrics.lines = lines;
   const body = ColorLyricsResponse.toBinary(colorLyricsResponseObj);
 
-  if (!$.isQX) return $done({ body });
+  if (!$.env.isQX) return $done({ body });
   
   return $done({
     bodyBytes: body.buffer.slice(
