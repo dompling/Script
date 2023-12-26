@@ -18,9 +18,17 @@
     {
       "id": "Spotify",
       "name": "Spotify歌词翻译",
-      "keys": ["BaiDu_APP_ID", "BaiDu_SECURITY_KEY"],
+      "keys": [
+        "BaiDu_APP_ID",
+        "BaiDu_SECURITY_KEY",
+        "@Spotify.spotifyToken",
+        "@Spotify.spotifyTo163Ids",
+        "@Spotify.spotifyTo163Lyics",
+        "@Spotify.clientId",
+        "@Spotify.clientSecret"
+      ],
       "author": "@dompling",
-      "descs_html":[
+      "descs_html": [
         "<ol>注册百度翻译个人开发者: <a href=\"http://api.fanyi.baidu.com/register\">开发者注册</a></ol>",
         "<ol>注册后如果需要认证可自行选择是否实人认证(高级版需要验证)</ol>",
         "<ol>开通(通用翻译)API服务: <a href=\"https://fanyi-api.baidu.com/choose\">服务开通</a></ol>",
@@ -40,6 +48,34 @@
           "val": null,
           "type": "text",
           "desc": "SECURITY_KEY"
+        },
+        {
+          "id": "@Spotify.music163",
+          "name": "网易云歌词",
+          "val": true,
+          "type": "boolean",
+          "desc": "开启时，当歌曲无歌词时，自动在网易云搜索歌词匹配"
+        },
+        {
+          "id": "@Spotify.cacheLyics",
+          "name": "缓存歌词",
+          "val": true,
+          "type": "boolean",
+          "desc": "读取到第三方音乐的歌词时，自动缓存"
+        },
+        {
+          "id": "@Spotify.clientId",
+          "name": "Spotify ClientId",
+          "val": null,
+          "type": "text",
+          "desc": "ClientId"
+        },
+        {
+          "id": "@Spotify.clientSecret",
+          "name": "Spotify ClientSecret",
+          "val": null,
+          "type": "text",
+          "desc": "ClientSecret"
         }
       ],
       "icons": [
@@ -370,7 +406,7 @@
           "autoGrow": false,
           "rows": 8,
           "desc": "CK 列表 (JSON 格式)",
-          "primary":["userName"],
+          "primary": ["userName"],
           "child": []
         }
       ],
