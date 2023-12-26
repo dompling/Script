@@ -29,10 +29,14 @@
       ],
       "author": "@dompling",
       "descs_html": [
+        "<h2>百度翻译 API</h2>",
         "<ol>注册百度翻译个人开发者: <a href=\"http://api.fanyi.baidu.com/register\">开发者注册</a></ol>",
         "<ol>注册后如果需要认证可自行选择是否实人认证(高级版需要验证)</ol>",
         "<ol>开通(通用翻译)API服务: <a href=\"https://fanyi-api.baidu.com/choose\">服务开通</a></ol>",
-        "<ol>appid和密钥: <a href=\"http://api.fanyi.baidu.com/manage/developer\">获取 APP_ID、SECURITY_KEY</a></ol>"
+        "<ol>appid和密钥: <a href=\"http://api.fanyi.baidu.com/manage/developer\">获取 APP_ID、SECURITY_KEY</a></ol>",
+        "<h2>Spotify API</h2>",
+        "<ol>登录: <a href=\"https://developer.spotify.com/dashboard\">开发者</a></ol>",
+        "<ol>创建APP: <a href=\"https://developer.spotify.com/dashboard/create\">开发者</a></ol>"
       ],
       "settings": [
         {
