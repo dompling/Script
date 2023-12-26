@@ -21,6 +21,8 @@
       "keys": [
         "BaiDu_APP_ID",
         "BaiDu_SECURITY_KEY",
+        "@Spotify.music163",
+        "@Spotify.cacheLyics",
         "@Spotify.spotifyToken",
         "@Spotify.spotifyTo163Ids",
         "@Spotify.spotifyTo163Lyics",
