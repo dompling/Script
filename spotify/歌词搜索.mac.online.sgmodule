@@ -1,0 +1,15 @@
+#!name=🟢 歌词搜索
+#!desc=Spotify 歌词翻译
+#!system=mac
+
+[Script]
+
+# 修改下方argument中的appid和securityKey,填入自己的appid和密钥
+spotify歌词翻译 = type=http-request,pattern=^https:\/\/spclient\.wg\.spotify\.com\/color-lyrics\/v2\/track\/,requires-body=1,max-size=0,script-path=https://raw.githubusercontent.com/dompling/Script/master/spotify/spotify-lyric.search.js
+
+[General]
+force-http-engine-hosts = %APPEND% spclient.wg.spotify.com
+
+[MITM]
+
+hostname = %APPEND% spclient.wg.spotify.com
