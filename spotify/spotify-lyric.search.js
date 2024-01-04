@@ -465,7 +465,7 @@ const Platform = {
     },
   },
 };
-const isIOS = $request.headers["app-platform"] === "iOS";
+const isIOS = ($request.headers["app-platform"]||$request.headers["App-Platform"]) === "iOS";
 $.response = isIOS ? Platform.IOS : Platform.MAC;
 const baseUrl = "https://spclient.wg.spotify.com/color-lyrics/v2/track/";
 
@@ -484,7 +484,10 @@ const baseUrl = "https://spclient.wg.spotify.com/color-lyrics/v2/track/";
     trackId = trackId.split("/")[0];
   }
 
+
+  $request.headers["Accept"] = "application/json";
   $request.headers["accept"] = "application/json";
+  
   let colorLyricsResponseObj = await $.http
     .get($request)
     .then((response) => response.body);
@@ -636,6 +639,8 @@ const baseUrl = "https://spclient.wg.spotify.com/color-lyrics/v2/track/";
 
   
 function getResult(body) {
+  console.log(JSON.stringify(body));
+  console.log(isIOS);
   if (!isIOS) {
     $.response.body = JSON.stringify(body);
     return $.response;
@@ -644,10 +649,12 @@ function getResult(body) {
   let binaryBody = ColorLyricsResponse.fromBinary($response.body, {
     readUnknownField: true,
   });
-  
+  console.log(binaryBody.lyrics.lines);
   binaryBody.lyrics.lines = body.lyrics.lines;
+  console.log("=====================");
+  console.log(binaryBody.lyrics.lines);
   // binaryBody.colors = body.colors;
-  // console.log(binaryBody);
+  console.log(binaryBody);
   let result = ColorLyricsResponse.toBinary(binaryBody);
   
   if (!$.env.isQX) {
