@@ -484,9 +484,10 @@ const baseUrl = "https://spclient.wg.spotify.com/color-lyrics/v2/track/";
     trackId = trackId.split("/")[0];
   }
 
-
+  if($.env.isQX){
   $request.headers["Accept"] = "application/json";
-  $request.headers["accept"] = "application/json";
+  } else{
+  $request.headers["accept"] = "application/json";}
   
   let colorLyricsResponseObj = await $.http
     .get($request)
