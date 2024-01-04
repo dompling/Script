@@ -620,7 +620,17 @@ const baseUrl = "https://spclient.wg.spotify.com/color-lyrics/v2/track/";
   .catch((e) => {
     console.log(`脚本异常：` + JSON.stringify(e));
     $.response.status = 404;
-    $.response.body = undefined;
+    $.response.body = {
+      lyrics: {
+        lines: [
+          {
+            words: JSON.stringify(e) || "未找到歌词或脚本运行异常",
+            startTimeMs: 0,
+          },
+        ],
+      },
+    };
+    getResult($.response.body);
     return isIOS ? $.done($.response) : $.done({ response: $.response });
   });
 
