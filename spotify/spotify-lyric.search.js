@@ -317,7 +317,17 @@ const baseUrl = "https://spclient.wg.spotify.com/color-lyrics/v2/track/";
   .catch((e) => {
     console.log(`脚本异常：` + JSON.stringify(e));
     $.response.status = 404;
-    $.response.body = null;
+    $.response.body = {
+      lyrics: {
+        lines: [
+          {
+            words: JSON.stringify(e),
+            startTimeMs: "0",
+          },
+        ],
+      },
+    };
+    getResult($.response.body)
     return isIOS ? $.done($.response) : $.done({ response: $.response });
   });
 
@@ -407,16 +417,17 @@ async function searchMusic(spotifyTrackId) {
 
       $.log163("m163Tracks:获取成功");
       const tracks = m163Tracks.result.songs
-      // .filter((item) => {
-      //   return (
-      //     tAlbumName.indexOf(item.artists[0].name) ||
-      //     item.artists[0].name.indexOf(tAlbumName)
-      //   );
-      // });
+        .filter((item) => {
+          return tName === item.name;
+        })
+        .map((item) => item.id);
+      if (!tracks.length) {
+        return {};
+      }
+
       $.log163("tracks size:" + tracks.length);
-      const id = tracks[0].id;
       trackItem = {
-        id: id,
+        id: tracks,
         tAlbumName,
         tName,
       };
@@ -424,8 +435,18 @@ async function searchMusic(spotifyTrackId) {
       $.write($.cacheIds, cacheKey.ids);
     }
     
-    const lyics = await getMusic163Lyics(trackItem.id);
-    
+    let lyics;
+    if (typeof trackItem.id === "string") {
+      lyics = await getMusic163Lyics(trackItem.id);
+    } else {
+      for (const item of trackItem.id) {
+        lyics = await getMusic163Lyics(item);
+        if (lyics.lrc.lyric) {
+          break;
+        }
+      }
+    }
+     
     if (lyics.code !== 200) {
       $.log163(lyics);
       return {};
