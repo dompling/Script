@@ -186,7 +186,9 @@ const baseUrl = "https://spclient.wg.spotify.com/color-lyrics/v2/track/";
   // let colorLyricsResponseObj = ColorLyricsResponse.fromBinary($response.body, {
   //   readUnknownField: true,
   // });
-  let colorLyricsResponseObj = null;
+  let colorLyricsResponseObj = $.http
+    .get($request)
+    .then((response) => response.body);
 
   if (!colorLyricsResponseObj) {
     $.log163("网易云歌词搜索");
