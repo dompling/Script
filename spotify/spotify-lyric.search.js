@@ -70,87 +70,19 @@ class ColorLyricsResponse$Type extends MessageType {
       // { no: 2, name: "colors", kind: "message", T: () => ColorsResponse },
     ]);
   }
-  create(e) {
-    var n = {};
-    return (
-      globalThis.Object.defineProperty(n, MESSAGE_TYPE, {
-        enumerable: !1,
-        value: this,
-      }),
-      void 0 !== e && reflectionMergePartial(this, n, e),
-      n
-    );
-  }
-  internalBinaryRead(e, n, r, i) {
-    for (var a = null != i ? i : this.create(), t = e.pos + n; e.pos < t; ) {
-      var [s, l] = e.tag();
-      switch (s) {
-        case 1: {
-          a.lyrics = LyricsResponse.internalBinaryRead(
-            e,
-            e.uint32(),
-            r,
-            a.lyrics
-          );
-          break;
-        }
-        // case 2: {
-          // a.colors = ColorsResponse.internalBinaryRead(
-          //   e,
-          //   e.uint32(),
-          //   r,
-          //   a.colors
-          // );
-        //   break;
-        // }
-        default: {
-          var o = r.readUnknownField;
-          if ("throw" === o)
-            throw new globalThis.Error(
-              `Unknown field ${s}(wire type ${l})for` + this.typeName
-            );
-          var d = e.skip(l);
-          if (o !== false)
-            (o === true ? UnknownFieldHandler.onRead : o)(
-              this.typeName,
-              a,
-              s,
-              l,
-              d
-            );
-        }
-      }
-    }
-    return a;
-  }
-  internalBinaryWrite(e, n, r) {
-    e.lyrics &&
-      LyricsResponse.internalBinaryWrite(
-        e.lyrics,
-        n.tag(1, WireType.LengthDelimited).fork(),
-        r
-      ).join();
-      
-    // e.colors &&
-    //   ColorsResponse.internalBinaryWrite(
-    //     e.colors,
-    //     n.tag(1, WireType.LengthDelimited).fork(),
-    //     r
-    //   ).join();  
-    
-    r = r.writeUnknownFields;
-    return (
-      !1 !== r &&
-        (1 == r ? UnknownFieldHandler.onWrite : r)(this.typeName, e, n),
-      n
-    );
-  }
 }
+
 const ColorLyricsResponse = new ColorLyricsResponse$Type();
 class LyricsResponse$Type extends MessageType {
   constructor() {
     super("LyricsResponse", [
-      { no: 2, name: "lines", kind: "message", repeat: 1, T: () => LyricsLine },
+      {
+        no: 2,
+        name: "lines",
+        kind: "message",
+        repeat: RepeatType.PACKED,
+        T: () => LyricsLine,
+      },
       {
         no: 9,
         name: "alternatives",
@@ -158,72 +90,8 @@ class LyricsResponse$Type extends MessageType {
         repeat: 1,
         T: () => Alternative,
       },
-      { no: 10, name: "language", kind: "scalar", T: 9 },
+      { no: 10, name: "language", kind: "scalar", T: ScalarType.STRING },
     ]);
-  }
-  create(e) {
-    var n = { lines: [], alternatives: [], language: "" };
-    return (
-      globalThis.Object.defineProperty(n, MESSAGE_TYPE, {
-        enumerable: !1,
-        value: this,
-      }),
-      void 0 !== e && reflectionMergePartial(this, n, e),
-      n
-    );
-  }
-  internalBinaryRead(e, n, r, i) {
-    for (var a = null != i ? i : this.create(), t = e.pos + n; e.pos < t; ) {
-      var [s, l] = e.tag();
-      switch (s) {
-        case 2:
-          a.lines.push(LyricsLine.internalBinaryRead(e, e.uint32(), r));
-          break;
-        case 9:
-          a.alternatives.push(Alternative.internalBinaryRead(e, e.uint32(), r));
-          break;
-        case 10:
-          a.language = e.string();
-          break;
-        default:
-          var o = r.readUnknownField;
-          if ("throw" === o)
-            throw new globalThis.Error(
-              `Unknown field ${s}(wire type ${l})for` + this.typeName
-            );
-          var d = e.skip(l);
-          !1 !== o &&
-            (!0 === o ? UnknownFieldHandler.onRead : o)(
-              this.typeName,
-              a,
-              s,
-              l,
-              d
-            );
-      }
-    }
-    return a;
-  }
-  internalBinaryWrite(n, r, i) {
-    for (let e = 0; e < n.lines.length; e++)
-      LyricsLine.internalBinaryWrite(
-        n.lines[e],
-        r.tag(2, WireType.LengthDelimited).fork(),
-        i
-      ).join();
-    for (let e = 0; e < n.alternatives.length; e++)
-      Alternative.internalBinaryWrite(
-        n.alternatives[e],
-        r.tag(9, WireType.LengthDelimited).fork(),
-        i
-      ).join();
-    "" !== n.language && r.tag(10, WireType.LengthDelimited).string(n.language);
-    var e = i.writeUnknownFields;
-    return (
-      !1 !== e &&
-        (1 == e ? UnknownFieldHandler.onWrite : e)(this.typeName, n, r),
-      r
-    );
   }
 }
 const LyricsResponse = new LyricsResponse$Type();
@@ -231,122 +99,23 @@ class LyricsLine$Type extends MessageType {
   constructor() {
     super("LyricsLine", [
       { no: 1, name: "startTimeMs", kind: "scalar", T: ScalarType.INT32 },
-      { no: 2, name: "words", kind: "scalar", T: 9 },
+      { no: 2, name: "words", kind: "scalar", T: ScalarType.STRING },
     ]);
-  }
-  create(e) {
-    var n = { words: "", startTimeMs: 0 };
-    return (
-      globalThis.Object.defineProperty(n, MESSAGE_TYPE, {
-        enumerable: !1,
-        value: this,
-      }),
-      void 0 !== e && reflectionMergePartial(this, n, e),
-      n
-    );
-  }
-  internalBinaryRead(reader, length, options, target) {
-    const message = target ?? this.create();
-    const end = reader.pos + length;
-    while (reader.pos < end) {
-      const [fieldNo, wireType] = reader.tag();
-      switch (fieldNo) {
-        case 1:
-          message.startTimeMs = reader.int32();
-          break;
-        case 2:
-          message.words = reader.string();
-          break;
-        default:
-          const u = options.readUnknownField;
-          if (u === "throw")
-            throw new globalThis.Error(
-              `Unknown field ${fieldNo}(wire type ${wireType})for ${this.typeName}`
-            );
-          const d = reader.skip(wireType);
-          if (u !== false)
-            (u === true ? UnknownFieldHandler.onRead : u)(
-              this.typeName,
-              message,
-              fieldNo,
-              wireType,
-              d
-            );
-      }
-    }
-    return message;
-  }
-  internalBinaryWrite(e, n, r) {
-    "" !== e.words && n.tag(2, WireType.LengthDelimited).string(e.words);
-    0 !== e.startTimeMs &&
-      n.tag(1, WireType.Varint).int32(Number(e.startTimeMs));
-
-    r = r.writeUnknownFields;
-    return (
-      !1 !== r &&
-        (1 == r ? UnknownFieldHandler.onWrite : r)(this.typeName, e, n),
-      n
-    );
   }
 }
 const LyricsLine = new LyricsLine$Type();
 class Alternative$Type extends MessageType {
   constructor() {
     super("Alternative", [
-      { no: 1, name: "language", kind: "scalar", T: 9 },
-      { no: 2, name: "lines", kind: "scalar", repeat: 2, T: 9 },
+      { no: 1, name: "language", kind: "scalar", T: ScalarType.STRING },
+      {
+        no: 2,
+        name: "lines",
+        kind: "scalar",
+        repeat: RepeatType.UNPACKED,
+        T: ScalarType.STRING,
+      },
     ]);
-  }
-  create(e) {
-    var n = { language: "", lines: [] };
-    return (
-      globalThis.Object.defineProperty(n, MESSAGE_TYPE, {
-        enumerable: !1,
-        value: this,
-      }),
-      void 0 !== e && reflectionMergePartial(this, n, e),
-      n
-    );
-  }
-  internalBinaryRead(e, n, r, i) {
-    for (var a = null != i ? i : this.create(), t = e.pos + n; e.pos < t; ) {
-      var [s, l] = e.tag();
-      switch (s) {
-        case 1:
-          a.language = e.string();
-          break;
-        case 2:
-          a.lines.push(e.string());
-          break;
-        default:
-          var o = r.readUnknownField;
-          if ("throw" === o)
-            throw new globalThis.Error(
-              `Unknown field ${s}(wire type ${l})for` + this.typeName
-            );
-          var d = e.skip(l);
-          !1 !== o &&
-            (!0 === o ? UnknownFieldHandler.onRead : o)(
-              this.typeName,
-              a,
-              s,
-              l,
-              d
-            );
-      }
-    }
-    return a;
-  }
-  internalBinaryWrite(n, r, e) {
-    "" !== n.language && r.tag(1, WireType.LengthDelimited).string(n.language);
-    for (let e = 0; e < n.lines.length; e++)
-      r.tag(2, WireType.LengthDelimited).string(n.lines[e]);
-    e = e.writeUnknownFields;
-    return (
-      !1 !== e &&
-        (1 == e ? UnknownFieldHandler.onWrite : e)(this.typeName, n, r),
-      r
-    );
   }
 }
 const Alternative = new Alternative$Type();
@@ -357,62 +126,6 @@ class Colors$Type extends MessageType {
       { no: 2, name: "text", kind: "scalar", T: ScalarType.INT32 },
       { no: 3, name: "highlightText", kind: "scalar", T: ScalarType.INT32 },
     ]);
-  }
-  create(e) {
-    var n = {};
-    return (
-      globalThis.Object.defineProperty(n, MESSAGE_TYPE, {
-        enumerable: !1,
-        value: this,
-      }),
-      void 0 !== e && reflectionMergePartial(this, n, e),
-      n
-    );
-  }
-  internalBinaryRead(reader, length, options, target) {
-    const message = target ?? this.create();
-    const end = reader.pos + length;
-    while (reader.pos < end) {
-      const [fieldNo, wireType] = reader.tag();
-      switch (fieldNo) {
-        case 1:
-          message.background = reader.int32();
-          break;
-        case 2:
-          message.text = reader.int32();
-          break;
-        case 3:
-          message.highlightText = reader.int32();
-          break;
-        default:
-          const u = options.readUnknownField;
-          if (u === "throw")
-            throw new globalThis.Error(
-              `Unknown field ${fieldNo}(wire type ${wireType})for ${this.typeName}`
-            );
-          const d = reader.skip(wireType);
-          if (u !== false)
-            (u === true ? UnknownFieldHandler.onRead : u)(
-              this.typeName,
-              message,
-              fieldNo,
-              wireType,
-              d
-            );
-      }
-    }
-    return message;
-  }
-  internalBinaryWrite(e, n, r) {
-    e.background && n.tag(1, WireType.Varint).int32(e.background);
-    e.text && n.tag(1, WireType.text).int32(e.text);
-    e.highlightText && n.tag(1, WireType.Varint).int32(e.highlightText);
-    r = r.writeUnknownFields;
-    return (
-      !1 !== r &&
-        (1 == r ? UnknownFieldHandler.onWrite : r)(this.typeName, e, n),
-      n
-    );
   }
 }
 const ColorsResponse = new Colors$Type();
@@ -454,11 +167,6 @@ $.response = isIOS ? Platform.IOS : Platform.MAC;
 const baseUrl = "https://spclient.wg.spotify.com/color-lyrics/v2/track/";
 
 (async () => {
-  if (!options.appid || !options.securityKey) {
-    $.notify(notifyName, "请按备注获取百度翻译 appid 和 securityKey");
-    return $.done({});
-  }
-
   if ($request.method === "OPTIONS") {
     return $.response;
   }
@@ -473,6 +181,9 @@ const baseUrl = "https://spclient.wg.spotify.com/color-lyrics/v2/track/";
   }
 
   $request.headers["accept"] = "application/json";
+  // let colorLyricsResponseObj = ColorLyricsResponse.fromBinary($response.body, {
+  //   readUnknownField: true,
+  // });
   let colorLyricsResponseObj = await $.http
     .get($request)
     .then((response) => response.body);
@@ -486,9 +197,9 @@ const baseUrl = "https://spclient.wg.spotify.com/color-lyrics/v2/track/";
       lyrics: {
         syncType: "LINE_SYNCED",
         lines: [],
-        provider: "MusixMatch",
-        providerLyricsId: "7752053",
-        providerDisplayName: "Musixmatch",
+        provider: "Music163",
+        providerLyricsId: "163",
+        providerDisplayName: "Music163",
         syncLyricsUri: "",
         isDenseTypeface: true,
         alternatives: [],
@@ -527,6 +238,11 @@ const baseUrl = "https://spclient.wg.spotify.com/color-lyrics/v2/track/";
 
   if ("z1" === originLanguage) {
     console.log("歌词为中文,无需翻译");
+    return getResult(colorLyricsResponseObj);
+  }
+
+  if (!options.appid || !options.securityKey) {
+    console.log(notifyName, "请按备注获取百度翻译 appid 和 securityKey");
     return getResult(colorLyricsResponseObj);
   }
 
@@ -617,10 +333,7 @@ function getResult(body) {
   });
   
   binaryBody.lyrics.lines = body.lyrics.lines;
-  // binaryBody.colors = body.colors;
-  // console.log(binaryBody);
   let result = ColorLyricsResponse.toBinary(binaryBody);
-  
   if (!$.env.isQX) {
     $.response.body = result;
     return $.response;
