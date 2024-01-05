@@ -655,8 +655,6 @@ const baseUrl = "https://spclient.wg.spotify.com/color-lyrics/v2/track/";
 
   
 function getResult(body) {
-  console.log(JSON.stringify(body));
-  console.log(isIOS);
   if (!isIOS) {
     $.response.body = JSON.stringify(body);
     return $.response;
@@ -667,6 +665,8 @@ function getResult(body) {
   });
   
   binaryBody.lyrics.lines = body.lyrics.lines;
+  binaryBody.lyrics.alternatives = body.lyrics.alternatives;
+
   let result = ColorLyricsResponse.toBinary(binaryBody);
   
   if (!$.env.isQX) {
