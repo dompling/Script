@@ -665,12 +665,8 @@ function getResult(body) {
   let binaryBody = ColorLyricsResponse.fromBinary($response.body, {
     readUnknownField: true,
   });
-  console.log(binaryBody.lyrics.lines);
+  
   binaryBody.lyrics.lines = body.lyrics.lines;
-  console.log("=====================");
-  console.log(binaryBody.lyrics.lines);
-  // binaryBody.colors = body.colors;
-  console.log(binaryBody);
   let result = ColorLyricsResponse.toBinary(binaryBody);
   
   if (!$.env.isQX) {
