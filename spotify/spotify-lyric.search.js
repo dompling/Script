@@ -25,6 +25,22 @@ hostname = %APPEND% spclient.wg.spotify.com
 spotify歌词请求 = type=http-request,pattern=^https:\/\/spclient\.wg\.spotify\.com\/color-lyrics\/v2\/track\/,requires-body=1,max-size=0,script-path=https://raw.githubusercontent.com/dompling/Script/master/spotify/spotify-lyric.request.js
 spotify歌词翻译 = type=http-response,pattern=^https:\/\/spclient\.wg\.spotify\.com\/color-lyrics\/v2\/track\/,requires-body=1,binary-body-mode=1,max-size=0,script-path=https://raw.githubusercontent.com/dompling/Script/master/spotify/spotify-lyric.search.js
 
+
+2.Loon:
+[Mitm]
+hostname =spclient.wg.spotify.com
+[Script]
+http-request ^https:\/\/spclient\.wg\.spotify\.com\/color-lyrics\/v2\/track\/ script-path=https://raw.githubusercontent.com/dompling/Script/master/spotify/spotify-lyric.request.js, requires-body=true timeout=10, tag=spotify歌词请求
+http-response ^https:\/\/spclient\.wg\.spotify\.com\/color-lyrics\/v2\/track\/ script-path=https://raw.githubusercontent.com/dompling/Script/master/spotify/spotify-lyric.search.js, requires-body=true, binary-body-mode=true, timeout=10, tag=spotify歌词翻译
+
+3.qx:
+[mitm]
+hostname = spclient.wg.spotify.com
+[rewrite_local]
+^https:\/\/spclient\.wg\.spotify\.com\/color-lyrics\/v2\/track\/ url script-request-body https://raw.githubusercontent.com/dompling/Script/master/spotify/spotify-lyric.request.js
+^https:\/\/spclient\.wg\.spotify\.com\/color-lyrics\/v2\/track\/ url script-echo-response https://raw.githubusercontent.com/dompling/Script/master/spotify/spotify-lyric.search.js
+
+
 */
 
 const notifyName = "spotify歌词翻译2023.06.19";
@@ -623,13 +639,12 @@ const baseUrl = "https://spclient.wg.spotify.com/color-lyrics/v2/track/";
   })
   .catch((e) => {
     console.log(`脚本异常：` + JSON.stringify(e));
-    $.response.status = 404;
     $.response.body = {
       lyrics: {
         lines: [
           {
             words: JSON.stringify(e) || "未找到歌词或脚本运行异常",
-            startTimeMs: 0,
+            startTimeMs: `0`,
           },
         ],
       },
