@@ -890,7 +890,8 @@ function getMusic163Lyics(id163) {
 }
 
 function formatLyirc(str) {
-  const array = str.split(`\n`).filter((item) => !!item);
+  const pattern = /\[\d+\:\d+\.\d+\]/;
+  const array = str.split(`\n`).filter((item) => !!item && pattern.test(item));
   const data = {};
   array.forEach((item) => {
     try {
@@ -898,6 +899,7 @@ function formatLyirc(str) {
       value[0] = value[0].replace(`[`, "");
       const times = value[0].split(".");
       value[0] = timeToSec(times[0]) + parseInt(times[1]);
+
       data[value[0]] = value[1];
     } catch (e) {
       console.log(e);
