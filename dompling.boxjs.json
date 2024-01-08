@@ -23,6 +23,7 @@
         "BaiDu_SECURITY_KEY",
         "@Spotify.music163",
         "@Spotify.cacheLyics",
+        "@Spotify.autoTrans",
         "@Spotify.spotifyToken",
         "@Spotify.spotifyTo163Ids",
         "@Spotify.spotifyTo163Lyics",
@@ -41,6 +42,13 @@
         "<ol>创建APP: <a href=\"https://developer.spotify.com/dashboard/create\">开发者</a></ol>"
       ],
       "settings": [
+        {
+          "id": "@Spotify.autoTrans",
+          "name": "自动翻译",
+          "val": true,
+          "type": "boolean",
+          "desc": "翻译后的内容直接显示在歌词播放界面"
+        },
         {
           "id": "BaiDu_APP_ID",
           "name": "百度 APP_ID",
