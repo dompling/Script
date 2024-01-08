@@ -778,7 +778,7 @@ async function searchMusic(spotifyTrackId) {
     }
     
     let lyics;
-    if (typeof trackItem.id === "string") {
+    if (["string", "number"].includes(typeof trackItem.id)) {
       lyics = await getMusic163Lyics(trackItem.id);
     } else {
       for (const item of trackItem.id) {
