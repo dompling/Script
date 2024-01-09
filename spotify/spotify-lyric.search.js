@@ -447,12 +447,12 @@ $.response = isIOS ? Platform.IOS : Platform.MAC;
 
   if ($.read("autoTrans") !== "false" || $.read("autoTrans") === false) {
     const lines = [];
-    colorLyricsResponseObj.lyrics.lines = lines;
     colorLyricsResponseObj.lyrics.lines.forEach((line, index) => {
       lines.push(line);
       if (zhWords[index] && zhWords[index] !== "♪")
         lines.push({ ...line, words: zhWords[index] });
     });
+    colorLyricsResponseObj.lyrics.lines = lines;
   } else {
     colorLyricsResponseObj.lyrics.alternatives = [
       {
