@@ -645,7 +645,7 @@ async function searchMusic(spotifyTrackId) {
   $.log163(trackItem);
   const lrc = formatLyirc(lyicsData.lrc.lyric);
   let tlyric;
-  if (lyicsData.tlyric.lyric) {
+  if (lyicsData?.tlyric?.lyric) {
     tlyric = formatLyirc(lyicsData.tlyric.lyric);
   }
   
