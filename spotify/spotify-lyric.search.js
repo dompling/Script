@@ -360,15 +360,17 @@ $.response = isIOS ? Platform.IOS : Platform.MAC;
         authorization: $request.headers["authorization"],
       };
     }
-    let rawBody = $.env.isQX ? new Uint8Array($response?.bodyBytes ?? []) : $response?.body ?? new Uint8Array();
+    let rawBody = $.env.isQX
+      ? new Uint8Array($response?.bodyBytes ?? [])
+      : $response?.body ?? new Uint8Array();
     colorLyricsResponseObj = ColorLyricsResponse.fromBinary(rawBody);
   } else {
-     colorLyricsResponseObj = await $.http
-       .get($request)
-       .then((response) => response.body || "{}");
-      colorLyricsResponseObj = JSON.parse(colorLyricsResponseObj);
+    colorLyricsResponseObj = await $.http
+      .get($request)
+      .then((response) => response.body || "{}");
+    colorLyricsResponseObj = JSON.parse(colorLyricsResponseObj);
   }
-  
+
   if (!colorLyricsResponseObj.lyrics) {
     $.log163("网易云歌词搜索");
     try {
@@ -382,7 +384,7 @@ $.response = isIOS ? Platform.IOS : Platform.MAC;
       $.log163("未找到歌词");
       throw "未找到歌词";
     }
-  } 
+  }
 
   const originLanguage = colorLyricsResponseObj.lyrics.language;
 
@@ -461,9 +463,6 @@ $.response = isIOS ? Platform.IOS : Platform.MAC;
   }
   return getResult(colorLyricsResponseObj);
 })()
-  .then(() => {
-    return $.done($.response);
-  })
   .catch((e) => {
     console.log(`脚本异常：${e}`);
     $.response.body = {
@@ -493,8 +492,9 @@ $.response = isIOS ? Platform.IOS : Platform.MAC;
       },
       hasVocalRemoval: false,
     };
-    getResult($.response.body);
-    return $.done($.response);
+  })
+  .finally(() => {
+    return isIOS ? $.done($.response) : $.done({ response: $.response });
   });
 
 function getResult(body) {
