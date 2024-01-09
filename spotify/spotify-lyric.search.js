@@ -445,9 +445,9 @@ $.response = isIOS ? Platform.IOS : Platform.MAC;
     .map((line) => line.words)
     .map((word) => transMap.get(word) || word || "");
 
-  colorLyricsResponseObj.lyrics.lines = lines;
   if ($.read("autoTrans") !== "false" || $.read("autoTrans") === false) {
     const lines = [];
+    colorLyricsResponseObj.lyrics.lines = lines;
     colorLyricsResponseObj.lyrics.lines.forEach((line, index) => {
       lines.push(line);
       if (zhWords[index] && zhWords[index] !== "♪")
