@@ -343,6 +343,7 @@ const isIOS =
 const autoTrans =
   $.read("autoTrans") === "true" || $.read("autoTrans") === true || !isIOS;
 $.response = isIOS ? Platform.IOS : Platform.MAC;
+$.language = new Language();
 
 (async () => {
   if ($request.method === "OPTIONS") {
@@ -663,7 +664,7 @@ async function searchMusic(spotifyTrackId) {
       syncLyricsUri: "",
       isDenseTypeface: true,
       alternatives: [],
-      language: "z1",
+      language: $.language.get(trackItem.tName),
     },
     colors: {
       background: getColor(),
@@ -672,8 +673,8 @@ async function searchMusic(spotifyTrackId) {
     },
     hasVocalRemoval: false,
   };
-  
-  if (!tlyric) {
+
+  if (!tlyric || result.lyrics === "z1") {
     Object.keys(lrc).forEach((key) => {
       const item = lrc[key];
       try {
@@ -687,10 +688,8 @@ async function searchMusic(spotifyTrackId) {
         $.log163(e);
       }
     });
-    if (trackItem.tName.indexOf("%u") === -1) {
-      result.lyrics.language = "auto";
-    }
   } else {
+    result.lyrics.language = "z1";
     const alternative = {
       language: "zh",
       lines: [],
@@ -732,7 +731,6 @@ async function searchMusic(spotifyTrackId) {
       result.lyrics.alternatives.push(alternative);
     }
   }
-  console.log(result);
   return result;
 }
 
@@ -844,6 +842,35 @@ function getColor() {
     str += arr[num];
   }
   return -parseInt(str, 16);
+}
+
+function Language() {
+  return new (class {
+    isChinese(temp) {
+      var re = /[^\u4e00-\u9fa5]/;
+      if (re.test(temp)) return false;
+      return true;
+    }
+
+    isJp(temp) {
+      var re = /[^\u0800-\u4e00]/;
+      if (re.test(temp)) return false;
+      return true;
+    }
+
+    isKoera(temp) {
+      var re = /[\uac00-\ud7ff]/;
+      if (re.test(temp)) return false;
+      return true;
+    }
+
+    get(str) {
+      if (this.isChinese(str)) return "z1";
+      if (this.isJp(str)) return "jp";
+      if (this.isKoera(str)) return "ko";
+      return "auto";
+    }
+  })();
 }
 
 // prettier-ignore
