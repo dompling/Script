@@ -337,7 +337,12 @@ const Platform = {
     },
   },
 };
-const isIOS = ($request.headers["app-platform"]||$request.headers["App-Platform"]) === "iOS";
+
+const isIOS =
+  ($request.headers["app-platform"] || $request.headers["App-Platform"]) ===
+  "iOS";
+const autoTrans =
+  ($.read("autoTrans") !== "false" || $.read("autoTrans") === false) && !isIOS;
 $.response = isIOS ? Platform.IOS : Platform.MAC;
 
 (async () => {
@@ -445,7 +450,7 @@ $.response = isIOS ? Platform.IOS : Platform.MAC;
     .map((line) => line.words)
     .map((word) => transMap.get(word) || word || "");
 
-  if ($.read("autoTrans") !== "false" || $.read("autoTrans") === false) {
+  if (autoTrans) {
     const lines = [];
     colorLyricsResponseObj.lyrics.lines.forEach((line, index) => {
       lines.push(line);
@@ -696,7 +701,7 @@ async function searchMusic(spotifyTrackId) {
       const item = tlyric[key];
       const lItem = lrc[key];
       try {
-        if ($.read("autoTrans") !== "false" || $.read("autoTrans") === false) {
+        if (autoTrans) {
           result.lyrics.lines.push({
             words: lItem || "♪",
             endTimeMs: "",
