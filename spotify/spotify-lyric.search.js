@@ -310,11 +310,10 @@ const Platform = {
       : {
           "x-content-type-options": "nosniff",
           "content-type": "application/vnd.google.protobuf",
-          "mc-ttl": "3600",
+          "mc-ttl": "0",
           "strict-transport-security": "max-age=31536000",
           "mc-cache-policy": "public",
           server: "envoy",
-          "Content-Length": "1151",
           "Alt-Svc": 'h3=":443"; ma=2592000,h3-29=":443"; ma=2592000',
           "cache-control": "public, max-age=3600",
           Via: "HTTP/2 edgeproxy, 1.1 google",
@@ -342,7 +341,7 @@ const isIOS =
   ($request.headers["app-platform"] || $request.headers["App-Platform"]) ===
   "iOS";
 const autoTrans =
-  ($.read("autoTrans") !== "false" || $.read("autoTrans") === false) && !isIOS;
+  $.read("autoTrans") === "true" || $.read("autoTrans") === true || !isIOS;
 $.response = isIOS ? Platform.IOS : Platform.MAC;
 
 (async () => {
@@ -729,7 +728,9 @@ async function searchMusic(spotifyTrackId) {
         $.log163(e);
       }
     });
-    result.lyrics.alternatives.push(alternative);
+    if (!autoTrans) {
+      result.lyrics.alternatives.push(alternative);
+    }
   }
   console.log(result);
   return result;
