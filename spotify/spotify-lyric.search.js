@@ -683,6 +683,9 @@ async function searchMusic(spotifyTrackId) {
         $.log163(e);
       }
     });
+    if (trackItem.tName.indexOf("%u") === -1) {
+      result.lyrics.language = "auto";
+    }
   } else {
     const alternative = {
       language: "zh",
