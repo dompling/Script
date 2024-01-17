@@ -674,7 +674,7 @@ async function searchMusic(spotifyTrackId) {
     hasVocalRemoval: false,
   };
 
-  if (!tlyric || result.lyrics === "z1") {
+  if (!tlyric || result.lyrics.language === "z1") {
     Object.keys(lrc).forEach((key) => {
       const item = lrc[key];
       try {
