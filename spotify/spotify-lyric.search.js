@@ -847,21 +847,18 @@ function getColor() {
 function Language() {
   return new (class {
     isChinese(temp) {
-      var re = /[^\u4e00-\u9fa5]/;
-      if (re.test(temp)) return false;
-      return true;
+      var re = /[\u4e00-\u9fff]/;
+      return !!re.test(temp);
     }
 
     isJp(temp) {
-      var re = /[^\u0800-\u4e00]/;
-      if (re.test(temp)) return false;
-      return true;
+      var re = /[\u3040-\u309F\u30A0-\u30FF]/;
+      return !!re.test(temp);
     }
 
     isKoera(temp) {
-      var re = /[\uac00-\ud7ff]/;
-      if (re.test(temp)) return false;
-      return true;
+      var re = /[\u1100-\u11FF\u3130-\u318F\uAC00-\uD7AF]/;
+      return !!re.test(temp);
     }
 
     get(str) {
