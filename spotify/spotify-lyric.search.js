@@ -385,7 +385,10 @@ $.language = new Language();
       throw error;
     }
 
-    if (!colorLyricsResponseObj.lyrics) {
+    if (
+      !colorLyricsResponseObj.lyrics ||
+      !colorLyricsResponseObj.lyrics.lines.length
+    ) {
       $.log163("未找到歌词");
       throw "未找到歌词";
     }
@@ -470,25 +473,17 @@ $.language = new Language();
 })()
   .catch((e) => {
     console.log(`脚本异常：${e}`);
-    $.response.body = {
+    getResult({
       lyrics: {
         syncType: "LINE_SYNCED",
-        //"syncType": 1,
-        lines: [
-          {
-            startTimeMs: "0",
-            words: `${e}` || "异常错误",
-            syllables: [],
-            endTimeMs: "0",
-          },
-        ],
-        provider: "",
-        providerLyricsId: "",
-        providerDisplayName: "",
+        lines: [{ words: `${e}` || "异常错误" }],
+        provider: "系统通知",
+        providerLyricsId: "系统通知",
+        providerDisplayName: "系统通知",
         syncLyricsUri: "",
         isDenseTypeface: true,
         alternatives: [],
-        language: "",
+        language: "z1",
       },
       colors: {
         background: -8421504, // 灰色
@@ -496,7 +491,7 @@ $.language = new Language();
         highlightText: -1, // 白色
       },
       hasVocalRemoval: false,
-    };
+    });
   })
   .finally(() => {
     return isIOS ? $.done($.response) : $.done({ response: $.response });
