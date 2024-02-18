@@ -14,7 +14,7 @@
                 {
                     "id": "aliyunCheck",
                     "name": "阿里云ck数据",
-                    "val": null,
+                    "val": "",
                     "type": "textarea",
                     "rows": 1,
                     "desc": "多账号用@分隔"
