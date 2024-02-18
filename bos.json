@@ -3,7 +3,7 @@
   "name": "sliverkiss脚本订阅",
   "author": "@sliverkiss",
   "icon": "https://raw.githubusercontent.com/Sliverkiss/GoodNight/master/icon/sliverkiss.png",
-  "repo": "https://github.com/Sliverkiss/GoodNight/tree/master",
+  "repo": "https://github.com/Sliverkiss/GoodNight/tree/main",
   "apps": [
     {
             "id": "aliyunCheck",
@@ -25,14 +25,14 @@
                     "val": true,
                     "type": "boolean",
                     "desc": ""
-                }
+                },
             ],
             "icons": [
                 "https://raw.githubusercontent.com/fmz200/wool_scripts/main/icons/apps/AliYunDrive.png",
                 "https://raw.githubusercontent.com/fmz200/wool_scripts/main/icons/apps/AliYunDrive.png"
             ],
             "author": "@Sliverkiss",
-            "repo": ""
+            "repo": "",
       }
   ]
 }
