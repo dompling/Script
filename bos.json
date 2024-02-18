@@ -1,0 +1,39 @@
+{
+  "id": "aliyun.sub",
+  "name": "阿里云签到脚本订阅",
+  "author": "@Sliverkiss",
+  "icon": "https://raw.githubusercontent.com/Sliverkiss/GoodNight/master/icon/sliverkiss.png",
+  "repo": "",
+  "apps": [
+    {
+            "id": "aliyunCheck",
+            "name": "阿里云签到",
+            "descs_html": [],
+            "keys": ["ADriveCheckIn","aliyun_reward"],
+            "settings": [
+                {
+                    "id": "aliyunCheck",
+                    "name": "阿里云ck数据",
+                    "val": null,
+                    "type": "textarea",
+                    "rows": 1,
+                    "desc": "多账号用@分隔"
+                },
+                {
+                    "id": "aliyun_reward",
+                    "name": "是否自动领取奖励",
+                    "val": true,
+                    "type": "boolean",
+                    "desc": ""
+                },
+            ],
+            "author": "@Sliverkiss",
+            "repo": "",
+            "icons": [
+                "https://raw.githubusercontent.com/fmz200/wool_scripts/main/icons/apps/AliYunDrive.png",
+                "https://raw.githubusercontent.com/fmz200/wool_scripts/main/icons/apps/AliYunDrive.png"
+            ],
+            "script": ""
+      }
+  ]
+}
