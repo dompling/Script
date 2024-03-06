@@ -5,7 +5,7 @@
 /.idea
 /.history
 /.output
-*.json
+/*.json
 !dompling.boxjs.json
 test.js
 .DS_Store
