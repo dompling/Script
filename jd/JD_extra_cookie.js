@@ -5,12 +5,7 @@ Github: https://github.com/domping
 Version: v1.1.0
 
 ===================
-特别说明：
-1.获取多个京东cookie文件，不和野比大佬的文件冲突。暂不支持野比大佬脚本签到。
-2.若是要使用京东多合一签到，请使用修改版地址：https://raw.githubusercontent.com/dompling/Script/master/jd/JD_extra_sign.js
-===================
-===================
-使用方式：复制 https://home.m.jd.com/myJd/newhome.action 到浏览器打开 ，在个人中心自动获取 cookie，
+使用方式：复制 https://my.m.jd.com/jingdou/index.html 到浏览器打开 ，在 个人中心>京东豆数量页面 自动获取 cookie，
 若弹出成功则正常使用。否则继续再此页面继续刷新一下试试
 ===================
 
@@ -21,20 +16,20 @@ hostname = api.m.jd.com
 【Surge脚本配置】:
 ===================
 [Script]
-获取多账号京东Cookie = type=http-response,pattern=^https:\/\/api\.m\.jd\.com\/api\?functionId=GetJDUserInfoUnionForJD,,requires-body=1,max-size=0,script-path=https://raw.githubusercontent.com/dompling/Script/master/jd/JD_extra_cookie.js,script-update-interval=0
+获取京东Cookie = type=http-request,pattern=https:\/\/api\.m\.jd\.com\/api\?.*functionId=queryJDUserInfo,requires-body=1,max-size=0,script-path=https://raw.githubusercontent.com/dompling/Script/master/jd/JD_extra_cookie.js,script-update-interval=0
 
 ===================
 【Loon脚本配置】:
 ===================
 [Script]
-http-request ^https:\/\/api\.m\.jd\.com\/api\?functionId=GetJDUserInfoUnionForJD, tag=获取京东Cookie, script-path=https://raw.githubusercontent.com/dompling/Script/master/jd/JD_extra_cookie.js
+http-request https:\/\/api\.m\.jd\.com\/api\?.*functionId=queryJDUserInfo tag=获取京东Cookie, script-path=https://raw.githubusercontent.com/dompling/Script/master/jd/JD_extra_cookie.js
 
 ===================
 【 QX  脚本配置 】 :
 ===================
 
 [rewrite_local]
-^https:\/\/api\.m\.jd\.com\/api\?functionId=GetJDUserInfoUnionForJD,  url script-request-header https://raw.githubusercontent.com/dompling/Script/master/jd/JD_extra_cookie.js
+https:\/\/api\.m\.jd\.com\/api\?.*functionId=queryJDUserInfo  url script-request-header https://raw.githubusercontent.com/dompling/Script/master/jd/JD_extra_cookie.js
 
  */
 
@@ -180,8 +175,7 @@ async function GetCookie() {
   const CV = `${$request.headers["Cookie"] || $request.headers["cookie"]};`;
 
   if (
-    ($request.url.indexOf("GetJDUserInfoUnion") > -1 &&
-      $request.url.indexOf("isLogin") === -1) ||
+    $request.url.indexOf("queryJDUserInfo") > -1 ||
     $request.url.indexOf("openUpgrade") > -1
   ) {
     if (CV.match(/(pt_key=.+?pt_pin=|pt_pin=.+?pt_key=)/)) {
@@ -208,9 +202,6 @@ async function GetCookie() {
       }
 
       if (updateIndex !== null) {
-        // const response = await TotalBean(updateCookiesData[updateIndex].cookie)
-        // if (response && response.retcode === '0')
-        //   return console.log('cookie 未过期，无需更新')
         updateCookiesData[updateIndex].cookie = CookieValue;
         CookieName = "【账号" + (updateIndex + 1) + "】";
         tipPrefix = "更新京东";
@@ -243,7 +234,7 @@ async function GetCookie() {
   } else if ($request.headers && $request.url.indexOf("newUserInfo") > -1) {
     if (CV.match(/wskey=([^=;]+?);/)[1]) {
       const wskey = CV.match(/wskey=([^=;]+?);/)[1];
-      console.log($response);
+
       const respBody = JSON.parse($response.body);
       const pin = respBody.userInfoSns.unickName;
       const code = `wskey=${wskey};pt_pin=${pin};`;
@@ -291,47 +282,55 @@ async function GetCookie() {
   }
 }
 
-async function TotalBean(Cookie) {
-  const opt = {
-    url: "https://me-api.jd.com/user_new/info/GetJDUserInfoUnion?sceneval=2&sceneval=2&g_login_type=1&g_ty=ls&isLogin=1",
-    headers: {
-      cookie: Cookie,
-      Referer: "https://home.m.jd.com/",
-    },
-  };
-  return $.http.get(opt).then((response) => {
-    try {
-      return JSON.parse(response.body);
-    } catch (e) {
-      return false;
-    }
-  });
-}
+/**
+ * OpenAPI
+ * @author: Peng-YM
+ * https://github.com/Peng-YM/QuanX/blob/master/Tools/OpenAPI/README.md
+ */
 
 function ENV() {
-  const isQX = typeof $task !== "undefined";
-  const isLoon = typeof $loon !== "undefined";
-  const isSurge = typeof $httpClient !== "undefined" && !isLoon;
   const isJSBox = typeof require == "function" && typeof $jsbox != "undefined";
-  const isNode = typeof require == "function" && !isJSBox;
-  const isRequest = typeof $request !== "undefined";
-  const isScriptable = typeof importModule !== "undefined";
-  return { isQX, isLoon, isSurge, isNode, isJSBox, isRequest, isScriptable };
+  return {
+    isQX: typeof $task !== "undefined",
+    isLoon: typeof $loon !== "undefined",
+    isSurge:
+      typeof $httpClient !== "undefined" && typeof $utils !== "undefined",
+    isBrowser: typeof document !== "undefined",
+    isNode: typeof require == "function" && !isJSBox,
+    isJSBox,
+    isRequest: typeof $request !== "undefined",
+    isScriptable: typeof importModule !== "undefined",
+  };
 }
 
-function HTTP(defaultOptions = { baseURL: "" }) {
-  const { isQX, isLoon, isSurge, isScriptable, isNode } = ENV();
+function HTTP(
+  defaultOptions = {
+    baseURL: "",
+  }
+) {
+  const { isQX, isLoon, isSurge, isScriptable, isNode, isBrowser } = ENV();
   const methods = ["GET", "POST", "PUT", "DELETE", "HEAD", "OPTIONS", "PATCH"];
   const URL_REGEX =
     /https?:\/\/(www\.)?[-a-zA-Z0-9@:%._\+~#=]{1,256}\.[a-zA-Z0-9()]{1,6}\b([-a-zA-Z0-9()@:%_\+.~#?&//=]*)/;
 
   function send(method, options) {
-    options = typeof options === "string" ? { url: options } : options;
+    options =
+      typeof options === "string"
+        ? {
+            url: options,
+          }
+        : options;
     const baseURL = defaultOptions.baseURL;
     if (baseURL && !URL_REGEX.test(options.url || "")) {
       options.url = baseURL ? baseURL + options.url : options.url;
     }
-    options = { ...defaultOptions, ...options };
+    if (options.body && options.headers && !options.headers["Content-Type"]) {
+      options.headers["Content-Type"] = "application/x-www-form-urlencoded";
+    }
+    options = {
+      ...defaultOptions,
+      ...options,
+    };
     const timeout = options.timeout;
     const events = {
       ...{
@@ -346,7 +345,10 @@ function HTTP(defaultOptions = { baseURL: "" }) {
 
     let worker;
     if (isQX) {
-      worker = $task.fetch({ method, ...options });
+      worker = $task.fetch({
+        method,
+        ...options,
+      });
     } else if (isLoon || isSurge || isNode) {
       worker = new Promise((resolve, reject) => {
         const request = isNode ? require("request") : $httpClient;
@@ -376,6 +378,23 @@ function HTTP(defaultOptions = { baseURL: "" }) {
             });
           })
           .catch((err) => reject(err));
+      });
+    } else if (isBrowser) {
+      worker = new Promise((resolve, reject) => {
+        fetch(options.url, {
+          method,
+          headers: options.headers,
+          body: options.body,
+        })
+          .then((response) => response.json())
+          .then((response) =>
+            resolve({
+              statusCode: response.status,
+              headers: response.headers,
+              body: response.data,
+            })
+          )
+          .catch(reject);
       });
     }
 
@@ -444,8 +463,7 @@ function API(name = "untitled", debug = false) {
       };
     }
 
-    // persistance
-
+    // persistence
     // initialize cache
     initCache() {
       if (isQX) this.cache = JSON.parse($prefs.valueForKey(this.name) || "{}");
@@ -459,7 +477,9 @@ function API(name = "untitled", debug = false) {
           this.node.fs.writeFileSync(
             fpath,
             JSON.stringify({}),
-            { flag: "wx" },
+            {
+              flag: "wx",
+            },
             (err) => console.log(err)
           );
         }
@@ -471,7 +491,9 @@ function API(name = "untitled", debug = false) {
           this.node.fs.writeFileSync(
             fpath,
             JSON.stringify({}),
-            { flag: "wx" },
+            {
+              flag: "wx",
+            },
             (err) => console.log(err)
           );
           this.cache = {};
@@ -485,20 +507,24 @@ function API(name = "untitled", debug = false) {
 
     // store cache
     persistCache() {
-      const data = JSON.stringify(this.cache);
+      const data = JSON.stringify(this.cache, null, 2);
       if (isQX) $prefs.setValueForKey(data, this.name);
       if (isLoon || isSurge) $persistentStore.write(data, this.name);
       if (isNode) {
         this.node.fs.writeFileSync(
           `${this.name}.json`,
           data,
-          { flag: "w" },
+          {
+            flag: "w",
+          },
           (err) => console.log(err)
         );
         this.node.fs.writeFileSync(
           "root.json",
-          JSON.stringify(this.root),
-          { flag: "w" },
+          JSON.stringify(this.root, null, 2),
+          {
+            flag: "w",
+          },
           (err) => console.log(err)
         );
       }
@@ -580,7 +606,7 @@ function API(name = "untitled", debug = false) {
         let opts = {};
         if (openURL) opts["openUrl"] = openURL;
         if (mediaURL) opts["mediaUrl"] = mediaURL;
-        if (JSON.stringify(opts) == "{}") {
+        if (JSON.stringify(opts) === "{}") {
           $notification.post(title, subtitle, content);
         } else {
           $notification.post(title, subtitle, content, opts);
@@ -605,15 +631,15 @@ function API(name = "untitled", debug = false) {
 
     // other helper functions
     log(msg) {
-      if (this.debug) console.log(msg);
+      if (this.debug) console.log(`[${this.name}] LOG: ${this.stringify(msg)}`);
     }
 
     info(msg) {
-      console.log(msg);
+      console.log(`[${this.name}] INFO: ${this.stringify(msg)}`);
     }
 
     error(msg) {
-      console.log("ERROR: " + msg);
+      console.log(`[${this.name}] ERROR: ${this.stringify(msg)}`);
     }
 
     wait(millisec) {
@@ -630,6 +656,17 @@ function API(name = "untitled", debug = false) {
           $context.body = value.body;
         }
       }
+    }
+
+    stringify(obj_or_str) {
+      if (typeof obj_or_str === "string" || obj_or_str instanceof String)
+        return obj_or_str;
+      else
+        try {
+          return JSON.stringify(obj_or_str, null, 2);
+        } catch (err) {
+          return "[object Object]";
+        }
     }
   })(name, debug);
 }
