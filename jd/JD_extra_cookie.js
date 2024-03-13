@@ -16,25 +16,25 @@ Version: v1.1.0
 
 ===================
 [MITM]
-hostname = me-api.jd.com
+hostname = api.m.jd.com
 
 【Surge脚本配置】:
 ===================
 [Script]
-获取京东Cookie = type=http-request,pattern=^https:\/\/api\.m\.jd\.com\/client\.action\?functionId=newUserInfo,requires-body=1,max-size=0,script-path=https://raw.githubusercontent.com/dompling/Script/master/jd/JD_extra_cookie.js,script-update-interval=0
+获取多账号京东Cookie = type=http-response,pattern=^https:\/\/api\.m\.jd\.com\/api\?functionId=GetJDUserInfoUnionForJD,,requires-body=1,max-size=0,script-path=https://raw.githubusercontent.com/dompling/Script/master/jd/JD_extra_cookie.js,script-update-interval=0
 
 ===================
 【Loon脚本配置】:
 ===================
 [Script]
-http-request ^https:\/\/api\.m\.jd\.com\/client\.action\?functionId=newUserInfo tag=获取京东Cookie, script-path=https://raw.githubusercontent.com/dompling/Script/master/jd/JD_extra_cookie.js
+http-request ^https:\/\/api\.m\.jd\.com\/api\?functionId=GetJDUserInfoUnionForJD, tag=获取京东Cookie, script-path=https://raw.githubusercontent.com/dompling/Script/master/jd/JD_extra_cookie.js
 
 ===================
 【 QX  脚本配置 】 :
 ===================
 
 [rewrite_local]
-^https:\/\/api\.m\.jd\.com\/client\.action\?functionId=newUserInfo  url script-request-header https://raw.githubusercontent.com/dompling/Script/master/jd/JD_extra_cookie.js
+^https:\/\/api\.m\.jd\.com\/api\?functionId=GetJDUserInfoUnionForJD,  url script-request-header https://raw.githubusercontent.com/dompling/Script/master/jd/JD_extra_cookie.js
 
  */
 

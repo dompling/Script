@@ -132,6 +132,11 @@ body div.bottom_tips_wrapper
 }
 
 
+.wx_wrap .modal{
+  display:none!important;
+}
+
+
 .tool_bar_jf{
  position: fixed;
  top: 80%;
