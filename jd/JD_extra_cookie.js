@@ -61,24 +61,7 @@ async function getScriptUrl() {
 const mute = "#cks_get_mute";
 $.mute = $.read(mute);
 
-function getSessions() {
-  const sessionstr = $.read($.KEY_sessions);
-  const sessions = ![undefined, null, "null", ""].includes(sessionstr)
-    ? JSON.parse(sessionstr)
-    : [];
-  return Array.isArray(sessions) ? sessions : [];
-}
-
-const allConfig = getSessions()
-  .filter((item) => item && item.appId === "ql")
-  .map((item) => {
-    const temp = {};
-    item.datas.forEach((data) => {
-      const [, idKey] = data.key.replace("@").split(".");
-      if (idKey !== "env") temp[idKey] = data.val;
-    });
-    return temp;
-  });
+const allConfig =[JSON.parse($.read("#ql"))];
 
 (async () => {
   const ql_script = (await getScriptUrl()) || "";
@@ -194,6 +177,7 @@ async function GetCookie() {
       });
 
       if ($.ql) {
+        console.log(allConfig);
         for (const item of allConfig) {
           $.ql_config = item;
           $.ql.initial();
