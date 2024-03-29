@@ -1,9 +1,15 @@
-#!name=解析脚本
+#!name = 🔴 解析脚本
 #!category=通用重写
 #!desc=依赖于 https://script.hub
 
 [URL Rewrite]
 #^https:\/\/(.*)\/(.*\.js)$ http://script.hub/file/_start_/https://$1/$2/_end_/$2.sgmodule?type=surge-module&target=surge-module&del=true
-^https:\/\/(.*)\/(.*\.js).*(sg=true)$ http://script.hub/file/_start_/https://$1/$2/_end_/$2.sgmodule?type=surge-module&target=surge-module&del=true
-^https:\/\/(.*)\/(.*\.js).*(stash=true)$ http://script.hub/file/_start_/https://$1/$2/_end_/$2.sgmodule?type=qx-rewrite&target=stash-stoverride&del=true
-^https:\/\/(.*)\/(.*\.js).*(loon=true)$ http://script.hub/file/_start_/https://$1/$2/_end_/$2.sgmodule?type=loon-plugin&target=loon-plugin&del=true
+^https:\/\/(.*)\/(.*\.js).*(sg)$ http://script.hub/file/_start_/https://$1/$2/_end_/$2.sgmodule?type=surge-module&target=surge-module&del=true
+^https:\/\/(.*)\/(.*\.js).*(stash)$ http://script.hub/file/_start_/https://$1/$2/_end_/$2.sgmodule?type=qx-rewrite&target=stash-stoverride&del=true
+^https:\/\/(.*)\/(.*\.js).*(loon)$ http://script.hub/file/_start_/https://$1/$2/_end_/$2.sgmodule?type=loon-plugin&target=loon-plugin&del=true
+
+
+#^https:\/\/(.*)\/(.*\.snippet)$ http://script.hub/file/_start_/https://$1/$2/_end_/$2.sgmodule?type=qx-rewrite&target=surge-module&del=true
+^https:\/\/(.*)\/(.*\.snippet).*(sg)$ http://script.hub/file/_start_/https://$1/$2/_end_/$2.sgmodule?type=qx-rewrite&target=surge-module&del=true
+^https:\/\/(.*)\/(.*\.snippet).*(stash)$ http://script.hub/file/_start_/https://$1/$2/_end_/$2.sgmodule?type=qx-rewrite&target=stash-stoverride&del=true
+^https:\/\/(.*)\/(.*\.snippet).*(loon)$ http://script.hub/file/_start_/https://$1/$2/_end_/$2.sgmodule?type=qx-rewrite&target=loon-plugin&del=true
