@@ -1,15 +1,18 @@
-#!name = 🔴 解析脚本
+#!name=🔴 解析脚本
 #!category=通用重写
 #!desc=依赖于 https://script.hub
+#!arguments=SURGE_SUFFIX:sg,STASH_SUFFIX:stash,LOON_SUFFIX:loon
+#!arguments-desc=[参数设置]\nSURGE_SUFFIX: 自定义Surge链接的后戳参数\nSTASH_SUFFIX: 自定义Stash链接的后戳参数\nLOON_SUFFIX: 自定义Loon链接的后戳参数\n\n[模块说明]\n▎模块依赖于 https://script.hub 环境运行;\n▎模块限Surge使用, Loon或Stash可复制相关重写至本地使用;\n▎Surge用户只需修改SURGE_SUFFIX参数即可, 另外两个参数仅供格式预览;
 
 [URL Rewrite]
-^https:\/\/(raw.*)\/(.*\.js)$ http://script.hub/file/_start_/https://$1/$2/_end_/$2.sgmodule?type=surge-module&target=surge-module&del=true
-^https:\/\/(raw.*)\/(.*\.js).*(sg)$ http://script.hub/file/_start_/https://$1/$2/_end_/$2.sgmodule?type=surge-module&target=surge-module&del=true
-^https:\/\/(raw.*)\/(.*\.js).*(stash)$ http://script.hub/file/_start_/https://$1/$2/_end_/$2.sgmodule?type=qx-rewrite&target=stash-stoverride&del=true
-^https:\/\/(raw.*)\/(.*\.js).*(loon)$ http://script.hub/file/_start_/https://$1/$2/_end_/$2.sgmodule?type=loon-plugin&target=loon-plugin&del=true
+# 搭配 【快捷指令】【模块管理器】 https://www.icloud.com/shortcuts/5703d8a26a6644ebab34aaeca8b37902
+# ^https:\/\/(.*git.*)\/(.*)\.(js|conf|snippet|plugin|list)$ http://script.hub/file/_start_/https://$1/$2.$3/_end_/$2.sgmodule?type=surge-module&target=surge-module&del=true
 
+# 转为Surge
+^https:\/\/(.*git.*)\/(.*\.)(js|conf|snippet|plugin|list).*(sg)$ http://script.hub/file/_start_/https://$1/$2$3/_end_/$2.sgmodule?type=surge-module&target=surge-module&del=true
 
-^https:\/\/(raw.*)\/(.*\.snippet)$ http://script.hub/file/_start_/https://$1/$2/_end_/$2.sgmodule?type=qx-rewrite&target=surge-module&del=true
-^https:\/\/(raw.*)\/(.*\.snippet).*(sg)$ http://script.hub/file/_start_/https://$1/$2/_end_/$2.sgmodule?type=qx-rewrite&target=surge-module&del=true
-^https:\/\/(raw.*)\/(.*\.snippet).*(stash)$ http://script.hub/file/_start_/https://$1/$2/_end_/$2.sgmodule?type=qx-rewrite&target=stash-stoverride&del=true
-^https:\/\/(raw.*)\/(.*\.snippet).*(loon)$ http://script.hub/file/_start_/https://$1/$2/_end_/$2.sgmodule?type=qx-rewrite&target=loon-plugin&del=true
+# 转为Stash
+^https:\/\/(.*git.*)\/(.*\.)(js|conf|snippet|plugin|list).*(stash)$ http://script.hub/file/_start_/https://$1/$2$3/_end_/$2.sgmodule?type=qx-rewrite&target=stash-stoverride&del=true
+
+# 转为Loon
+^https:\/\/(.*git.*)\/(.*\.)(js|conf|snippet|plugin|list).*(loon)$ http://script.hub/file/_start_/https://$1/$2$3/_end_/$2.sgmodule?type=loon-plugin&target=loon-plugin&del=true
