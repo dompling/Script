@@ -1,0 +1,8 @@
+#!name=解析脚本
+#!category=通用重写
+#!desc=依赖于 https://script.hub
+
+[URL Rewrite]
+^https:\/\/(.*)\/(.*\.js).*(sg=true)$ http://script.hub/file/_start_/https://$1/$2/_end_/$2.sgmodule?type=surge-module&target=surge-module&del=true
+^https:\/\/(.*)\/(.*\.js).*(stash=true)$ http://script.hub/file/_start_/https://$1/$2/_end_/$2.sgmodule?type=qx-rewrite&target=stash-stoverride&del=true
+^https:\/\/(.*)\/(.*\.js).*(loon=true)$ http://script.hub/file/_start_/https://$1/$2/_end_/$2.sgmodule?type=loon-plugin&target=loon-plugin&del=true
