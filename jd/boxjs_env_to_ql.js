@@ -22,6 +22,7 @@ async function getScriptUrl() {
 (async () => {
   if (!boxjsKey) return $.notify(title, "同步失败", "环境变量错误");
   const qlValue = $.read(boxjsKey) || "";
+  console.log(boxjsKey);
   const ql_script = (await getScriptUrl()) || "";
   eval(ql_script);
   await $.ql.login();
@@ -31,13 +32,22 @@ async function getScriptUrl() {
   await $.ql.delete(delIds);
   console.log(`=======================清空环境变量=======================`);
 
-  await $.ql.add([
+  const res = await $.ql.add([
     {
       name: qlKey,
       value: qlValue,
       remarks: `BoxJS 上传 Key${boxjsKey}`,
     },
   ]);
+
+  if (res.error) {
+    return $.notify(
+      title,
+      "同步失败",
+      `青龙【${qlKey}】名称只能输入字母数字下划线，且不能以数字开头`
+    );
+  }
+
   console.log(`=======================恢复环境变量=======================`);
   if ($.read("mute") !== "true") {
     return $.notify(
