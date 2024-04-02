@@ -234,7 +234,7 @@
           "script": "https://raw.githubusercontent.com/dompling/Script/master/jd/ql_cookie_sync.js"
         },
         {
-          "name": "环境变量同步",
+          "name": "BoxJS指定Key同步到青龙",
           "script": "https://raw.githubusercontent.com/dompling/Script/master/jd/boxjs_env_to_ql.js"
         },
         {
