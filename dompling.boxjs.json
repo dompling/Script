@@ -160,6 +160,7 @@
         "@ql.username",
         "@ql.password",
         "@ql.env",
+        "@ql.ENV_KEY",
         "@ql.mute",
         "@ql.is_pwd"
       ],
@@ -177,6 +178,13 @@
           "val": false,
           "type": "boolean",
           "desc": "同步时，优先使用密码登陆"
+        },
+        {
+          "id": "@ql.ENV_KEY",
+          "name": "环境变量KEY",
+          "val": "",
+          "type": "text",
+          "placeholder": "boxjs 同步到 Ql 的环境变量"
         },
         {
           "id": "@ql.ip",
@@ -226,6 +234,10 @@
           "script": "https://raw.githubusercontent.com/dompling/Script/master/jd/ql_cookie_sync.js"
         },
         {
+          "name": "环境变量同步",
+          "script": "https://raw.githubusercontent.com/dompling/Script/master/jd/boxjs_env_to_ql.js"
+        },
+        {
           "name": "备份环境变量",
           "script": "https://raw.githubusercontent.com/dompling/Script/master/jd/ql_env_back.js"
         },
@@ -238,7 +250,10 @@
         "青龙 docker 的安装方式请移步 tg 频道",
         "青龙 docker 作者仓库：【<a href=\"https://github.com/whyour\">github</a>】",
         "青龙 docker 频道：【<a href=\"https://t.me/qiongqiya\">电报频道</a>】",
-        "应用client_id,client_secret（openapi）方式；请去 设置->应用 中添加相关参数，优先以 openapi 方式同步"
+        "应用client_id,client_secret（openapi）方式；请去 设置->应用 中添加相关参数，优先以 openapi 方式同步",
+        "<h1>环境变量KEY</h1>",
+        "<ol>BoxJS本地key:青龙环境变量如【JDCookie:JDCookie1】</ol>",
+        "<ol>BoxJS本地key和青龙环境变量一致时【JDCookie】</ol>"
       ]
     },
     {
