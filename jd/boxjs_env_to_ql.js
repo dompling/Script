@@ -47,14 +47,14 @@ try {
 }
 const envsData = {};
 envsSync.forEach((item) => {
-  const qlValue = $.getdata(item.BoxjsKey) || "";
+  const qlValue = $.getdata(item.BoxJsKey) || "";
   if (!qlValue) return $.error("环境变量值不能为空");
-  notifyMsg.push(`${item.BoxjsKey}->${item.qlKey}`);
+  notifyMsg.push(`${item.BoxJsKey}->${item.qlKey}`);
 
-  envsData[item.BoxjsKey] = {
+  envsData[item.BoxJsKey] = {
     name: item.qlKey,
     value: qlValue,
-    remarks: `BoxJS 上传 Key${item.BoxjsKey}`,
+    remarks: `BoxJS 上传 Key${item.BoxJsKey}`,
   };
 });
 
