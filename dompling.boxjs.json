@@ -183,7 +183,8 @@
           "id": "@ql.ENV_KEY",
           "name": "环境变量KEY",
           "val": "",
-          "type": "text",
+          "type": "textarea",
+          "autoGrow": false,
           "placeholder": "boxjs 同步到 Ql 的环境变量",
           "primary": ["BoxJsKey"],
           "child": [
@@ -191,13 +192,11 @@
               "id": "BoxJsKey",
               "name": "BoxJS缓存Key",
               "type": "text",
-              "disabled": true,
               "desc": "读取BoxJS对应Key的值"
             },
             {
               "id": "qlKey",
               "name": "青龙环境变量KEY",
-              "disabled": true,
               "type": "text"
             }
           ]
@@ -266,11 +265,7 @@
         "青龙 docker 的安装方式请移步 tg 频道",
         "青龙 docker 作者仓库：【<a href=\"https://github.com/whyour\">github</a>】",
         "青龙 docker 频道：【<a href=\"https://t.me/qiongqiya\">电报频道</a>】",
-        "应用client_id,client_secret（openapi）方式；请去 设置->应用 中添加相关参数，优先以 openapi 方式同步",
-        "<h2>环境变量KEY</h2>",
-        "<ol>BoxJS本地key:青龙环境变量如【JDCookie:JDCookie1】</ol>",
-        "<ol>BoxJS本地key和青龙环境变量一致时【JDCookie】</ol>",
-        "<ol>多条同步使用英文|分割如【JDCookie|@ql.ip:ql_ip|@ql.password】</ol>"
+        "应用client_id,client_secret（openapi）方式；请去 设置->应用 中添加相关参数，优先以 openapi 方式同步"
       ]
     },
     {
