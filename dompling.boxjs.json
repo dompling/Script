@@ -191,7 +191,7 @@
             {
               "id": "BoxJsKey",
               "name": "BoxJS缓存Key",
-              "type": "text",
+              "type": "cacheKey",
               "desc": "读取BoxJS对应Key的值"
             },
             {
