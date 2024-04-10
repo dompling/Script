@@ -100,7 +100,7 @@
     {
       "id": "gistBackup",
       "name": "Gist备份",
-      "keys": ["@gist.token", "@gist.username"],
+      "keys": ["@gist.token", "@gist.username","@gist.boxCache"],
       "author": "@dompling",
       "icons": [
         "https://raw.githubusercontent.com/Former-Years/icon/master/github-bf.png",
