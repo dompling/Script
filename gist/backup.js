@@ -25,6 +25,37 @@ token 获取方式 :
 
 const $ = new API("gist");
 
+$.getval = (t) => {
+  if ($.env.isQX) {
+    return $prefs.valueForKey(t);
+  } else {
+    return $persistentStore.read(t);
+  }
+};
+
+$.getdata = (t) => {
+  function lodash_get(t, s, e) {
+    const i = s.replace(/\[(\d+)\]/g, ".$1").split(".");
+    let r = t;
+    for (const t of i) if (((r = Object(r)[t]), void 0 === r)) return e;
+    return r;
+  }
+
+  let s = $.getval(t);
+  if (/^@/.test(t)) {
+    const [, e, i] = /^@(.*?)\.(.*?)$/.exec(t),
+      r = e ? $.getval(e) : "";
+    if (r)
+      try {
+        const t = JSON.parse(r);
+        s = t ? lodash_get(t, i, "") : s;
+      } catch (t) {
+        s = "";
+      }
+  }
+  return s;
+};
+
 // 存储`用户偏好`
 $.KEY_usercfgs = "#chavy_boxjs_userCfgs";
 // 存储`应用会话`
@@ -66,36 +97,36 @@ const cacheArr = {
   if (!$.token || !$.username) throw "请去 boxjs 完善信息";
 
   const backup = getBoxJSData();
-  const gistList = await getGist();
+  // const gistList = await getGist();
 
-  if (!gistList) throw new Error("请检查 Gist 账号配置");
-  if (gistList.message)
-    throw new Error(
-      `Gist 列表请求失败:${gistList.message}\n请检查 Gist 账号配置`
-    );
+  // if (!gistList) throw new Error("请检查 Gist 账号配置");
+  // if (gistList.message)
+  //   throw new Error(
+  //     `Gist 列表请求失败:${gistList.message}\n请检查 Gist 账号配置`
+  //   );
 
-  const commonParams = { description: $.desc, public: false };
-  const all_params = { ...commonParams };
-  const files = {};
-  for (const cacheArrKey in cacheArr) {
-    const label = cacheArr[cacheArrKey];
-    const saveKey = `${cacheArrKey}.json`;
-    $.msg += `${label}：${saveKey}\n`;
-    files[saveKey] = { content: JSON.stringify(backup[cacheArrKey]) };
-  }
-  const isBackUp = gistList.find((item) => item.description === $.desc);
+  // const commonParams = { description: $.desc, public: false };
+  // const all_params = { ...commonParams };
+  // const files = {};
+  // for (const cacheArrKey in cacheArr) {
+  //   const label = cacheArr[cacheArrKey];
+  //   const saveKey = `${cacheArrKey}.json`;
+  //   $.msg += `${label}：${saveKey}\n`;
+  //   files[saveKey] = { content: JSON.stringify(backup[cacheArrKey]) };
+  // }
+  // const isBackUp = gistList.find((item) => item.description === $.desc);
 
-  all_params.files = files;
+  // all_params.files = files;
 
-  const response = await backGist(all_params, isBackUp);
+  // const response = await backGist(all_params, isBackUp);
 
-  if (response.message) {
-    $.error(`结果：gist 备份失败（${JSON.stringify(response)}❌`);
-    throw `结果：gist 备份失败（${JSON.stringify(response)}）❌ \n`;
-  } else {
-    $.info(`gist 备份成功 ✅\n`);
-    $.msg += `结果：gist（${$.desc}） 备份成功 ✅\n`;
-  }
+  // if (response.message) {
+  //   $.error(`结果：gist 备份失败（${JSON.stringify(response)}❌`);
+  //   throw `结果：gist 备份失败（${JSON.stringify(response)}）❌ \n`;
+  // } else {
+  //   $.info(`gist 备份成功 ✅\n`);
+  //   $.msg += `结果：gist（${$.desc}） 备份成功 ✅\n`;
+  // }
 })()
   .then(() => {
     $.notify("gist 备份", "", `${$.username}：\n${$.msg}`);
@@ -297,35 +328,15 @@ function getAppDatas(app) {
   const nulls = [null, undefined, "null", "undefined"];
   if (app.keys && Array.isArray(app.keys)) {
     app.keys.forEach((key) => {
-      if (/^@/.test(key)) {
-        const [, objkey, path] = /^@(.*?)\.(.*?)$/.exec(key);
-        try {
-          const val = JSON.parse($.read(`#${objkey}`) || "{}");
-          datas[key] = nulls.includes(val) ? null : val[path];
-        } catch (e) {
-          datas[key] = null;
-        }
-      } else {
-        const val = $.read(`#${key}`);
-        datas[key] = nulls.includes(val) ? null : val;
-      }
+      const val = $.getdata(key);
+      datas[key] = nulls.includes(val) ? null : val;
     });
   }
   if (app.settings && Array.isArray(app.settings)) {
     app.settings.forEach((setting) => {
       const key = setting.id;
-      if (/^@/.test(key)) {
-        const [, objkey, path] = /^@(.*?)\.(.*?)$/.exec(key);
-        try {
-          const val = JSON.parse($.read(`#${objkey}`) || "{}");
-          datas[key] = nulls.includes(val) ? null : val[path];
-        } catch (e) {
-          datas[key] = null;
-        }
-      } else {
-        const val = $.read(`#${key}`);
-        datas[key] = nulls.includes(val) ? null : val;
-      }
+      const val = $.getdata(key);
+      datas[key] = nulls.includes(val) ? null : val;
     });
   }
   return datas;
@@ -333,6 +344,14 @@ function getAppDatas(app) {
 
 function getBoxJSData() {
   const datas = {};
+
+  const extraDatas =
+    $.getdata(`${$.KEY_usercfgs.replace("#", "@")}.gist_cache_key`) || [];
+
+  extraDatas.forEach((key) => {
+    datas[key] = $.getdata(key);
+  });
+
   const usercfgs = getUserCfgs();
   const sessions = JSON.parse($.read($.KEY_sessions) || "[]");
   const curSessions = JSON.parse($.read($.KEY_cursessions) || "{}");
@@ -349,6 +368,7 @@ function getBoxJSData() {
       subcache.apps.forEach((app) => Object.assign(datas, getAppDatas(app)));
     }
   });
+
   return {
     datas,
     usercfgs,
