@@ -97,36 +97,36 @@ const cacheArr = {
   if (!$.token || !$.username) throw "请去 boxjs 完善信息";
 
   const backup = getBoxJSData();
-  // const gistList = await getGist();
+  const gistList = await getGist();
 
-  // if (!gistList) throw new Error("请检查 Gist 账号配置");
-  // if (gistList.message)
-  //   throw new Error(
-  //     `Gist 列表请求失败:${gistList.message}\n请检查 Gist 账号配置`
-  //   );
+  if (!gistList) throw new Error("请检查 Gist 账号配置");
+  if (gistList.message)
+    throw new Error(
+      `Gist 列表请求失败:${gistList.message}\n请检查 Gist 账号配置`
+    );
 
-  // const commonParams = { description: $.desc, public: false };
-  // const all_params = { ...commonParams };
-  // const files = {};
-  // for (const cacheArrKey in cacheArr) {
-  //   const label = cacheArr[cacheArrKey];
-  //   const saveKey = `${cacheArrKey}.json`;
-  //   $.msg += `${label}：${saveKey}\n`;
-  //   files[saveKey] = { content: JSON.stringify(backup[cacheArrKey]) };
-  // }
-  // const isBackUp = gistList.find((item) => item.description === $.desc);
+  const commonParams = { description: $.desc, public: false };
+  const all_params = { ...commonParams };
+  const files = {};
+  for (const cacheArrKey in cacheArr) {
+    const label = cacheArr[cacheArrKey];
+    const saveKey = `${cacheArrKey}.json`;
+    $.msg += `${label}：${saveKey}\n`;
+    files[saveKey] = { content: JSON.stringify(backup[cacheArrKey]) };
+  }
+  const isBackUp = gistList.find((item) => item.description === $.desc);
 
-  // all_params.files = files;
+  all_params.files = files;
 
-  // const response = await backGist(all_params, isBackUp);
+  const response = await backGist(all_params, isBackUp);
 
-  // if (response.message) {
-  //   $.error(`结果：gist 备份失败（${JSON.stringify(response)}❌`);
-  //   throw `结果：gist 备份失败（${JSON.stringify(response)}）❌ \n`;
-  // } else {
-  //   $.info(`gist 备份成功 ✅\n`);
-  //   $.msg += `结果：gist（${$.desc}） 备份成功 ✅\n`;
-  // }
+  if (response.message) {
+    $.error(`结果：gist 备份失败（${JSON.stringify(response)}❌`);
+    throw `结果：gist 备份失败（${JSON.stringify(response)}）❌ \n`;
+  } else {
+    $.info(`gist 备份成功 ✅\n`);
+    $.msg += `结果：gist（${$.desc}） 备份成功 ✅\n`;
+  }
 })()
   .then(() => {
     $.notify("gist 备份", "", `${$.username}：\n${$.msg}`);
