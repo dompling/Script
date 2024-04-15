@@ -69,7 +69,7 @@ $.KEY_cursessions = "#chavy_boxjs_cur_sessions";
 
 $.token = $.read("token");
 $.username = $.read("username");
-$.boxjsDomain = $.read("#boxjs_host");
+$.dataSplit = Number($.read("split") | "1") | 1;
 $.cacheKey = "BoxJS-Data";
 $.desc = "BoxJS-Data Backup";
 $.msg = "";
@@ -85,7 +85,6 @@ $.http = new HTTP({
 });
 
 const cacheArr = {
-  datas: "用户数据",
   usercfgs: "用户偏好",
   sessions: "应用会话",
   curSessions: "当前会话",
@@ -114,18 +113,39 @@ const cacheArr = {
     $.msg += `${label}：${saveKey}\n`;
     files[saveKey] = { content: JSON.stringify(backup[cacheArrKey]) };
   }
+
   const isBackUp = gistList.find((item) => item.description === $.desc);
 
   all_params.files = files;
 
   const response = await backGist(all_params, isBackUp);
 
+  const dataKeys = Object.keys(backup["datas"]);
+  const dataItemNum = Math.ceil(dataKeys.length / $.dataSplit);
+  const datas = chunk(dataKeys, dataItemNum);
+
+  for (let index = 0; index < datas.length; index++) {
+    const element = datas[index];
+    const saveKey = `datas${index || ""}.json`;
+    const saveValue = {};
+    element.forEach((key) => {
+      saveValue[key] = backup["datas"][key];
+    });
+    const dataFiles = {
+      files: { [saveKey]: { content: JSON.stringify(saveValue) } },
+    };
+    const result = await backGist(dataFiles, isBackUp);
+    $.msg += `用户数据：datas 第${index + 1}段备份${
+      result.message ? "失败" + `(${result.message})` : "成功"
+    }\n`;
+  }
+
   if (response.message) {
     $.error(`结果：gist 备份失败（${JSON.stringify(response)}❌`);
     throw `结果：gist 备份失败（${JSON.stringify(response)}）❌ \n`;
   } else {
-    $.info(`gist 备份成功 ✅\n`);
     $.msg += `结果：gist（${$.desc}） 备份成功 ✅\n`;
+    $.info($.msg);
   }
 })()
   .then(() => {
@@ -143,6 +163,19 @@ function getGist() {
   return $.http
     .get({ url: `/users/${$.username}/gists` })
     .then((response) => JSON.parse(response.body));
+}
+
+function chunk(arr, num) {
+  let data = [[]];
+  let number = 0;
+  arr.forEach((item, index) => {
+    if (index > 0 && index % num == 0) {
+      number++;
+      data.push([]);
+    }
+    data[number].push(item);
+  });
+  return data;
 }
 
 function backGist(params, backup) {

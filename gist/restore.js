@@ -23,93 +23,127 @@ token 获取方式 :
 
  */
 
-const $ = new API('gist');
+const $ = new API("gist");
 
 // 存储`用户偏好`
-$.KEY_usercfgs = 'chavy_boxjs_userCfgs';
+$.KEY_usercfgs = "chavy_boxjs_userCfgs";
 // 存储`应用会话`
-$.KEY_sessions = 'chavy_boxjs_sessions';
+$.KEY_sessions = "chavy_boxjs_sessions";
 // 存储`应用订阅缓存`
-$.KEY_app_subCaches = 'chavy_boxjs_app_subCaches';
+$.KEY_app_subCaches = "chavy_boxjs_app_subCaches";
 // 存储`备份索引`
-$.KEY_backups = 'chavy_boxjs_backups';
+$.KEY_backups = "chavy_boxjs_backups";
 // 存储`当前会话` (配合切换会话, 记录当前切换到哪个会话)
-$.KEY_cursessions = 'chavy_boxjs_cur_sessions';
+$.KEY_cursessions = "chavy_boxjs_cur_sessions";
 
-$.token = $.read('token');
-$.username = $.read('username');
-$.boxjsDomain = $.read('#boxjs_host');
-$.cacheKey = 'BoxJS-Data';
-$.desc = 'BoxJS-Data Backup';
-$.msg = '';
-$.error = '';
+$.token = $.read("token");
+$.username = $.read("username");
+$.dataSplit = Number($.read("split") | "1") | 1;
+
+$.cacheKey = "BoxJS-Data";
+$.desc = "BoxJS-Data Backup";
+$.msg = "";
+$.error = "";
 
 const cacheArr = {
-  datas: { label: '用户数据' },
-  usercfgs: { label: '用户偏好', key: $.KEY_usercfgs },
-  sessions: { label: '应用会话', key: $.KEY_sessions },
-  curSessions: { label: '当前会话', key: $.KEY_cursessions },
-  globalbaks: { label: '备份索引', key: $.KEY_backups },
-  appSubCaches: { label: '应用订阅缓存', key: $.KEY_app_subCaches },
+  usercfgs: { label: "用户偏好", key: $.KEY_usercfgs },
+  sessions: { label: "应用会话", key: $.KEY_sessions },
+  curSessions: { label: "当前会话", key: $.KEY_cursessions },
+  globalbaks: { label: "备份索引", key: $.KEY_backups },
+  appSubCaches: { label: "应用订阅缓存", key: $.KEY_app_subCaches },
 };
+
+for (let index = 0; index < $.dataSplit; index++) {
+  cacheArr[`datas${index || ""}`] = { label: `用户数据第${index + 1}段` };
+}
 
 $.http = new HTTP({
   baseURL: `https://api.github.com`,
   headers: {
     Authorization: `token ${$.token}`,
-    Accept: 'application/vnd.github.v3+json',
-    'User-Agent':
-      'Mozilla/5.0 (iPhone; CPU iPhone OS 13_2_3 like Mac OS X) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/13.0.3 Mobile/15E148 Safari/604.1',
+    Accept: "application/vnd.github.v3+json",
+    "User-Agent":
+      "Mozilla/5.0 (iPhone; CPU iPhone OS 13_2_3 like Mac OS X) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/13.0.3 Mobile/15E148 Safari/604.1",
   },
 });
+
+$.setval = (val, key) => {
+  if ($.env.isQX) {
+    return $prefs.setValueForKey(val, key);
+  } else {
+    return $persistentStore.write(val, key);
+  }
+};
+
+$.setdata = (val, key) => {
+  function lodash_set(obj, path, value) {
+    if (Object(obj) !== obj) return obj;
+    if (!Array.isArray(path)) path = path.toString().match(/[^.[\]]+/g) || [];
+    path
+      .slice(0, -1)
+      .reduce(
+        (a, c, i) =>
+          Object(a[c]) === a[c]
+            ? a[c]
+            : (a[c] = Math.abs(path[i + 1]) >> 0 === +path[i + 1] ? [] : {}),
+        obj
+      )[path[path.length - 1]] = value;
+    return obj;
+  }
+
+  let issuc = false;
+  if (/^@/.test(key)) {
+    const [, objkey, paths] = /^@(.*?)\.(.*?)$/.exec(key);
+    const objdat = $.getval(objkey);
+    const objval = objkey ? (objdat === "null" ? null : objdat || "{}") : "{}";
+    try {
+      const objedval = JSON.parse(objval);
+      lodash_set(objedval, paths, val);
+      issuc = $.setval(JSON.stringify(objedval), objkey);
+    } catch (e) {
+      const objedval = {};
+      lodash_set(objedval, paths, val);
+      issuc = $.setval(JSON.stringify(objedval), objkey);
+    }
+  } else {
+    issuc = $.setval(val, key);
+  }
+  return issuc;
+};
+
 (async () => {
-  if (!$.token || !$.username) throw '请去 boxjs 完善信息';
+  if (!$.token || !$.username) throw "请去 boxjs 完善信息";
   const gistList = await getGist();
-  if (!gistList) throw new Error('请检查 Gist 账号配置');
+  if (!gistList) throw new Error("请检查 Gist 账号配置");
   if (gistList.message)
     throw new Error(
       `Gist 列表请求失败:${gistList.message}\n请检查 Gist 账号配置`
     );
 
   const boxjsdata = gistList.find((item) => item.description === $.desc);
-  if (!boxjsdata) throw '未找到 Gist 备份信息，请先备份';
+  if (!boxjsdata) throw "未找到 Gist 备份信息，请先备份";
 
   for (const cacheArrKey in cacheArr) {
     const item = cacheArr[cacheArrKey];
     const saveKey = `${cacheArrKey}.json`;
     let fielUri = boxjsdata.files[saveKey].raw_url.replace(
       /\/raw\/(.*)\//,
-      '/raw/'
+      "/raw/"
     );
-    console.log(fielUri);
-    const content = await getBackGist(fielUri);
 
+    const content = await getBackGist(fielUri);
     if (content) {
-      $.info(`${item.label}：已找到备份-开始恢复到设备中...`);
       try {
         if (!item.key) {
-          const datas = {};
-          for (const contentKey in content) {
-            const dataItem = content[contentKey];
-            if (/^@/.test(contentKey)) {
-              const [, objkey, path] = /^@(.*?)\.(.*?)$/.exec(contentKey);
-              if (!datas[objkey]) datas[objkey] = {};
-              datas[objkey][path] = dataItem;
-            } else {
-              datas[contentKey] = dataItem;
-            }
-          }
-          for (const key in datas) {
-            saveBoxJSData({
-              key,
-              val:
-                typeof datas[key] === 'string'
-                  ? datas[key]
-                  : JSON.stringify(datas[key]),
+          Object.keys(content || {}).forEach((key) => {
+            const val = content[key];
+            $.setdata({
+              key: key,
+              val: val,
             });
-          }
+          });
         } else {
-          saveBoxJSData({ key: item.key, val: JSON.stringify(content) });
+          $.setdata({ key: item.key, val: JSON.stringify(content) });
         }
         $.msg += `${item.label}：备份恢复成功 \n`;
         $.info(`${item.label}：备份恢复成功`);
@@ -121,14 +155,14 @@ $.http = new HTTP({
       $.info(`${item.label}：未找到备份，请先备份`);
     }
   }
-  $.info('所有备份恢复成功');
+  $.info("所有备份恢复成功");
 })()
   .then(() => {
-    $.notify('gist 备份恢复', '', `${$.username}：\n${$.msg}`);
+    $.notify("gist 备份恢复", "", `${$.username}：\n${$.msg}`);
   })
   .catch((e) => {
     $.error(e);
-    $.notify('gist 备份', '', `❌${e.message || e}`);
+    $.notify("gist 备份", "", `❌${e.message || e}`);
   })
   .finally(() => {
     $.done();
@@ -146,14 +180,6 @@ function getGist() {
 
 function getBackGist(url) {
   return $.http.get({ url }).then((response) => JSON.parse(response.body));
-}
-
-function saveBoxJSData(data) {
-  if (Array.isArray(data)) {
-    data.forEach((dat) => $.write(dat.val, `#${dat.key}`));
-  } else {
-    $.write(data.val, `#${data.key}`);
-  }
 }
 
 /* prettier-ignore */
