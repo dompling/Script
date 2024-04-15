@@ -134,16 +134,15 @@ $.setdata = (val, key) => {
     const content = await getBackGist(fielUri);
     if (content) {
       try {
+        $.info(fileUri);
         if (!item.key) {
           Object.keys(content || {}).forEach((key) => {
             const val = content[key];
-            $.setdata({
-              key: key,
-              val: val,
-            });
+            $.setdata(val, key);
           });
         } else {
-          $.setdata({ key: item.key, val: JSON.stringify(content) });
+          console.log(item.key);
+          $.setdata(JSON.stringify(content), item.key);
         }
         $.msg += `${item.label}：备份恢复成功 \n`;
         $.info(`${item.label}：备份恢复成功`);
