@@ -122,16 +122,15 @@ $.setdata = (val, key) => {
 
   const boxjsdata = gistList.find((item) => item.description === $.desc);
   if (!boxjsdata) throw "未找到 Gist 备份信息，请先备份";
-
+  console.log(boxjsdata);
   for (const cacheArrKey in cacheArr) {
     const item = cacheArr[cacheArrKey];
     const saveKey = `${cacheArrKey}.json`;
-    let fielUri = boxjsdata.files[saveKey].raw_url.replace(
+    const fileUri = boxjsdata.files[saveKey].raw_url.replace(
       /\/raw\/(.*)\//,
       "/raw/"
     );
-
-    const content = await getBackGist(fielUri);
+    const content = await getBackGist(fileUri);
     if (content) {
       try {
         $.info(fileUri);
@@ -154,7 +153,6 @@ $.setdata = (val, key) => {
       $.info(`${item.label}：未找到备份，请先备份`);
     }
   }
-  $.info("所有备份恢复成功");
 })()
   .then(() => {
     $.notify("gist 备份恢复", "", `${$.username}：\n${$.msg}`);
