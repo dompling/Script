@@ -100,7 +100,7 @@
     {
       "id": "gistBackup",
       "name": "Gist备份",
-      "keys": ["@gist.token", "@gist.username"],
+      "keys": ["@gist.token", "@gist.username", "@gist.split"],
       "author": "@dompling",
       "icons": [
         "https://raw.githubusercontent.com/Former-Years/icon/master/github-bf.png",
@@ -121,6 +121,14 @@
         }
       ],
       "settings": [
+        {
+          "id": "@gist.split",
+          "name": "用户数据分段",
+          "val": null,
+          "type": "number",
+          "placeholder": "用户数据过大时，请进行拆分防止内存警告⚠️",
+          "desc": ""
+        },
         {
           "id": "@gist.username",
           "name": "用户名",
