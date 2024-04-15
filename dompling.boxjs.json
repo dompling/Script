@@ -127,7 +127,7 @@
           "val": null,
           "type": "number",
           "placeholder": "用户数据过大时，请进行拆分防止内存警告⚠️",
-          "desc": ""
+          "desc": "值为数字，拆分段数比如 2 就拆分成两个 datas."
         },
         {
           "id": "@gist.username",
