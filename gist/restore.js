@@ -75,6 +75,14 @@ $.setval = (val, key) => {
   }
 };
 
+$.getval = (t) => {
+  if ($.env.isQX) {
+    return $prefs.valueForKey(t);
+  } else {
+    return $persistentStore.read(t);
+  }
+};
+
 $.setdata = (val, key) => {
   function lodash_set(obj, path, value) {
     if (Object(obj) !== obj) return obj;
@@ -122,7 +130,14 @@ $.setdata = (val, key) => {
 
   const boxjsdata = gistList.find((item) => item.description === $.desc);
   if (!boxjsdata) throw "未找到 Gist 备份信息，请先备份";
-  
+  let datasIndex = 0;
+  Object.keys(boxjsdata.files).forEach((key) => {
+    if (key.indexOf("datas") !== -1) {
+      datasIndex += 1;
+      cacheArr[key] = { label: `用户数据第${datasIndex}段` };
+    }
+  });
+
   for (const cacheArrKey in cacheArr) {
     const item = cacheArr[cacheArrKey];
     const saveKey = `${cacheArrKey}.json`;
@@ -137,7 +152,7 @@ $.setdata = (val, key) => {
         if (!item.key) {
           Object.keys(content || {}).forEach((key) => {
             const val = content[key];
-            $.setdata(typeof val === "string" ? val : JSON.stringify(val), key);
+            $.setdata(val, key);
           });
         } else {
           $.setdata(JSON.stringify(content), item.key);
