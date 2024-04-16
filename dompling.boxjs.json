@@ -195,6 +195,12 @@
           "autoGrow": false,
           "placeholder": "boxjs 同步到 Ql 的环境变量",
           "primary": ["BoxJsKey"],
+          "childScripts": [
+            {
+              "name": "同步当前表单内容",
+              "script": "https://raw.githubusercontent.com/dompling/Script/master/jd/boxjs_env_to_ql.js"
+            }
+          ],
           "child": [
             {
               "id": "BoxJsKey",
@@ -206,6 +212,12 @@
               "id": "qlKey",
               "name": "青龙环境变量KEY",
               "type": "text"
+            },
+            {
+              "id": "remark",
+              "name": "覆盖备注",
+              "type": "textarea",
+              "desc": "覆盖和青龙环境变量中备注相同的变量"
             }
           ]
         },
