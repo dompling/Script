@@ -122,7 +122,7 @@ $.setdata = (val, key) => {
 
   const boxjsdata = gistList.find((item) => item.description === $.desc);
   if (!boxjsdata) throw "未找到 Gist 备份信息，请先备份";
-  console.log(boxjsdata);
+  
   for (const cacheArrKey in cacheArr) {
     const item = cacheArr[cacheArrKey];
     const saveKey = `${cacheArrKey}.json`;
@@ -137,10 +137,9 @@ $.setdata = (val, key) => {
         if (!item.key) {
           Object.keys(content || {}).forEach((key) => {
             const val = content[key];
-            $.setdata(val, key);
+            $.setdata(typeof val === "string" ? val : JSON.stringify(val), key);
           });
         } else {
-          console.log(item.key);
           $.setdata(JSON.stringify(content), item.key);
         }
         $.msg += `${item.label}：备份恢复成功 \n`;
