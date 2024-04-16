@@ -130,7 +130,9 @@ $.setdata = (val, key) => {
   Object.keys(boxjsdata.files).forEach((key) => {
     if (key.indexOf("datas") !== -1) {
       datasIndex += 1;
-      cacheArr[key] = { label: `用户数据第${datasIndex}段` };
+      cacheArr[key.replace(".json", "")] = {
+        label: `用户数据第${datasIndex}段`,
+      };
     }
   });
 
