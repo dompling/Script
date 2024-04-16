@@ -217,6 +217,7 @@
               "id": "remark",
               "name": "覆盖备注",
               "type": "textarea",
+              "placeholder": "请输入覆盖备注",
               "desc": "覆盖和青龙环境变量中备注相同的变量"
             }
           ]
