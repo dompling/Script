@@ -83,15 +83,16 @@ async function getScriptUrl() {
   for (let index = 0; index < qlData.length; index++) {
     const element = qlData[index];
     const response = await $.ql.select(element.name);
-    const delIds = response.data
-      .map((item) => item.id)
-      .filter(
-        (item) =>
-          item.remark === element.remark ||
-          element.remark.indexOf(element.name) !== -1
-      );
-    await $.ql.delete(delIds);
-    $.log(`清空环境变量${element.name}`);
+    response.data = response.data.filter(
+      (item) =>
+        item.remarks === element.remarks ||
+        element.remarks === `BoxJS 上传 Key${element.name}`
+    );
+    if (response.data.length > 0) {
+      const delIds = response.data.map((item) => item.id);
+      await $.ql.delete(delIds);
+      $.log(`清空环境变量${element.name}`);
+    }
   }
 
   const res = await $.ql.add(qlData);
