@@ -40,7 +40,7 @@ const title = "🐉 通知提示";
 const notifyMsg = [];
 let envsSync;
 try {
-  envsSync = $.read("ENV_KEY") || $arguments;
+  envsSync = $arguments;
 } catch (error) {
   envsSync = $.read("ENV_KEY") || `[]`;
 }
