@@ -60,7 +60,7 @@ envsSync.forEach((item) => {
   envsData[item.BoxJsKey] = {
     name: item.qlKey,
     value: qlValue,
-    remarks: `BoxJS 上传 Key${item.BoxJsKey}`,
+    remarks: item.remark || `BoxJS 上传 Key${item.BoxJsKey}`,
   };
 });
 
@@ -82,7 +82,13 @@ async function getScriptUrl() {
   for (let index = 0; index < qlData.length; index++) {
     const element = qlData[index];
     const response = await $.ql.select(element.name);
-    const delIds = response.data.map((item) => item.id);
+    const delIds = response.data
+      .map((item) => item.id)
+      .filter(
+        (item) =>
+          item.remark === element.remark ||
+          element.remark.indexOf(element.name) !== -1
+      );
     await $.ql.delete(delIds);
     $.log(`清空环境变量${element.name}`);
   }
