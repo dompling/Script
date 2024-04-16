@@ -53,10 +53,6 @@ const cacheArr = {
   appSubCaches: { label: "应用订阅缓存", key: $.KEY_app_subCaches },
 };
 
-for (let index = 0; index < $.dataSplit; index++) {
-  cacheArr[`datas${index || ""}`] = { label: `用户数据第${index + 1}段` };
-}
-
 $.http = new HTTP({
   baseURL: `https://api.github.com`,
   headers: {
