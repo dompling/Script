@@ -38,19 +38,20 @@ $.getdata = (t) => {
 
 const title = "🐉 通知提示";
 const notifyMsg = [];
-let envsSync;
-try {
-  envsSync = $arguments;
-} catch (error) {
-  envsSync = $.read("ENV_KEY") || `[]`;
-}
+let envsSync = $.read("ENV_KEY") || `[]`;
 
 try {
   envsSync = JSON.parse(envsSync);
 } catch (error) {
   envsSync = [];
-  $.log(error);
+  $.info(error);
 }
+
+try {
+  envsSync = [$arguments];
+  $.info(`传入参数：${JSON.$arguments}`);
+} catch (error) {}
+
 const envsData = {};
 envsSync.forEach((item) => {
   const qlValue = $.getdata(item.BoxJsKey) || "";
