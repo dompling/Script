@@ -197,7 +197,7 @@
           "primary": ["BoxJsKey"],
           "childScripts": [
             {
-              "name": "同步当前表单内容",
+              "name": "BoxJS指定Key同步到青龙(立即同步)",
               "script": "https://raw.githubusercontent.com/dompling/Script/master/jd/boxjs_env_to_ql.js"
             }
           ],
