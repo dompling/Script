@@ -90,6 +90,10 @@ async function getScriptUrl() {
       response.data = response.data.filter(
         (item) => item.remarks === element.remarks
       );
+    } else {
+      response.data = response.data.filter(
+        (item) => item.remarks === `BoxJS 上传 Key${element.name}`
+      );
     }
     if (response.data.length > 0) {
       const delIds = response.data.map((item) => item.id);
