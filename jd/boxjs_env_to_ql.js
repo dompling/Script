@@ -83,11 +83,14 @@ async function getScriptUrl() {
   for (let index = 0; index < qlData.length; index++) {
     const element = qlData[index];
     const response = await $.ql.select(element.name);
-    response.data = response.data.filter(
-      (item) =>
-        item.remarks === element.remarks ||
-        element.remarks === `BoxJS 上传 Key${element.name}`
-    );
+    if (
+      element.remarks &&
+      element.remarks !== `BoxJS 上传 Key${element.name}`
+    ) {
+      response.data = response.data.filter(
+        (item) => item.remarks === element.remarks
+      );
+    }
     if (response.data.length > 0) {
       const delIds = response.data.map((item) => item.id);
       await $.ql.delete(delIds);
