@@ -135,7 +135,6 @@ $.setdata = (val, key) => {
   if ($.versionId) {
     $.msg += `历史版本\n${$.versionId}\n`;
     boxjsdata = await getGistRevision(boxjsdata.id, $.versionId);
-    console.log(boxjsdata);
   }
 
 
