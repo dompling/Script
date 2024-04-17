@@ -183,7 +183,7 @@ $.setdata = (val, key) => {
   }
 })()
   .then(() => {
-    // $.write("", "revision_id");
+    $.write("", "revision_id");
     $.notify("gist 备份恢复", "", `${$.username}：\n${$.msg}`);
   })
   .catch((e) => {
