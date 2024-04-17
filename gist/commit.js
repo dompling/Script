@@ -31,6 +31,7 @@ const $ = new API("gist");
 
 $.token = $.read("token");
 $.username = $.read("username");
+$.desc = "BoxJS-Data Backup";
 
 $.msg = "";
 $.error = "";
@@ -44,58 +45,6 @@ $.http = new HTTP({
       "Mozilla/5.0 (iPhone; CPU iPhone OS 13_2_3 like Mac OS X) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/13.0.3 Mobile/15E148 Safari/604.1",
   },
 });
-
-$.setval = (val, key) => {
-  if ($.env.isQX) {
-    return $prefs.setValueForKey(val, key);
-  } else {
-    return $persistentStore.write(val, key);
-  }
-};
-
-$.getval = (t) => {
-  if ($.env.isQX) {
-    return $prefs.valueForKey(t);
-  } else {
-    return $persistentStore.read(t);
-  }
-};
-
-$.setdata = (val, key) => {
-  function lodash_set(obj, path, value) {
-    if (Object(obj) !== obj) return obj;
-    if (!Array.isArray(path)) path = path.toString().match(/[^.[\]]+/g) || [];
-    path
-      .slice(0, -1)
-      .reduce(
-        (a, c, i) =>
-          Object(a[c]) === a[c]
-            ? a[c]
-            : (a[c] = Math.abs(path[i + 1]) >> 0 === +path[i + 1] ? [] : {}),
-        obj
-      )[path[path.length - 1]] = value;
-    return obj;
-  }
-
-  let issuc = false;
-  if (/^@/.test(key)) {
-    const [, objkey, paths] = /^@(.*?)\.(.*?)$/.exec(key);
-    const objdat = $.getval(objkey);
-    const objval = objkey ? (objdat === "null" ? null : objdat || "{}") : "{}";
-    try {
-      const objedval = JSON.parse(objval);
-      lodash_set(objedval, paths, val);
-      issuc = $.setval(JSON.stringify(objedval), objkey);
-    } catch (e) {
-      const objedval = {};
-      lodash_set(objedval, paths, val);
-      issuc = $.setval(JSON.stringify(objedval), objkey);
-    }
-  } else {
-    issuc = $.setval(val, key);
-  }
-  return issuc;
-};
 
 (async () => {
   if (!$.token || !$.username) throw "请去 boxjs 完善信息";
@@ -112,13 +61,11 @@ $.setdata = (val, key) => {
   const commits = await getGistCommit(boxjsdata.id);
 
   const checkboxs = commits.map((item) => {
-    const date = new Date(item.committed_at);
-    const label = `${date.getFullYear()}-${
-      date.getMonth() + 1
-    }-${date.getDate()} ${date.getHours()}:${date.getMinutes()}:${date.getSeconds()}`;
+    const label = convertTimeToHumanReadable(item.committed_at);
     $.msg += `${label}\n${item.version}\n\n`;
     return { key: item.version, label };
   });
+
   $.write(checkboxs, "revision_options");
   $.info(`历史 Commit\n${$.msg}`);
 })()
@@ -140,6 +87,34 @@ function getGistCommit(gist_id) {
   return $.http
     .get({ url: `/gists/${gist_id}/commits?per_page=60` })
     .then((response) => JSON.parse(response.body));
+}
+
+Date.prototype.Format = function (fmt) {
+  var o = {
+    "M+": this.getMonth() + 1, //月份
+    "d+": this.getDate(), //日
+    "h+": this.getHours(), //小时
+    "m+": this.getMinutes(), //分
+    "s+": this.getSeconds(), //秒
+    "q+": Math.floor((this.getMonth() + 3) / 3), //季度
+    S: this.getMilliseconds(), //毫秒
+  };
+  if (/(y+)/.test(fmt))
+    fmt = fmt.replace(
+      RegExp.$1,
+      (this.getFullYear() + "").substr(4 - RegExp.$1.length)
+    );
+  for (var k in o)
+    if (new RegExp("(" + k + ")").test(fmt))
+      fmt = fmt.replace(
+        RegExp.$1,
+        RegExp.$1.length == 1 ? o[k] : ("00" + o[k]).substr(("" + o[k]).length)
+      );
+  return fmt;
+};
+
+function convertTimeToHumanReadable(dateTime) {
+  return new Date(dateTime).Format("yyyy-MM-dd hh:mm:ss");
 }
 
 /* prettier-ignore */

@@ -156,12 +156,10 @@ $.backupType = $.backupType.split(",");
     const commits = await getGistCommit(response.id);
 
     const checkboxs = commits.map((item) => {
-      const date = new Date(item.committed_at);
-      const label = `${date.getFullYear()}-${
-        date.getMonth() + 1
-      }-${date.getDate()} ${date.getHours()}:${date.getMinutes()}:${date.getSeconds()}`;
+      const label = convertTimeToHumanReadable(item.committed_at);
       return { key: item.version, label };
     });
+
     $.write(checkboxs, "revision_options");
     $.msg += `历史 Commit 缓存成功\n`;
     $.msg += `结果：gist（${$.desc}） 备份成功 ✅\n`;
@@ -189,6 +187,34 @@ function getGistCommit(gist_id) {
   return $.http
     .get({ url: `/gists/${gist_id}/commits?per_page=60` })
     .then((response) => JSON.parse(response.body));
+}
+
+Date.prototype.Format = function (fmt) {
+  var o = {
+    "M+": this.getMonth() + 1, //月份
+    "d+": this.getDate(), //日
+    "h+": this.getHours(), //小时
+    "m+": this.getMinutes(), //分
+    "s+": this.getSeconds(), //秒
+    "q+": Math.floor((this.getMonth() + 3) / 3), //季度
+    S: this.getMilliseconds(), //毫秒
+  };
+  if (/(y+)/.test(fmt))
+    fmt = fmt.replace(
+      RegExp.$1,
+      (this.getFullYear() + "").substr(4 - RegExp.$1.length)
+    );
+  for (var k in o)
+    if (new RegExp("(" + k + ")").test(fmt))
+      fmt = fmt.replace(
+        RegExp.$1,
+        RegExp.$1.length == 1 ? o[k] : ("00" + o[k]).substr(("" + o[k]).length)
+      );
+  return fmt;
+};
+
+function convertTimeToHumanReadable(dateTime) {
+  return new Date(dateTime).Format("yyyy-MM-dd hh:mm:ss");
 }
 
 function chunk(arr, num) {
