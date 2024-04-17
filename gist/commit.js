@@ -130,19 +130,15 @@ $.setdata = (val, key) => {
     $.done();
   });
 
-function getGistUrl(api) {
-  return `${api}`;
-}
-
 function getGist() {
   return $.http
-    .get({ url: getGistUrl(`/users/${$.username}/gists`) })
+    .get({ url: `/users/${$.username}/gists` })
     .then((response) => JSON.parse(response.body));
 }
 
 function getGistCommit(gist_id) {
   return $.http
-    .get({ url: getGistUrl(`/gists/${gist_id}/commits?per_page=60`) })
+    .get({ url: `/gists/${gist_id}/commits?per_page=60` })
     .then((response) => JSON.parse(response.body));
 }
 

@@ -153,6 +153,17 @@ $.backupType = $.backupType.split(",");
     $.error(`结果：gist 备份失败（${JSON.stringify(response)}❌`);
     throw `结果：gist 备份失败（${JSON.stringify(response)}）❌ \n`;
   } else {
+    const commits = await getGistCommit(response.id);
+
+    const checkboxs = commits.map((item) => {
+      const date = new Date(item.committed_at);
+      const label = `${date.getFullYear()}-${
+        date.getMonth() + 1
+      }-${date.getDate()} ${date.getHours()}:${date.getMinutes()}:${date.getSeconds()}`;
+      return { key: item.version, label };
+    });
+    $.write(checkboxs, "revision_options");
+    $.msg += `历史 Commit 缓存成功\n`;
     $.msg += `结果：gist（${$.desc}） 备份成功 ✅\n`;
     $.info($.msg);
   }
@@ -171,6 +182,12 @@ $.backupType = $.backupType.split(",");
 function getGist() {
   return $.http
     .get({ url: `/users/${$.username}/gists` })
+    .then((response) => JSON.parse(response.body));
+}
+
+function getGistCommit(gist_id) {
+  return $.http
+    .get({ url: `/gists/${gist_id}/commits?per_page=60` })
     .then((response) => JSON.parse(response.body));
 }
 

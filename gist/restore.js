@@ -194,13 +194,9 @@ $.setdata = (val, key) => {
     $.done();
   });
 
-function getGistUrl(api) {
-  return `${api}`;
-}
-
 function getGist() {
   return $.http
-    .get({ url: getGistUrl(`/users/${$.username}/gists`) })
+    .get({ url: `/users/${$.username}/gists` })
     .then((response) => JSON.parse(response.body));
 }
 
@@ -210,7 +206,7 @@ function getBackGist(url) {
 
 function getGistRevision(gist_id, revision_id) {
   return $.http
-    .get({ url: getGistUrl(`/gists/${gist_id}/${revision_id}`) })
+    .get({ url: `/gists/${gist_id}/${revision_id}` })
     .then((response) => JSON.parse(response.body));
 }
 
