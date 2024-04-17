@@ -155,7 +155,7 @@
           "id": "@gist.revision_id",
           "type": "modalSelects",
           "name": "历史版本",
-          "desc": "不填写时，默认获取最新，恢复后会自动清空",
+          "desc": "不填写时，默认获取最新，恢复后会自动清空。RevisionId",
           "items": "@gist.revision_options"
         },
         {
