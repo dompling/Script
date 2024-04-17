@@ -105,7 +105,6 @@
         "@gist.username",
         "@gist.split",
         "@gist.revision_options",
-        "@gist.revision_id",
         "@gist.backup_type"
       ],
       "author": "@dompling",
@@ -131,6 +130,10 @@
         {
           "name": "从 Gist 恢复",
           "script": "https://raw.githubusercontent.com/dompling/Script/master/gist/restore.js"
+        },
+        {
+          "name": "更新历史版本",
+          "script": "https://raw.githubusercontent.com/dompling/Script/master/gist/commit.js"
         }
       ],
       "settings": [
@@ -145,14 +148,14 @@
         {
           "id": "@gist.revision_id",
           "type": "modalSelects",
-          "name": "Gist Revision Id",
-          "desc": "不填写时，默认获取最新",
+          "name": "历史版本",
+          "desc": "不填写时，默认获取最新，恢复后会自动清空",
           "items": "@gist.revision_options"
         },
         {
           "id": "@gist.backup_type",
           "name": "备份/恢复内容",
-          "val": "[\"chavy_boxjs_userCfgs\",\"datas\",\"chavy_boxjs_sessions\",\"chavy_boxjs_cur_sessions\",\"chavy_boxjs_app_subCaches\",]",
+          "val": "chavy_boxjs_userCfgs,datas,chavy_boxjs_sessions,chavy_boxjs_cur_sessions,chavy_boxjs_app_subCaches",
           "type": "checkboxes",
           "items": [
             {
