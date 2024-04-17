@@ -155,7 +155,7 @@
         {
           "id": "@gist.backup_type",
           "name": "备份/恢复内容",
-          "val": "chavy_boxjs_userCfgs,datas,chavy_boxjs_sessions,chavy_boxjs_cur_sessions,chavy_boxjs_app_subCaches",
+          "val": "chavy_boxjs_userCfgs,datas,chavy_boxjs_sessions,chavy_boxjs_cur_sessions,chavy_boxjs_backups,chavy_boxjs_app_subCaches",
           "type": "checkboxes",
           "items": [
             {
