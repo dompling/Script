@@ -154,8 +154,8 @@
         {
           "id": "@gist.revision_id",
           "type": "modalSelects",
-          "name": "历史版本",
-          "desc": "不填写时，默认获取最新，恢复后会自动清空。RevisionId",
+          "name": "历史版本RevisionId",
+          "desc": "不填写时，默认获取最新，恢复后会自动清空。选择无内容时，请运行上方更新历史版本",
           "items": "@gist.revision_options"
         },
         {
