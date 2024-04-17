@@ -96,7 +96,7 @@ $.backupType =
   $.read("backup_type") ||
   [
     "datas",
-    "chavy_boxjs_userCfgs",
+    "chavy_boxjs_usercfgs",
     "chavy_boxjs_sessions",
     "chavy_boxjs_cur_sessions",
     "chavy_boxjs_backups",

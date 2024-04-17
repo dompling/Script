@@ -161,11 +161,11 @@
         {
           "id": "@gist.backup_type",
           "name": "备份/恢复内容",
-          "val": "chavy_boxjs_userCfgs,datas,chavy_boxjs_sessions,chavy_boxjs_cur_sessions,chavy_boxjs_backups,chavy_boxjs_app_subCaches",
+          "val": "usercfgs,datas,sessions,curSessions,backups,appSubCaches",
           "type": "checkboxes",
           "items": [
             {
-              "key": "chavy_boxjs_userCfgs",
+              "key": "usercfgs",
               "label": "用户偏好"
             },
             {
@@ -173,19 +173,19 @@
               "label": "用户数据"
             },
             {
-              "key": "chavy_boxjs_sessions",
+              "key": "sessions",
               "label": "应用会话"
             },
             {
-              "key": "chavy_boxjs_cur_sessions",
+              "key": "curSessions",
               "label": "当前会话"
             },
             {
-              "key": "chavy_boxjs_backups",
+              "key": "backups",
               "label": "备份索引"
             },
             {
-              "key": "chavy_boxjs_app_subCaches",
+              "key": "appSubCaches",
               "label": "应用订阅缓存"
             }
           ]
