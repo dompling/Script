@@ -113,8 +113,14 @@
         "https://raw.githubusercontent.com/Former-Years/icon/master/github-bf.png"
       ],
       "descs_html": [
-        "Token的获取方式:",
-        "头像菜单->\n      Settings ->\n      Developer settings ->\n      Personal access tokens ->\n      Generate new token ->\n      在里面找到 gist 勾选提交",
+        "<h2>Token的获取方式</h2>",
+        "<ol>头像菜单 -></ol>",
+        "<ol>Settings -></ol>",
+        "<ol>Developer settings -></ol>",
+        "<ol>Personal access tokens -></ol>",
+        "<ol>Generate new token -></ol>",
+        "<ol>在里面找到 gist 勾选提交</ol>",
+
         "<h2>Gist Revision Id</h2>",
         "<ol>打开Gist项目</ol>",
         "<ol>默认为Code，选择Revisions</ol>",

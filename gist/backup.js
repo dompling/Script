@@ -92,6 +92,27 @@ const cacheArr = {
   appSubCaches: "应用订阅缓存",
 };
 
+$.backupType =
+  $.read("backup_type") ||
+  [
+    "datas",
+    "chavy_boxjs_userCfgs",
+    "chavy_boxjs_sessions",
+    "chavy_boxjs_cur_sessions",
+    "chavy_boxjs_backups",
+    "chavy_boxjs_app_subCaches",
+  ].join(",");
+
+$.backupType = $.backupType.split(",");
+
+$.backupType = $.backupType.map((item) => {
+  return item
+    .replace("chavy_boxjs_", "")
+    .replace(/\_(\w)/g, function (all, letter) {
+      return letter.toUpperCase();
+    });
+});
+
 (async () => {
   if (!$.token || !$.username) throw "请去 boxjs 完善信息";
 
@@ -108,6 +129,8 @@ const cacheArr = {
   const all_params = { ...commonParams };
   const files = {};
   for (const cacheArrKey in cacheArr) {
+    if ($.backupType.indexOf(cacheArrKey) === -1) continue;
+
     const label = cacheArr[cacheArrKey];
     const saveKey = `${cacheArrKey}.json`;
     $.msg += `${label}：${saveKey}\n`;
@@ -124,20 +147,22 @@ const cacheArr = {
   const dataItemNum = Math.ceil(dataKeys.length / $.dataSplit);
   const datas = chunk(dataKeys, dataItemNum);
 
-  for (let index = 0; index < datas.length; index++) {
-    const element = datas[index];
-    const saveKey = `datas${index || ""}.json`;
-    const saveValue = {};
-    element.forEach((key) => {
-      saveValue[key] = backup["datas"][key];
-    });
-    const dataFiles = {
-      files: { [saveKey]: { content: JSON.stringify(saveValue) } },
-    };
-    const result = await backGist(dataFiles, isBackUp);
-    $.msg += `用户数据：datas 第${index + 1}段备份${
-      result.message ? "失败" + `(${result.message})` : "成功"
-    }\n`;
+  if ($.backupType.indexOf(`datas`) > -1) {
+    for (let index = 0; index < datas.length; index++) {
+      const element = datas[index];
+      const saveKey = `datas${index || ""}.json`;
+      const saveValue = {};
+      element.forEach((key) => {
+        saveValue[key] = backup["datas"][key];
+      });
+      const dataFiles = {
+        files: { [saveKey]: { content: JSON.stringify(saveValue) } },
+      };
+      const result = await backGist(dataFiles, isBackUp);
+      $.msg += `用户数据：datas 第${index + 1}段备份${
+        result.message ? "失败" + `(${result.message})` : "成功"
+      }\n`;
+    }
   }
 
   if (response.message) {

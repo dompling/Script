@@ -18,6 +18,10 @@ token 获取方式 :
 
 # 备份
 0 10 * * * https://raw.githubusercontent.com/dompling/Script/master/gist/backup.js
+
+# 缓存历史纪录
+5 10 * * * https://raw.githubusercontent.com/dompling/Script/master/gist/commit.js
+
 # 恢复
 5 10 * * * https://raw.githubusercontent.com/dompling/Script/master/gist/restore.js
 
@@ -25,53 +29,11 @@ token 获取方式 :
 
 const $ = new API("gist");
 
-// 存储`用户偏好`
-$.KEY_usercfgs = "chavy_boxjs_userCfgs";
-// 存储`应用会话`
-$.KEY_sessions = "chavy_boxjs_sessions";
-// 存储`应用订阅缓存`
-$.KEY_app_subCaches = "chavy_boxjs_app_subCaches";
-// 存储`备份索引`
-$.KEY_backups = "chavy_boxjs_backups";
-// 存储`当前会话` (配合切换会话, 记录当前切换到哪个会话)
-$.KEY_cursessions = "chavy_boxjs_cur_sessions";
-
 $.token = $.read("token");
 $.username = $.read("username");
-$.versionId = $.read("revision_id");
-$.backupType =
-  $.read("backup_type") ||
-  [
-    "datas",
-    "chavy_boxjs_userCfgs",
-    "chavy_boxjs_sessions",
-    "chavy_boxjs_cur_sessions",
-    "chavy_boxjs_backups",
-    "chavy_boxjs_app_subCaches",
-  ].join(",");
 
-$.backupType = $.backupType.split(",");
-
-$.backupType = $.backupType.map((item) => {
-  return item
-    .replace("chavy_boxjs_", "")
-    .replace(/\_(\w)/g, function (all, letter) {
-      return letter.toUpperCase();
-    });
-});
-
-$.cacheKey = "BoxJS-Data";
-$.desc = "BoxJS-Data Backup";
 $.msg = "";
 $.error = "";
-
-const cacheArr = {
-  usercfgs: { label: "用户偏好", key: $.KEY_usercfgs },
-  sessions: { label: "应用会话", key: $.KEY_sessions },
-  curSessions: { label: "当前会话", key: $.KEY_cursessions },
-  globalbaks: { label: "备份索引", key: $.KEY_backups },
-  appSubCaches: { label: "应用订阅缓存", key: $.KEY_app_subCaches },
-};
 
 $.http = new HTTP({
   baseURL: `https://api.github.com`,
@@ -144,66 +106,25 @@ $.setdata = (val, key) => {
       `Gist 列表请求失败:${gistList.message}\n请检查 Gist 账号配置`
     );
 
-  let boxjsdata = gistList.find((item) => item.description === $.desc);
+  const boxjsdata = gistList.find((item) => item.description === $.desc);
   if (!boxjsdata) throw "未找到 Gist 备份信息，请先备份";
 
-  if ($.versionId) {
-    $.msg += `历史版本\n${$.versionId}\n`;
-    boxjsdata = await getGistRevision(boxjsdata.id, $.versionId);
-  }
+  const commits = await getGistCommit(boxjsdata.id);
 
-  if ($.backupType.indexOf(`datas`) !== -1) {
-    let datasIndex = 0;
-    Object.keys(boxjsdata.files).forEach((key) => {
-      if (key.indexOf("datas") !== -1) {
-        datasIndex += 1;
-        $.backupType.push(key.replace(".json", ""));
-        cacheArr[key.replace(".json", "")] = {
-          label: `用户数据第${datasIndex}段`,
-        };
-      }
-    });
-  }
-
-  for (const cacheArrKey in cacheArr) {
-    if ($.backupType.indexOf(cacheArrKey) === -1) continue;
-
-    const item = cacheArr[cacheArrKey];
-    const saveKey = `${cacheArrKey}.json`;
-    const fileUri = boxjsdata.files[saveKey].raw_url.replace(
-      /\/raw\/(.*)\//,
-      "/raw/"
-    );
-    const content = await getBackGist(fileUri);
-    if (content) {
-      try {
-        $.info(fileUri);
-        if (!item.key) {
-          Object.keys(content || {}).forEach((key) => {
-            const val = content[key];
-            $.setdata(val, key);
-          });
-        } else {
-          $.setdata(JSON.stringify(content), item.key);
-        }
-        $.msg += `${item.label}：备份恢复成功 \n`;
-        $.info(`${item.label}：备份恢复成功`);
-      } catch (e) {
-        $.msg += `${item.label}：备份数据异常 \n`;
-      }
-    } else {
-      $.msg += `${item.label}：未找到备份，请先备份 \n`;
-      $.info(`${item.label}：未找到备份，请先备份`);
-    }
-  }
+  const checkboxs = commits.map((item) => {
+    const date = new Date(item.committed_at);
+    const label = `${date.getFullYear()}-${
+      date.getMonth() + 1
+    }-${date.getDate()} ${date.getHours()}:${date.getMinutes()}:${date.getSeconds()}`;
+    $.msg += `${label}\n${item.version}\n\n`;
+    return { key: item.version, label };
+  });
+  $.write(checkboxs, "revision_options");
+  $.info(`历史 Commit\n${$.msg}`);
 })()
-  .then(() => {
-    // $.write("", "revision_id");
-    $.notify("gist 备份恢复", "", `${$.username}：\n${$.msg}`);
-  })
   .catch((e) => {
     $.error(e);
-    $.notify("gist 备份", "", `❌${e.message || e}`);
+    $.notify("GIST", "", `❌${e.message || e}`);
   })
   .finally(() => {
     $.done();
@@ -219,13 +140,9 @@ function getGist() {
     .then((response) => JSON.parse(response.body));
 }
 
-function getBackGist(url) {
-  return $.http.get({ url }).then((response) => JSON.parse(response.body));
-}
-
-function getGistRevision(gist_id, revision_id) {
+function getGistCommit(gist_id) {
   return $.http
-    .get({ url: getGistUrl(`/gists/${gist_id}/${revision_id}`) })
+    .get({ url: getGistUrl(`/gists/${gist_id}/commits?per_page=60`) })
     .then((response) => JSON.parse(response.body));
 }
 
