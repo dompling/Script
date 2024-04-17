@@ -133,10 +133,8 @@ $.setdata = (val, key) => {
   if (!boxjsdata) throw "未找到 Gist 备份信息，请先备份";
 
   if ($.versionId) {
-    $.msg += `历史版本\n${$.versionId}\n`;
     boxjsdata = await getGistRevision(boxjsdata.id, $.versionId);
   }
-
 
   if ($.backupType.indexOf(`datas`) !== -1) {
     let datasIndex = 0;
@@ -182,11 +180,19 @@ $.setdata = (val, key) => {
 })()
   .then(() => {
     $.write("", "revision_id");
-    $.notify("gist 备份恢复", "", `${$.username}：\n${$.msg}`);
+    if ($.versionId) {
+      $.notify("gist 历史备份恢复", $.versionId, `${$.username}：\n${$.msg}`);
+    } else {
+      $.notify("gist 备份恢复", "", `${$.username}：\n${$.msg}`);
+    }
   })
   .catch((e) => {
     $.error(e);
-    $.notify("gist 备份", "", `❌${e.message || e}`);
+    if ($.versionId) {
+      $.notify("gist 历史备份恢复", $.versionId, `❌${e.message || e}`);
+    } else {
+      $.notify("gist 备份恢复", "", `❌${e.message || e}`);
+    }
   })
   .finally(() => {
     $.done();
