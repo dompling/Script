@@ -93,25 +93,9 @@ const cacheArr = {
 };
 
 $.backupType =
-  $.read("backup_type") ||
-  [
-    "datas",
-    "chavy_boxjs_usercfgs",
-    "chavy_boxjs_sessions",
-    "chavy_boxjs_cur_sessions",
-    "chavy_boxjs_backups",
-    "chavy_boxjs_app_subCaches",
-  ].join(",");
+  $.read("backup_type") || [...Object.keys(cacheArr), "datas"].join(",");
 
 $.backupType = $.backupType.split(",");
-
-$.backupType = $.backupType.map((item) => {
-  return item
-    .replace("chavy_boxjs_", "")
-    .replace(/\_(\w)/g, function (all, letter) {
-      return letter.toUpperCase();
-    });
-});
 
 (async () => {
   if (!$.token || !$.username) throw "请去 boxjs 完善信息";

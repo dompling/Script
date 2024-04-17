@@ -39,26 +39,6 @@ $.KEY_cursessions = "chavy_boxjs_cur_sessions";
 $.token = $.read("token");
 $.username = $.read("username");
 $.versionId = $.read("revision_id");
-$.backupType =
-  $.read("backup_type") ||
-  [
-    "datas",
-    "chavy_boxjs_usercfgs",
-    "chavy_boxjs_sessions",
-    "chavy_boxjs_cur_sessions",
-    "chavy_boxjs_backups",
-    "chavy_boxjs_app_subCaches",
-  ].join(",");
-
-$.backupType = $.backupType.split(",");
-
-$.backupType = $.backupType.map((item) => {
-  return item
-    .replace("chavy_boxjs_", "")
-    .replace(/\_(\w)/g, function (all, letter) {
-      return letter.toUpperCase();
-    });
-});
 
 $.cacheKey = "BoxJS-Data";
 $.desc = "BoxJS-Data Backup";
@@ -72,6 +52,11 @@ const cacheArr = {
   globalbaks: { label: "备份索引", key: $.KEY_backups },
   appSubCaches: { label: "应用订阅缓存", key: $.KEY_app_subCaches },
 };
+
+$.backupType =
+  $.read("backup_type") || [...Object.keys(cacheArr), "datas"].join(",");
+
+$.backupType = $.backupType.split(",");
 
 $.http = new HTTP({
   baseURL: `https://api.github.com`,
