@@ -100,7 +100,14 @@
     {
       "id": "gistBackup",
       "name": "Gist备份",
-      "keys": ["@gist.token", "@gist.username", "@gist.split"],
+      "keys": [
+        "@gist.token",
+        "@gist.username",
+        "@gist.split",
+        "@gist.revision_options",
+        "@gist.revision_id",
+        "@gist.backup_type"
+      ],
       "author": "@dompling",
       "icons": [
         "https://raw.githubusercontent.com/Former-Years/icon/master/github-bf.png",
@@ -108,7 +115,13 @@
       ],
       "descs_html": [
         "Token的获取方式:",
-        "头像菜单->\n      Settings ->\n      Developer settings ->\n      Personal access tokens ->\n      Generate new token ->\n      在里面找到 gist 勾选提交"
+        "头像菜单->\n      Settings ->\n      Developer settings ->\n      Personal access tokens ->\n      Generate new token ->\n      在里面找到 gist 勾选提交",
+        "<h2>Gist Revision Id</h2>",
+        "<ol>打开Gist项目</ol>",
+        "<ol>默认为Code，选择Revisions</ol>",
+        "<ol>找到需要恢复的版本文件</ol>",
+        "<ol>点击右上角【...】>【View file】</ol>",
+        "<ol>浏览器地址最后一串为 RevisionId</ol>"
       ],
       "scripts": [
         {
@@ -128,6 +141,45 @@
           "type": "number",
           "placeholder": "用户数据过大时，请进行拆分防止内存警告⚠️",
           "desc": "值为数字，拆分段数比如 2 就拆分成两个 datas."
+        },
+        {
+          "id": "@gist.revision_id",
+          "type": "modalSelects",
+          "name": "Gist Revision Id",
+          "desc": "不填写时，默认获取最新",
+          "items": "@gist.revision_options"
+        },
+        {
+          "id": "@gist.backup_type",
+          "name": "备份/恢复内容",
+          "val": "[\"chavy_boxjs_userCfgs\",\"datas\",\"chavy_boxjs_sessions\",\"chavy_boxjs_cur_sessions\",\"chavy_boxjs_app_subCaches\",]",
+          "type": "checkboxes",
+          "items": [
+            {
+              "key": "chavy_boxjs_userCfgs",
+              "label": "用户偏好"
+            },
+            {
+              "key": "datas",
+              "label": "用户数据"
+            },
+            {
+              "key": "chavy_boxjs_sessions",
+              "label": "应用会话"
+            },
+            {
+              "key": "chavy_boxjs_cur_sessions",
+              "label": "当前会话"
+            },
+            {
+              "key": "chavy_boxjs_backups",
+              "label": "备份索引"
+            },
+            {
+              "key": "chavy_boxjs_app_subCaches",
+              "label": "应用订阅缓存"
+            }
+          ]
         },
         {
           "id": "@gist.username",
