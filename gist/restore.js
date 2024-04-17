@@ -135,7 +135,9 @@ $.setdata = (val, key) => {
   if ($.versionId) {
     $.msg += `历史版本\n${$.versionId}\n`;
     boxjsdata = await getGistRevision(boxjsdata.id, $.versionId);
+    console.log(boxjsdata);
   }
+
 
   if ($.backupType.indexOf(`datas`) !== -1) {
     let datasIndex = 0;
@@ -155,10 +157,7 @@ $.setdata = (val, key) => {
 
     const item = cacheArr[cacheArrKey];
     const saveKey = `${cacheArrKey}.json`;
-    const fileUri = boxjsdata.files[saveKey].raw_url.replace(
-      /\/raw\/(.*)\//,
-      "/raw/"
-    );
+    const fileUri = boxjsdata.files[saveKey].raw_url;
     const content = await getBackGist(fileUri);
     if (content) {
       try {
