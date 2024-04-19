@@ -19,7 +19,15 @@
       "id": "10000Ck",
       "name": "中国电信",
       "keys": ["@yy_10000.china_telecom_loginUrl"],
-      "settings": [],
+      "settings": [
+         {
+          "id": "@yy_10000.china_telecom_loginUrl",
+          "name": "电信登录地址",
+          "val": null,
+          "type": "text",
+          "desc": ""
+        }
+      ],
       "author": "@dompling",
       "icons": [
         "https://raw.githubusercontent.com/Orz-3/mini/master/Alpha/10000.png",
