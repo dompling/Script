@@ -155,12 +155,13 @@ $.backupType = $.backupType.split(",");
   } else {
     const commits = await getGistCommit(response.id);
 
-    const checkboxs = commits.map((item) => {
+    const checkboxs = {};
+    commits.forEach((item) => {
       const label = convertTimeToHumanReadable(item.committed_at);
-      return { key: item.version, label };
+      if (!checkboxs[label]) checkboxs[label] = { key: item.version, label };
     });
 
-    $.write(checkboxs, "revision_options");
+    $.write(Object.values(checkboxs), "revision_options");
     $.msg += `历史 Commit 缓存成功\n`;
     $.msg += `结果：gist（${$.desc}） 备份成功 ✅\n`;
     $.info($.msg);
@@ -214,7 +215,7 @@ Date.prototype.Format = function (fmt) {
 };
 
 function convertTimeToHumanReadable(dateTime) {
-  return new Date(dateTime).Format("yyyy-MM-dd hh:mm:ss");
+  return new Date(dateTime).Format("yyyy-MM-dd hh:mm");
 }
 
 function chunk(arr, num) {
