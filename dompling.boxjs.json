@@ -149,7 +149,7 @@
         "<ol>找到需要恢复的版本文件</ol>",
         "<ol>点击右上角【...】>【View file】</ol>",
         "<ol>浏览器地址最后一串为 RevisionId</ol>",
-        "<a href=\"/app/gistBackup\">Gist 数据黑名单</a>"
+        "<a href=\"/app/GistBackupBlackApp\">Gist 数据黑名单</a>"
       ],
       "scripts": [
         {
