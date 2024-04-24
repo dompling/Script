@@ -35,8 +35,8 @@
       ]
     },
     {
-      "id": "Spotify",
-      "name": "Spotify歌词翻译",
+      "id": "yy.Spotify",
+      "name": "Spotify",
       "keys": [
         "BaiDu_APP_ID",
         "BaiDu_SECURITY_KEY",
@@ -112,8 +112,8 @@
         }
       ],
       "icons": [
-        "https://open.spotifycdn.com/cdn/images/favicon.0f31d2ea.ico",
-        "https://open.spotifycdn.com/cdn/images/favicon.0f31d2ea.ico"
+        "https://raw.githubusercontent.com/Orz-3/mini/master/Color/Spotify.png",
+        "https://raw.githubusercontent.com/Orz-3/mini/master/Color/Spotify.png"
       ]
     },
     {
