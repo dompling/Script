@@ -239,7 +239,7 @@
       "keys": ["@gist.backup_black_apps", "@gist.apps"],
       "settings": [
         {
-          "id": "@gist.backup_black_app",
+          "id": "@gist.backup_black_apps",
           "name": "备份/恢复黑名单",
           "val": "",
           "type": "checkboxes",
