@@ -14,7 +14,7 @@ Object.values($.appSubCaches).forEach((sub) => {
     id: `@gist.backup_black_apps.${sub.author}`,
     type: "checkboxes",
     val: [],
-    name: `${sub.author}(${sub.apps.length})`,
+    name: `${sub.name}（${sub.apps.length}）`,
     items: [],
   };
   sub.apps.forEach((app) => {
