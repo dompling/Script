@@ -245,8 +245,7 @@
           "id": "@gist.backup_black_apps",
           "name": "请运行【刷新APP】",
           "val": "",
-          "type": "checkboxes",
-          "items": "@gist.apps",
+          "type": "textarea",
           "desc": "除黑名单相关 APP 的 Key 到用户数据，无选择内容时，请运行【刷新APP】"
         }
       ],
