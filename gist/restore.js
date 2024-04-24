@@ -25,13 +25,32 @@ token 获取方式 :
 
 const $ = new API("gist");
 try {
-  $.restore = Object.values($.read("backup_black_apps") || {})
+  $.backup_black_apps = Object.values($.read("backup_black_apps") || {})
     .filter((item) => !!item)
     .join(",")
     .split(",");
 } catch (error) {
-  $.restore = [];
+  $.backup_black_apps = [];
 }
+
+$.appSubCaches = JSON.parse($.read("#chavy_boxjs_app_subCaches"));
+
+$.apps = [];
+$.restore = [];
+Object.values($.appSubCaches).forEach((sub) => {
+  sub.apps.forEach((app) => {
+    const key = `${app.id}`;
+    if ($.backup_black_apps.indexOf(key) !== -1) {
+      if (app.keys) {
+        $.restore = [...app.keys, ...$.restore];
+      }
+      if (app.settings) {
+        const ids = app.settings.map((setting) => setting.id);
+        $.restore = [...ids, ...$.restore];
+      }
+    }
+  });
+});
 
 // 存储`用户偏好`
 $.KEY_usercfgs = "chavy_boxjs_userCfgs";

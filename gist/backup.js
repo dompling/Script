@@ -426,22 +426,14 @@ function getAppDatas(app) {
   if (app.keys && Array.isArray(app.keys)) {
     app.keys.forEach((key) => {
       const val = $.getdata(key);
-      if ($.restore.indexOf(key) === -1) {
-        datas[key] = nulls.includes(val) ? null : val;
-      } else {
-        $.info(`${key}:黑名单跳过备份`);
-      }
+      datas[key] = nulls.includes(val) ? null : val;
     });
   }
   if (app.settings && Array.isArray(app.settings)) {
     app.settings.forEach((setting) => {
       const key = setting.id;
       const val = $.getdata(key);
-      if ($.restore.indexOf(key) === -1) {
-        datas[key] = nulls.includes(val) ? null : val;
-      } else {
-        $.info(`${key}:黑名单跳过备份`);
-      }
+      datas[key] = nulls.includes(val) ? null : val;
     });
   }
   return datas;
@@ -465,12 +457,20 @@ function getBoxJSData() {
   const sysapps = getSystemApps();
 
   // 把 `内置应用`和`订阅应用` 里需要持久化属性放到`datas`
-  sysapps.forEach((app) => Object.assign(datas, getAppDatas(app)));
+  sysapps.forEach((app) => {
+    if ($.restore.indexOf(app.id) > -1)
+      return $.info(`${app.name}: 黑名单 APP 跳过备份`);
+    Object.assign(datas, getAppDatas(app));
+  });
 
   usercfgs.appsubs.forEach((sub) => {
     const subcache = appSubCaches[sub.url];
     if (subcache && subcache.apps && Array.isArray(subcache.apps)) {
-      subcache.apps.forEach((app) => Object.assign(datas, getAppDatas(app)));
+      subcache.apps.forEach((app) => {
+        if ($.restore.indexOf(app.id) > -1)
+          return $.info(`${app.name}: 黑名单 APP 跳过备份`);
+        Object.assign(datas, getAppDatas(app));
+      });
     }
   });
 
