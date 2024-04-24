@@ -21,7 +21,7 @@ Object.values($.appSubCaches).forEach((sub) => {
     $.msg += `${app.name}\n\n`;
     setting.items.push({
       label: app.name,
-      key: `${app.id}\n${app.author || sub.author}`,
+      key: `${app.id}`,
     });
   });
   $.settings.push(setting);
