@@ -1,21 +1,39 @@
 const $ = new API("gist");
 $.appSubCaches = JSON.parse($.read("#chavy_boxjs_app_subCaches"));
+$.gitKey = `https://raw.githubusercontent.com/dompling/Script/master/dompling.boxjs.json`;
+$.dompling = $.appSubCaches[$.gitKey];
 
-$.apps = [];
+$.appIndex = $.dompling.apps.findIndex(
+  (app) => app.id === "GistBackupBlackApp"
+);
+
+$.settings = [];
 $.msg = "";
 Object.values($.appSubCaches).forEach((sub) => {
+  const setting = {
+    id: `@gist.backup_black_apps.${sub.author}`,
+    type: "checkboxes",
+    val: [],
+    name: `${sub.author}(${sub.apps.length})`,
+    items: [],
+  };
   sub.apps.forEach((app) => {
     $.msg += `${app.name}\n\n`;
-    $.apps.push({
+    setting.items.push({
       label: app.name,
       key: `${app.id}\n${app.author || sub.author}`,
     });
   });
+  $.settings.push(setting);
 });
 
-$.info($.msg);
-$.write($.apps, "apps");
-$.notify("数据黑名", "", `刷新 Apps（${$.apps.length}）成功`);
+if ($.appIndex !== -1) {
+  $.appSubCaches[$.gitKey].apps[$.appIndex].settings = $.settings;
+  $.info($.msg);
+  $.write(JSON.stringify($.appSubCaches), "#chavy_boxjs_app_subCaches");
+}
+
+$.notify("数据黑名", "", `刷新 Apps 成功`);
 $.done({});
 
 /* prettier-ignore */

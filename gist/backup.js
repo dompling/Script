@@ -25,6 +25,15 @@ token 获取方式 :
 
 const $ = new API("gist");
 
+try {
+  $.restore = Object.values($.read("backup_black_apps") || {})
+    .filter((item) => !!item)
+    .join(",")
+    .split(",");
+} catch (error) {
+  $.restore = [];
+}
+
 $.getval = (t) => {
   if ($.env.isQX) {
     return $prefs.valueForKey(t);
@@ -415,14 +424,22 @@ function getAppDatas(app) {
   if (app.keys && Array.isArray(app.keys)) {
     app.keys.forEach((key) => {
       const val = $.getdata(key);
-      datas[key] = nulls.includes(val) ? null : val;
+      if ($.restore.indexOf(key) === -1) {
+        datas[key] = nulls.includes(val) ? null : val;
+      } else {
+        $.info(`${key}:黑名单跳过备份`);
+      }
     });
   }
   if (app.settings && Array.isArray(app.settings)) {
     app.settings.forEach((setting) => {
       const key = setting.id;
       const val = $.getdata(key);
-      datas[key] = nulls.includes(val) ? null : val;
+      if ($.restore.indexOf(key) === -1) {
+        datas[key] = nulls.includes(val) ? null : val;
+      } else {
+        $.info(`${key}:黑名单跳过备份`);
+      }
     });
   }
   return datas;

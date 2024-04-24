@@ -63,8 +63,10 @@ $.http = new HTTP({
   const checkboxs = {};
   commits.forEach((item) => {
     const label = convertTimeToHumanReadable(item.committed_at);
-    $.msg += `${label}\n${item.version}\n\n`;
-    if (!checkboxs[label]) checkboxs[label] = { key: item.version, label };
+    if (!checkboxs[label]) {
+      checkboxs[label] = { key: item.version, label };
+      $.msg += `${label}\n${item.version}\n\n`;
+    }
   });
 
   $.write(Object.values(checkboxs), "revision_options");

@@ -125,7 +125,9 @@
         "@gist.split",
         "@gist.revision_options",
         "@gist.backup_type",
-        "@gist.backup_items"
+        "@gist.backup_items",
+        "@gist.backup_black_apps",
+        "@gist.apps"
       ],
       "author": "@dompling",
       "icons": [
@@ -150,11 +152,11 @@
       ],
       "scripts": [
         {
-          "name": "备份 Gist",
+          "name": "备份 Gist (除黑名单)",
           "script": "https://raw.githubusercontent.com/dompling/Script/master/gist/backup.js"
         },
         {
-          "name": "从 Gist 恢复",
+          "name": "恢复 Gist (除黑名单)",
           "script": "https://raw.githubusercontent.com/dompling/Script/master/gist/restore.js"
         },
         {
@@ -249,8 +251,12 @@
       ],
       "scripts": [
         {
-          "name": "Gist恢复（除黑名单）",
-          "script": "https://raw.githubusercontent.com/dompling/Script/master/gist/blackRestore.js"
+          "name": "备份 Gist (除黑名单)",
+          "script": "https://raw.githubusercontent.com/dompling/Script/master/gist/backup.js"
+        },
+        {
+          "name": "恢复 Gist (除黑名单)",
+          "script": "https://raw.githubusercontent.com/dompling/Script/master/gist/restore.js"
         },
         {
           "name": "刷新APP",

@@ -24,6 +24,14 @@ token 获取方式 :
  */
 
 const $ = new API("gist");
+try {
+  $.restore = Object.values($.read("backup_black_apps") || {})
+    .filter((item) => !!item)
+    .join(",")
+    .split(",");
+} catch (error) {
+  $.restore = [];
+}
 
 // 存储`用户偏好`
 $.KEY_usercfgs = "chavy_boxjs_userCfgs";
@@ -162,7 +170,11 @@ $.setdata = (val, key) => {
         if (!item.key) {
           Object.keys(content || {}).forEach((key) => {
             const val = content[key];
-            $.setdata(val, key);
+            if ($.restore.indexOf(key) === -1) {
+              $.setdata(val, key);
+            } else {
+              $.info(`${key}:黑名单跳过恢复`);
+            }
           });
         } else {
           $.setdata(JSON.stringify(content), item.key);
