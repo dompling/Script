@@ -151,7 +151,7 @@ $.backupType = $.backupType.split(",");
       const dataFiles = {
         files: { [saveKey]: { content: JSON.stringify(saveValue) } },
       };
-      const result = await backGist(dataFiles, isBackUp);
+      const result = await backGist(dataFiles, response);
       $.msg += `用户数据：datas 第${index + 1}段备份${
         result.message ? "失败" + `(${result.message})` : "成功"
       }\n`;
