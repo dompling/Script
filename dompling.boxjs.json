@@ -20,7 +20,7 @@
       "name": "中国电信",
       "keys": ["@yy_10000.china_telecom_loginUrl"],
       "settings": [
-         {
+        {
           "id": "@yy_10000.china_telecom_loginUrl",
           "name": "电信登录地址",
           "val": null,
@@ -124,7 +124,8 @@
         "@gist.username",
         "@gist.split",
         "@gist.revision_options",
-        "@gist.backup_type"
+        "@gist.backup_type",
+        "@gist.backup_items"
       ],
       "author": "@dompling",
       "icons": [
@@ -225,6 +226,41 @@
           "placeholder": "github personal access tokens",
           "desc": "必填"
         }
+      ]
+    },
+    {
+      "id": "GistBackupBlackApp",
+      "name": "数据黑名",
+      "author": "@dompling",
+      "icons": [
+        "https://raw.githubusercontent.com/Former-Years/icon/master/github-bf.png",
+        "https://raw.githubusercontent.com/Former-Years/icon/master/github-bf.png"
+      ],
+      "keys": ["@gist.backup_black_apps", "@gist.apps"],
+      "settings": [
+        {
+          "id": "@gist.backup_black_app",
+          "name": "备份/恢复黑名单",
+          "val": "",
+          "type": "checkboxes",
+          "items": "@gist.apps",
+          "desc": "除黑名单相关 APP 的 Key 到用户数据"
+        }
+      ],
+      "scripts": [
+        {
+          "name": "Gist恢复（除黑名单）",
+          "script": "https://raw.githubusercontent.com/dompling/Script/master/gist/blackRestore.js"
+        },
+        {
+          "name": "刷新APP",
+          "script": "https://raw.githubusercontent.com/dompling/Script/master/gist/refreshApps.js"
+        }
+      ],
+      "descs_html": [
+        "<h2>使用场景</h2>",
+        "<ol>两个端同步时需排除相关 APP 同步</ol>",
+        "<ol>特殊 APP：建行生活</ol>"
       ]
     },
     {
