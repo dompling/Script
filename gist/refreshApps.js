@@ -13,7 +13,7 @@ Object.values($.appSubCaches).forEach((sub) => {
   const setting = {
     id: `@gist.backup_black_apps.${sub.author}`,
     type: "checkboxes",
-    val: [],
+    val: "",
     name: `${sub.name}（${sub.apps.length}）`,
     items: [],
   };
