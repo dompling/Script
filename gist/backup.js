@@ -119,22 +119,29 @@ $.backupType = $.backupType.split(",");
     );
 
   const commonParams = { description: $.desc, public: false };
-  const all_params = { ...commonParams };
-  const files = {};
-  for (const cacheArrKey in cacheArr) {
-    if ($.backupType.indexOf(cacheArrKey) === -1) continue;
-
-    const label = cacheArr[cacheArrKey];
-    const saveKey = `${cacheArrKey}.json`;
-    $.msg += `${label}：${saveKey}\n`;
-    files[saveKey] = { content: JSON.stringify(backup[cacheArrKey]) };
-  }
-
   const isBackUp = gistList.find((item) => item.description === $.desc);
 
-  all_params.files = files;
-
-  const response = await backGist(all_params, isBackUp);
+  let response;
+  for (const cacheArrKey in cacheArr) {
+    if ($.backupType.indexOf(cacheArrKey) === -1) continue;
+    try {
+      const all_params = { ...commonParams };
+      const files = {};
+      const label = cacheArr[cacheArrKey];
+      const saveKey = `${cacheArrKey}.json`;
+      $.msg += `${label}：${saveKey}\n`;
+      files[saveKey] = { content: JSON.stringify(backup[cacheArrKey]) };
+      all_params.files = files;
+      response = await backGist(all_params, isBackUp);
+      if (response.message) {
+        $.error(`${label}: 备份失败（${JSON.stringify(response)}❌`);
+      } else {
+        $.info(`${label}：${saveKey}备份成功\n`);
+      }
+    } catch (error) {
+      $.error(error);
+    }
+  }
 
   const dataKeys = Object.keys(backup["datas"]);
   const dataItemNum = Math.ceil(dataKeys.length / $.dataSplit);
@@ -152,6 +159,11 @@ $.backupType = $.backupType.split(",");
         files: { [saveKey]: { content: JSON.stringify(saveValue) } },
       };
       const result = await backGist(dataFiles, response);
+      $.info(
+        `用户数据：datas 第${index + 1}段备份${
+          result.message ? "失败" + `(${result.message})` : "成功"
+        }\n`
+      );
       $.msg += `用户数据：datas 第${index + 1}段备份${
         result.message ? "失败" + `(${result.message})` : "成功"
       }\n`;
@@ -173,7 +185,6 @@ $.backupType = $.backupType.split(",");
     $.write(Object.values(checkboxs), "revision_options");
     $.msg += `历史 Commit 缓存成功\n`;
     $.msg += `结果：gist（${$.desc}） 备份成功 ✅\n`;
-    $.info($.msg);
   }
 })()
   .then(() => {
