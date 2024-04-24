@@ -48,8 +48,8 @@ try {
 }
 
 try {
-  envsSync = [$arguments];
-  $.info(`传入参数：${JSON.stringify($arguments)}`);
+  envsSync = [JSON.parse($argument)];
+  $.info(`传入参数：${$argument}`);
 } catch (error) {}
 
 const envsData = {};
