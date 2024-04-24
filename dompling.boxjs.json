@@ -242,7 +242,7 @@
       "settings": [
         {
           "id": "@gist.backup_black_apps",
-          "name": "备份/恢复黑名单",
+          "name": "请运行【刷新APP】",
           "val": "",
           "type": "checkboxes",
           "items": "@gist.apps",
