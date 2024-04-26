@@ -27,14 +27,14 @@ const $ = new API("gist");
 
 try {
   $.black_restore = Object.values($.read("backup_black_apps") || {})
-    .filter((item) => !!item)
     .join(",")
-    .split(",");
+    .split(",")
+    .filter((item) => !!item);
 
   $.white_restore = Object.values($.read("backup_white_apps") || {})
-    .filter((item) => !!item)
     .join(",")
-    .split(",");
+    .split(",")
+    .filter((item) => !!item);
 } catch (error) {
   $.black_restore = [];
   $.white_restore = [];
@@ -136,20 +136,27 @@ $.backupType = $.backupType.split(",");
     files[saveKey] = { content: JSON.stringify(backup[cacheArrKey]) };
   }
 
-  const isBackUp = gistList.find((item) => item.description === $.desc);
+  let response = gistList.find((item) => item.description === $.desc);
 
   all_params.files = files;
 
-  const response = await backGist(all_params, isBackUp);
-
-  const dataKeys = Object.keys(backup["datas"]);
-  const dataItemNum = Math.ceil(dataKeys.length / $.dataSplit);
-  const datas = chunk(dataKeys, dataItemNum);
+  response = await backGist(all_params, response);
 
   if ($.backupType.indexOf(`datas`) > -1) {
+    const remoteDatas = Object.keys(response.files).filter(
+      (item) => item.indexOf("datas") !== -1
+    );
+
     const dataFiles = {
       files: {},
     };
+
+    remoteDatas.forEach((key) => {
+      dataFiles.files[key] = { content: "" };
+    });
+
+    const dataKeys = Object.keys(backup["datas"]);
+    const datas = chunk(dataKeys, $.dataSplit);
     for (let index = 0; index < datas.length; index++) {
       const element = datas[index];
       const saveKey = `datas${index || ""}.json`;
@@ -236,15 +243,13 @@ function convertTimeToHumanReadable(dateTime) {
 }
 
 function chunk(arr, num) {
-  let data = [[]];
-  let number = 0;
-  arr.forEach((item, index) => {
-    if (index > 0 && index % num == 0) {
-      number++;
-      data.push([]);
-    }
-    data[number].push(item);
-  });
+  let data = [];
+  const len = Math.ceil(arr.length / num);
+  for (let index = 0; index < num; index++) {
+    const curr = index * len;
+    const items = arr.slice(curr, curr + len);
+    data = [...data, items];
+  }
   return data;
 }
 
@@ -467,6 +472,9 @@ function getBoxJSData() {
     Object.assign(datas, getAppDatas(app));
   });
 
+  if ($.white_restore.length) {
+    $.info("检测到白名单 APP");
+  }
   usercfgs.appsubs.forEach((sub) => {
     const subcache = appSubCaches[sub.url];
     if (subcache && subcache.apps && Array.isArray(subcache.apps)) {

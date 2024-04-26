@@ -26,14 +26,14 @@ token 获取方式 :
 const $ = new API("gist");
 try {
   $.backup_black_apps = Object.values($.read("backup_black_apps") || {})
-    .filter((item) => !!item)
     .join(",")
-    .split(",");
+    .split(",")
+    .filter((item) => !!item);
 
   $.backup_white_apps = Object.values($.read("backup_white_apps") || {})
-    .filter((item) => !!item)
     .join(",")
-    .split(",");
+    .split(",")
+    .filter((item) => !!item);
 } catch (error) {
   $.backup_black_apps = [];
   $.backup_white_apps = [];
