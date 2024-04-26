@@ -149,7 +149,7 @@
         "<ol>找到需要恢复的版本文件</ol>",
         "<ol>点击右上角【...】>【View file】</ol>",
         "<ol>浏览器地址最后一串为 RevisionId</ol>",
-        "<a href=\"/app/GistBackupBlackApp\">Gist 数据黑名单</a>"
+        "<a href=\"/app/GistBackupBlackApp\" style=\"display: block;width: 100%;font-size: 20px;text-align: center;background: #1890ff;color: #fff;border-radius: 4px;overflow: hidden;text-decoration: none;padding: 5px;box-sizing: border-box;\">Gist 数据黑名单</a>"
       ],
       "scripts": [
         {
@@ -268,7 +268,7 @@
         "<h2>使用场景</h2>",
         "<ol>两个端同步时需排除相关 APP 同步</ol>",
         "<ol>特殊 APP：建行生活</ol>",
-        "<a href=\"/app/gistBackup\">Gist 配置</a>"
+        "<a href=\"/app/gistBackup\" style=\"display: block;width: 100%;font-size: 20px;text-align: center;background: #1890ff;color: #fff;border-radius: 4px;overflow: hidden;text-decoration: none;padding: 5px;box-sizing: border-box;\">Gist 配置</a>"
       ]
     },
     {
