@@ -236,8 +236,8 @@
       "name": "数据黑名",
       "author": "@dompling",
       "icons": [
-        "https://raw.githubusercontent.com/Former-Years/icon/master/github-bf.png",
-        "https://raw.githubusercontent.com/Former-Years/icon/master/github-bf.png"
+        "https://raw.githubusercontent.com/dompling/icon/master/icon/github-black.png",
+        "https://raw.githubusercontent.com/dompling/icon/master/icon/github-black.png"
       ],
       "keys": ["@gist.backup_black_apps"],
       "settings": [
@@ -277,8 +277,8 @@
       "name": "数据白名",
       "author": "@dompling",
       "icons": [
-        "https://raw.githubusercontent.com/Former-Years/icon/master/github-bf.png",
-        "https://raw.githubusercontent.com/Former-Years/icon/master/github-bf.png"
+        "https://raw.githubusercontent.com/dompling/icon/master/icon/github-white.png",
+        "https://raw.githubusercontent.com/dompling/icon/master/icon/github-white.png"
       ],
       "keys": ["@gist.backup_white_apps"],
       "settings": [

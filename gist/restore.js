@@ -29,24 +29,40 @@ try {
     .filter((item) => !!item)
     .join(",")
     .split(",");
+
+  $.backup_white_apps = Object.values($.read("backup_white_apps") || {})
+    .filter((item) => !!item)
+    .join(",")
+    .split(",");
 } catch (error) {
   $.backup_black_apps = [];
+  $.backup_white_apps = [];
 }
 
 $.appSubCaches = JSON.parse($.read("#chavy_boxjs_app_subCaches"));
 
 $.apps = [];
-$.restore = [];
+$.black_restore = [];
+$.white_restore = [];
 Object.values($.appSubCaches).forEach((sub) => {
   sub.apps.forEach((app) => {
     const key = `${app.id}`;
     if ($.backup_black_apps.indexOf(key) !== -1) {
       if (app.keys) {
-        $.restore = [...app.keys, ...$.restore];
+        $.black_restore = [...app.keys, ...$.black_restore];
       }
       if (app.settings) {
         const ids = app.settings.map((setting) => setting.id);
-        $.restore = [...ids, ...$.restore];
+        $.black_restore = [...ids, ...$.black_restore];
+      }
+    }
+    if ($.backup_white_apps.indexOf(key) !== -1) {
+      if (app.keys) {
+        $.white_restore = [...app.keys, ...$.white_restore];
+      }
+      if (app.settings) {
+        const ids = app.settings.map((setting) => setting.id);
+        $.white_restore = [...ids, ...$.white_restore];
       }
     }
   });
@@ -189,7 +205,14 @@ $.setdata = (val, key) => {
         if (!item.key) {
           Object.keys(content || {}).forEach((key) => {
             const val = content[key];
-            if ($.restore.indexOf(key) === -1) {
+            if ($.white_restore.length) {
+              if ($.white_restore.indexOf(key) > -1) {
+                $.setdata(val, key);
+                $.info(`${key}:白名单恢复`);
+              }
+              return;
+            }
+            if ($.black_restore.indexOf(key) === -1) {
               $.setdata(val, key);
             } else {
               $.info(`${key}:黑名单跳过恢复`);

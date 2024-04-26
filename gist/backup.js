@@ -26,12 +26,18 @@ token 获取方式 :
 const $ = new API("gist");
 
 try {
-  $.restore = Object.values($.read("backup_black_apps") || {})
+  $.black_restore = Object.values($.read("backup_black_apps") || {})
+    .filter((item) => !!item)
+    .join(",")
+    .split(",");
+
+  $.white_restore = Object.values($.read("backup_white_apps") || {})
     .filter((item) => !!item)
     .join(",")
     .split(",");
 } catch (error) {
-  $.restore = [];
+  $.black_restore = [];
+  $.white_restore = [];
 }
 
 $.getval = (t) => {
@@ -458,8 +464,6 @@ function getBoxJSData() {
 
   // 把 `内置应用`和`订阅应用` 里需要持久化属性放到`datas`
   sysapps.forEach((app) => {
-    if ($.restore.indexOf(app.id) > -1)
-      return $.info(`${app.name}: 黑名单 APP 跳过备份`);
     Object.assign(datas, getAppDatas(app));
   });
 
@@ -467,8 +471,15 @@ function getBoxJSData() {
     const subcache = appSubCaches[sub.url];
     if (subcache && subcache.apps && Array.isArray(subcache.apps)) {
       subcache.apps.forEach((app) => {
-        if ($.restore.indexOf(app.id) > -1)
+        if ($.white_restore.length) {
+          if ($.white_restore.indexOf(app.id) > -1) {
+            Object.assign(datas, getAppDatas(app));
+          }
+          return;
+        }
+        if ($.black_restore.indexOf(app.id) > -1) {
           return $.info(`${app.name}: 黑名单 APP 跳过备份`);
+        }
         Object.assign(datas, getAppDatas(app));
       });
     }
