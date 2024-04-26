@@ -134,7 +134,7 @@
         "https://raw.githubusercontent.com/Former-Years/icon/master/github-bf.png"
       ],
       "descs_html": [
-        "<h2>Token的获取方式</h2>",
+        "<h4>Token的获取方式</h4>",
         "<ol>头像菜单 -></ol>",
         "<ol>Settings -></ol>",
         "<ol>Developer settings -></ol>",
@@ -142,13 +142,13 @@
         "<ol>Generate new token -></ol>",
         "<ol>在里面找到 gist 勾选提交</ol>",
 
-        "<h2>Gist Revision Id</h2>",
+        "<h4>Gist Revision Id</h4>",
         "<ol>打开Gist项目</ol>",
         "<ol>默认为Code，选择Revisions</ol>",
         "<ol>找到需要恢复的版本文件</ol>",
         "<ol>点击右上角【...】>【View file】</ol>",
         "<ol>浏览器地址最后一串为 RevisionId</ol>",
-        "<a href=\"/app/GistBackupBlackApp\" style=\"display: block;width: 100%;font-size: 20px;text-align: center;background: #1890ff;color: #fff;border-radius: 4px;overflow: hidden;text-decoration: none;padding: 5px;box-sizing: border-box;\">Gist 数据黑名单</a>",
+        "<a href=\"/app/GistBackupBlackApp\" style=\"display: block;width: 100%;font-size: 20px;text-align: center;background: #1890ff;color: #fff;border-radius: 4px;overflow: hidden;text-decoration: none;padding: 5px;box-sizing: border-box;margin-bottom:10px\">Gist 数据黑名单</a>",
         "<a href=\"/app/GistBackupWhiteApp\" style=\"display: block;width: 100%;font-size: 20px;text-align: center;background: #1890ff;color: #fff;border-radius: 4px;overflow: hidden;text-decoration: none;padding: 5px;box-sizing: border-box;\">Gist 数据白名单</a>"
       ],
       "scripts": [
@@ -268,7 +268,7 @@
         "<h4>【同步提示】</h4>",
         "<p style=\"color:red\">白名单中，仅备份包含的 app(优先于黑名单)</p>",
         "黑名单中包含的 app 会跳过备份和恢复",
-        "<a href=\"/app/gistBackup\" style=\"display: block;width: 100%;font-size: 20px;text-align: center;background: #1890ff;color: #fff;border-radius: 4px;overflow: hidden;text-decoration: none;padding: 5px;box-sizing: border-box;\">Gist 配置</a>",
+        "<a href=\"/app/gistBackup\" style=\"display: block;width: 100%;font-size: 20px;text-align: center;background: #1890ff;color: #fff;border-radius: 4px;overflow: hidden;text-decoration: none;padding: 5px;box-sizing: border-box;margin-bottom:10px\">Gist 配置</a>",
         "<a href=\"/app/GistBackupWhiteApp\" style=\"display: block;width: 100%;font-size: 20px;text-align: center;background: #1890ff;color: #fff;border-radius: 4px;overflow: hidden;text-decoration: none;padding: 5px;box-sizing: border-box;\">Gist 数据白名单</a>"
       ]
     },
@@ -309,7 +309,7 @@
         "<h4>【同步提示】</h4>",
         "<p style=\"color:red\">白名单中，仅备份包含的 app(优先于黑名单)</p>",
         "黑名单中包含的 app 会跳过备份和恢复",
-        "<a href=\"/app/gistBackup\" style=\"display: block;width: 100%;font-size: 20px;text-align: center;background: #1890ff;color: #fff;border-radius: 4px;overflow: hidden;text-decoration: none;padding: 5px;box-sizing: border-box;\">Gist 配置</a>",
+        "<a href=\"/app/gistBackup\" style=\"display: block;width: 100%;font-size: 20px;text-align: center;background: #1890ff;color: #fff;border-radius: 4px;overflow: hidden;text-decoration: none;padding: 5px;box-sizing: border-box;margin-bottom:10px\">Gist 配置</a>",
         "<a href=\"/app/GistBackupBlackApp\" style=\"display: block;width: 100%;font-size: 20px;text-align: center;background: #1890ff;color: #fff;border-radius: 4px;overflow: hidden;text-decoration: none;padding: 5px;box-sizing: border-box;\">Gist 数据白名单</a>"
       ]
     },
