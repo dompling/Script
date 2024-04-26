@@ -125,9 +125,8 @@
         "@gist.split",
         "@gist.revision_options",
         "@gist.backup_type",
-        "@gist.backup_items",
         "@gist.backup_black_apps",
-        "@gist.apps"
+        "@gist.backup_white_apps"
       ],
       "author": "@dompling",
       "icons": [
@@ -149,15 +148,16 @@
         "<ol>找到需要恢复的版本文件</ol>",
         "<ol>点击右上角【...】>【View file】</ol>",
         "<ol>浏览器地址最后一串为 RevisionId</ol>",
-        "<a href=\"/app/GistBackupBlackApp\" style=\"display: block;width: 100%;font-size: 20px;text-align: center;background: #1890ff;color: #fff;border-radius: 4px;overflow: hidden;text-decoration: none;padding: 5px;box-sizing: border-box;\">Gist 数据黑名单</a>"
+        "<a href=\"/app/GistBackupBlackApp\" style=\"display: block;width: 100%;font-size: 20px;text-align: center;background: #1890ff;color: #fff;border-radius: 4px;overflow: hidden;text-decoration: none;padding: 5px;box-sizing: border-box;\">Gist 数据黑名单</a>",
+        "<a href=\"/app/GistBackupWhiteApp\" style=\"display: block;width: 100%;font-size: 20px;text-align: center;background: #1890ff;color: #fff;border-radius: 4px;overflow: hidden;text-decoration: none;padding: 5px;box-sizing: border-box;\">Gist 数据白名单</a>"
       ],
       "scripts": [
         {
-          "name": "备份 Gist (除黑名单)",
+          "name": "备份 Gist",
           "script": "https://raw.githubusercontent.com/dompling/Script/master/gist/backup.js"
         },
         {
-          "name": "恢复 Gist (除黑名单)",
+          "name": "恢复 Gist",
           "script": "https://raw.githubusercontent.com/dompling/Script/master/gist/restore.js"
         },
         {
@@ -239,7 +239,7 @@
         "https://raw.githubusercontent.com/Former-Years/icon/master/github-bf.png",
         "https://raw.githubusercontent.com/Former-Years/icon/master/github-bf.png"
       ],
-      "keys": ["@gist.backup_black_apps", "@gist.apps"],
+      "keys": ["@gist.backup_black_apps"],
       "settings": [
         {
           "id": "@gist.backup_black_apps",
@@ -265,10 +265,52 @@
         }
       ],
       "descs_html": [
-        "<h2>使用场景</h2>",
-        "<ol>两个端同步时需排除相关 APP 同步</ol>",
-        "<ol>特殊 APP：建行生活</ol>",
-        "<a href=\"/app/gistBackup\" style=\"display: block;width: 100%;font-size: 20px;text-align: center;background: #1890ff;color: #fff;border-radius: 4px;overflow: hidden;text-decoration: none;padding: 5px;box-sizing: border-box;\">Gist 配置</a>"
+        "<h4>【同步提示】</h4>",
+        "<p style=\"color:red\">白名单中，仅备份包含的 app(优先于黑名单)</p>",
+        "黑名单中包含的 app 会跳过备份和恢复",
+        "<a href=\"/app/gistBackup\" style=\"display: block;width: 100%;font-size: 20px;text-align: center;background: #1890ff;color: #fff;border-radius: 4px;overflow: hidden;text-decoration: none;padding: 5px;box-sizing: border-box;\">Gist 配置</a>",
+        "<a href=\"/app/GistBackupWhiteApp\" style=\"display: block;width: 100%;font-size: 20px;text-align: center;background: #1890ff;color: #fff;border-radius: 4px;overflow: hidden;text-decoration: none;padding: 5px;box-sizing: border-box;\">Gist 数据白名单</a>"
+      ]
+    },
+    {
+      "id": "GistBackupWhiteApp",
+      "name": "数据白名",
+      "author": "@dompling",
+      "icons": [
+        "https://raw.githubusercontent.com/Former-Years/icon/master/github-bf.png",
+        "https://raw.githubusercontent.com/Former-Years/icon/master/github-bf.png"
+      ],
+      "keys": ["@gist.backup_white_apps"],
+      "settings": [
+        {
+          "id": "@gist.backup_white_apps",
+          "name": "请运行【刷新APP】,刷新后再刷新当前页面",
+          "val": "",
+          "type": "textarea",
+          "placeholder": "请运行【刷新APP】",
+          "desc": "白名单相关 APP 的 Key 到用户数据，无选择内容时，请运行【刷新APP】"
+        }
+      ],
+      "scripts": [
+        {
+          "name": "备份 Gist (仅备份白名单)",
+          "script": "https://raw.githubusercontent.com/dompling/Script/master/gist/backup.js"
+        },
+        {
+          "name": "恢复 Gist (仅恢复白名单)",
+          "script": "https://raw.githubusercontent.com/dompling/Script/master/gist/restore.js"
+        },
+        {
+          "name": "刷新APP",
+          "script": "https://raw.githubusercontent.com/dompling/Script/master/gist/refreshApps.js"
+        }
+      ],
+      "descs_html": [
+        "<h4>【同步提示】</h4>",
+        "<p style=\"color:red\">白名单中，仅备份包含的 app(优先于黑名单)</p>",
+        "黑名单中包含的 app 会跳过备份和恢复",
+        "<a href=\"/app/gistBackup\" style=\"display: block;width: 100%;font-size: 20px;text-align: center;background: #1890ff;color: #fff;border-radius: 4px;overflow: hidden;text-decoration: none;padding: 5px;box-sizing: border-box;\">Gist 配置</a>",
+        "<a href=\"/app/GistBackupBlackApp\" style=\"display: block;width: 100%;font-size: 20px;text-align: center;background: #1890ff;color: #fff;border-radius: 4px;overflow: hidden;text-decoration: none;padding: 5px;box-sizing: border-box;\">Gist 数据白名单</a>"
       ]
     },
     {

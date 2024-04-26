@@ -3,8 +3,12 @@ $.appSubCaches = JSON.parse($.read("#chavy_boxjs_app_subCaches"));
 $.gitKey = `https://raw.githubusercontent.com/dompling/Script/master/dompling.boxjs.json`;
 $.dompling = $.appSubCaches[$.gitKey];
 
-$.appIndex = $.dompling.apps.findIndex(
+$.appBlackIndex = $.dompling.apps.findIndex(
   (app) => app.id === "GistBackupBlackApp"
+);
+
+$.appWhiteIndex = $.dompling.apps.findIndex(
+  (app) => app.id === "GistBackupWhiteApp"
 );
 
 $.settings = [];
@@ -26,14 +30,23 @@ Object.values($.appSubCaches).forEach((sub) => {
   });
   $.settings.push(setting);
 });
-
-if ($.appIndex !== -1) {
-  $.appSubCaches[$.gitKey].apps[$.appIndex].settings = $.settings;
-  $.info($.msg);
+$.info($.msg);
+if ($.appBlackIndex !== -1) {
+  $.appSubCaches[$.gitKey].apps[$.appBlackIndex].settings = $.settings;
   $.write(JSON.stringify($.appSubCaches), "#chavy_boxjs_app_subCaches");
 }
 
-$.notify("数据黑名", "", `刷新 Apps 成功`);
+if ($.appWhiteIndex !== -1) {
+  $.appSubCaches[$.gitKey].apps[$.appWhiteIndex].settings = $.settings.map(
+    (item) => {
+      const id = item.id.replace("backup_black_apps", "backup_white_apps");
+      return { ...item, id };
+    }
+  );
+  $.write(JSON.stringify($.appSubCaches), "#chavy_boxjs_app_subCaches");
+}
+
+$.notify("数据黑白名", "", `刷新 Apps 成功`);
 $.done({});
 
 /* prettier-ignore */
