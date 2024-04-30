@@ -16,20 +16,20 @@ hostname = api.m.jd.com
 【Surge脚本配置】:
 ===================
 [Script]
-获取京东Cookie = type=http-request,pattern=https:\/\/api\.m\.jd\.com\/api\?.*functionId=queryJDUserInfo,requires-body=1,max-size=0,script-path=https://raw.githubusercontent.com/dompling/Script/master/jd/JD_extra_cookie.js,script-update-interval=0
+获取京东Cookie = type=http-request,pattern=https:\/\/api\.m\.jd\.com\/\?.*functionId=queryJDUserInfo,requires-body=1,max-size=0,script-path=https://raw.githubusercontent.com/dompling/Script/master/jd/JD_extra_cookie.js,script-update-interval=0
 
 ===================
 【Loon脚本配置】:
 ===================
 [Script]
-http-request https:\/\/api\.m\.jd\.com\/api\?.*functionId=queryJDUserInfo tag=获取京东Cookie, script-path=https://raw.githubusercontent.com/dompling/Script/master/jd/JD_extra_cookie.js
+http-request https:\/\/api\.m\.jd\.com\/\?.*functionId=queryJDUserInfo tag=获取京东Cookie, script-path=https://raw.githubusercontent.com/dompling/Script/master/jd/JD_extra_cookie.js
 
 ===================
 【 QX  脚本配置 】 :
 ===================
 
 [rewrite_local]
-https:\/\/api\.m\.jd\.com\/api\?.*functionId=queryJDUserInfo  url script-request-header https://raw.githubusercontent.com/dompling/Script/master/jd/JD_extra_cookie.js
+https:\/\/api\.m\.jd\.com\/\?.*functionId=queryJDUserInfo  url script-request-header https://raw.githubusercontent.com/dompling/Script/master/jd/JD_extra_cookie.js
 
  */
 
@@ -111,9 +111,7 @@ const allConfig = [JSON.parse($.read("#ql"))];
         }
         $.info(JSON.stringify(response));
         if ($.mute === "true" && response.code === 200) {
-          return $.info(
-            "用户名: " + DecodeName + `同步${name}更新青龙成功🎉`
-          );
+          return $.info("用户名: " + DecodeName + `同步${name}更新青龙成功🎉`);
         } else if (response.code === 200) {
           $.notify(
             "用户名: " + DecodeName,
@@ -215,12 +213,26 @@ async function GetCookie() {
     } else {
       console.log("ck 写入失败，未找到相关 ck");
     }
-  } else if ($request.headers && $request.url.indexOf("newUserInfo") > -1) {
+  } else if (
+    $request.headers &&
+    ($request.url.indexOf("newUserInfo") > -1 ||
+      $request.url.indexOf("userBasicInfos") > -1)
+  ) {
     if (CV.match(/wskey=([^=;]+?);/)[1]) {
       const wskey = CV.match(/wskey=([^=;]+?);/)[1];
 
       const respBody = JSON.parse($response.body);
-      const pin = respBody.userInfoSns.unickName;
+      let pin = "";
+      if (respBody.userInfoSns) {
+        pin = respBody.userInfoSns.unickName;
+      }
+      if (respBody.basicUserInfo) {
+        const nameInfo = respBody.basicUserInfo.find(
+          (item) => item.functionId === "nameInfo"
+        );
+        if (nameInfo) pin = nameInfo.content;
+      }
+
       const code = `wskey=${wskey};pt_pin=${pin};`;
 
       const username = getUsername(code);
