@@ -118,11 +118,9 @@ $.backupType = $.backupType.split(",");
   const backup = getBoxJSData();
   const gistList = await getGist();
 
-  if (!gistList) throw new Error("请检查 Gist 账号配置");
+  if (!gistList) throw "请检查 Gist 账号配置";
   if (gistList.message)
-    throw new Error(
-      `Gist 列表请求失败:${gistList.message}\n请检查 Gist 账号配置`
-    );
+    throw `Gist 列表请求失败:${gistList.message}\n请检查 Gist 账号配置`;
 
   const commonParams = { description: $.desc, public: false };
   const all_params = { ...commonParams };

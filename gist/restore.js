@@ -87,7 +87,6 @@ $.versionId = $.read("revision_id");
 $.cacheKey = "BoxJS-Data";
 $.desc = "BoxJS-Data Backup";
 $.msg = "";
-$.error = "";
 
 const cacheArr = {
   usercfgs: { label: "用户偏好", key: $.KEY_usercfgs },
@@ -167,11 +166,9 @@ $.setdata = (val, key) => {
 (async () => {
   if (!$.token || !$.username) throw "请去 boxjs 完善信息";
   const gistList = await getGist();
-  if (!gistList) throw new Error("请检查 Gist 账号配置");
+  if (!gistList) throw "请检查 Gist 账号配置";
   if (gistList.message)
-    throw new Error(
-      `Gist 列表请求失败:${gistList.message}\n请检查 Gist 账号配置`
-    );
+    throw `Gist 列表请求失败:${gistList.message}\n请检查 Gist 账号配置`;
 
   let boxjsdata = gistList.find((item) => item.description === $.desc);
   if (!boxjsdata) throw "未找到 Gist 备份信息，请先备份";
