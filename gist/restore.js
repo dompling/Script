@@ -39,13 +39,13 @@ try {
   $.backup_white_apps = [];
 }
 
-$.appSubCaches = JSON.parse($.read("#chavy_boxjs_app_subCaches"));
+$.appSubCaches = JSON.parse($.read("#chavy_boxjs_app_subCaches") || "{}");
 
 $.apps = [];
 $.black_restore = [];
 $.white_restore = [];
 Object.values($.appSubCaches).forEach((sub) => {
-  if(!sub||!sub.apps)return;
+  if (!sub || !sub.apps) return;
   sub.apps.forEach((app) => {
     const key = `${app.id}`;
     if ($.backup_black_apps.indexOf(key) !== -1) {
