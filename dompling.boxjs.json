@@ -16,6 +16,32 @@
       ]
     },
     {
+      "id": "jdwskey",
+      "name": "京东WSKEY",
+      "keys": ["JD_Token_info", "JD_Wskey"],
+      "author": "@zmyLiuFeng",
+            "settings": [
+        {
+          "id": "JD_Token_info",
+          "name": "京东Token_Info",
+          "val": null,
+          "type": "text",
+          "desc": "Token_Info"
+        },
+        {
+          "id": "JD_Wskey",
+          "name": "京东wskey",
+          "val": null,
+          "type": "text",
+          "desc": "Wskey"
+        }
+      ],
+      "icons": [
+        "https://raw.githubusercontent.com/Orz-3/mini/master/Alpha/10010.png",
+        "https://raw.githubusercontent.com/Orz-3/mini/master/Color/10010.png"
+      ]
+    },
+    {
       "id": "Spotify",
       "name": "Spotify歌词翻译",
       "keys": ["BaiDu_APP_ID", "BaiDu_SECURITY_KEY"],
