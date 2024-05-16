@@ -17,28 +17,24 @@
     },
     {
       "id": "jdwskey",
-      "name": "京东WSKEY",
-      "keys": ["JD_Token_info", "JD_Wskey"],
+      "name": "京东WSKEY集合",
+      "keys": ["WskeysJD"],
       "author": "@zmyLiuFeng",
             "settings": [
         {
-          "id": "JD_Token_info",
-          "name": "京东Token_Info",
-          "val": null,
-          "type": "text",
-          "desc": "Token_Info"
-        },
-        {
-          "id": "JD_Wskey",
-          "name": "京东wskey",
-          "val": null,
-          "type": "text",
-          "desc": "Wskey"
+                    "id": "CookieListJD",
+                    "name": "Cookie列表",
+                    "type": "textarea",
+                    "autoGrow": false,
+                    "rows": 20,
+                    "val": "[\n  {\n    \"wskey\": \"此处填写账号1 Wskey\"\n  },\n  {\n    \"wskey\": \"此处填写账号2 Wskey\"\n  }\n]",
+                    "placeholder": "[ {\"wskey\": \"pin=xxx;wskey=yyy;\"}  ]",
+                    "desc": "Wskey列表, 如需修改请严格按照JSON格式填写; \"cookie\"为必须, 其他为可选."
         }
       ],
       "icons": [
-        "https://raw.githubusercontent.com/Orz-3/mini/master/Alpha/10010.png",
-        "https://raw.githubusercontent.com/Orz-3/mini/master/Color/10010.png"
+        "https://raw.githubusercontent.com/Orz-3/mini/master/jd.png",
+        "https://raw.githubusercontent.com/Orz-3/task/master/jd.png"
       ]
     },
     {
