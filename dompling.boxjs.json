@@ -22,8 +22,8 @@
       "author": "@zmyLiuFeng",
             "settings": [
         {
-                    "id": "CookieListJD",
-                    "name": "Cookie列表",
+                    "id": "WskeysJD",
+                    "name": "Wskey列表",
                     "type": "textarea",
                     "autoGrow": false,
                     "rows": 20,
