@@ -49,12 +49,15 @@ async function getScriptUrl() {
     }
 
   }
+  console.log(delIds)
+  console.log(addData)
+
   if (addData.delIds) await $.ql.delete(delIds);
   if (addData.length) await $.ql.add(addData);
 
   const cookieText = addData.map((item) => item.remarks).join(`\n`);
   if ($.read('mute') !== 'true') {
-    return $.notify(title, '', `已同步账号\n： ${cookieText}`);
+    return $.notify(title, '', `已同步账号：\n ${cookieText}`);
   }
 })()
   .catch((e) => {
