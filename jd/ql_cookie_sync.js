@@ -60,8 +60,6 @@ async function getScriptUrl() {
     addData.push({ name: 'JD_COOKIE', value: jd_cookie.cookie, remarks });
   }
   if (addData.length) await $.ql.add(addData);
-  if (wsCookie.length) await $.ql.add(wsCookie);
-
   const _cookiesRes = await $.ql.select();
   const _ids = [];
   for (let index = 0; index < _cookiesRes.data.length; index++) {
