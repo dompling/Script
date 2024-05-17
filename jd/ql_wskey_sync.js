@@ -43,21 +43,12 @@ async function getScriptUrl() {
     var dd = jd_wskeys.match(pinStr+"wskey=(.+?);")
     if(dd!=null){
       var val = dd[0]
-      wskey.value = val;
-     console.log("wskey"+wskey)
-     var stt = JSON.stringify(wskey);
-     console.log("stt"+stt)
-  await $.ql.edit(wskey);
-      // delIds.push(wskey.id);
+      await $.ql.edit({id:wskey.id,"name": 'JD_WSCK', value: val});
       addData.push(wskey);
-      // addData.push({ id:wskey.id, name: 'JD_WSCK', value: pin, remarks:wskey.remarks });
-
     }
 
   }
   // await $.ql.delete(delIds);
-  if (addData.length) await $.ql.edit(addData);
-
   const cookieText = addData.map((item) => item.remarks).join(`\n`);
   if ($.read('mute') !== 'true') {
     return $.notify(title, '', `已同步账号：\n${cookieText}`);
