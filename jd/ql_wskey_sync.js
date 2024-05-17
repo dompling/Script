@@ -16,7 +16,7 @@ function getPin(ck) {
 
 async function getScriptUrl() {
   const response = await $.http.get({
-    url: 'https://raw.githubusercontent.com/zmyLiuFeng/Script/master/jd/ql_api.js',
+    url: 'https://raw.githubusercontent.com/dompling/Script/master/jd/ql_api.js',
   });
   return response.body;
 }
@@ -28,12 +28,10 @@ async function getScriptUrl() {
 
   
   const wskeyRes = await $.ql.select('JD_WSCK');
-  var sss = wskeyRes.data.map((item) => item.id);
-  console.log("sss:"+sss)
   //console.log("jd_wskeys:"+jd_wskeys)
   //console.log("jd_wskeys:"+JSON.stringify(wskeyRes))
   const addData = [];
-  const delIds = [];
+  // const delIds = [];
 
 
   for (const wskey of wskeyRes.data) {
@@ -44,22 +42,25 @@ async function getScriptUrl() {
     //console.log("pinStr.value:"+pinStr)
     var dd = jd_wskeys.match(pinStr+"wskey=(.+?);")
     if(dd!=null){
-      var pin = dd[0]
-//      console.log("已找到:"+pin+";"+wskey.id)
-      delIds.push(wskey.id);
-      addData.push({ name: 'JD_WSCK', value: pin, remarks:wskey.remarks });
+      var val = dd[0]
+      wskey.value = val;
+     console.log("wskey"+wskey)
+     var stt = JSON.stringify(wskey);
+     console.log("stt"+stt)
+  await $.ql.edit(wskey);
+      // delIds.push(wskey.id);
+      addData.push(wskey);
+      // addData.push({ id:wskey.id, name: 'JD_WSCK', value: pin, remarks:wskey.remarks });
+
     }
 
   }
-  console.log(delIds)
-  console.log(addData)
-
-  if (addData.delIds) await $.ql.delete(delIds);
-  if (addData.length) await $.ql.add(addData);
+  // await $.ql.delete(delIds);
+  if (addData.length) await $.ql.edit(addData);
 
   const cookieText = addData.map((item) => item.remarks).join(`\n`);
   if ($.read('mute') !== 'true') {
-    return $.notify(title, '', `已同步账号：\n ${cookieText}`);
+    return $.notify(title, '', `已同步账号：\n${cookieText}`);
   }
 })()
   .catch((e) => {
