@@ -35,7 +35,8 @@ async function getScriptUrl() {
   const addData = [];
   const wsCookie = [];
   for (const wskey of wskeyRes) {
-    var dd = JSON.stringify(jd_wskeys).match(pin+";wskey=(.+?);")[0]
+    console.log("wskey.value.pin:"+wskey.value.pin)
+    var dd = jd_wskeys.match(wskey.value.pin+";wskey=(.+?);")[0]
     console.log("wsk:"+dd)
   }
   // if (addData.length) await $.ql.add(addData);
