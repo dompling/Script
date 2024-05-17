@@ -39,12 +39,9 @@ async function getScriptUrl() {
   eval(ql_script);
   await $.ql.login();
 
-  const cookiesRes = await $.ql.select();
-  const ids = cookiesRes.data.map((item) => item.id);
-  await $.ql.delete(ids);
   const wskeyRes = await $.ql.select('JD_WSCK');
   await $.ql.delete(wskeyRes.data.map((item) => item.id));
-  $.log('清空 cookie 和 wskey');
+  $.log('清空 cookie');
 
   const addData = [];
   const wsCookie = [];
@@ -61,16 +58,6 @@ async function getScriptUrl() {
       remarks = username;
     }
     addData.push({ name: 'JD_COOKIE', value: jd_cookie.cookie, remarks });
-    if (jd_cookie.wskey) {
-      wsCookie.push({
-        name: 'JD_WSCK',
-        remarks: remarks.split('&')[0],
-        value:
-          jd_cookie.wskey.indexOf('pt_pin') !== -1
-            ? jd_cookie.wskey
-            : `${jd_cookie.wskey}pt_pin=${encodeURI(username)};`,
-      });
-    }
   }
   if (addData.length) await $.ql.add(addData);
   if (wsCookie.length) await $.ql.add(wsCookie);
