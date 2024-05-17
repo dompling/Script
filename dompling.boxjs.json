@@ -140,6 +140,28 @@
           "应用client_id,client_secret（openapi）方式；请去 设置->应用 中添加相关参数，优先以 openapi 方式同步"
         ]
       },
+          {
+      "id": "jdwskey",
+      "name": "WSKEY",
+      "keys": ["WskeysJD"],
+      "author": "@zmyLiuFeng",
+            "settings": [
+        {
+                    "id": "WskeysJD",
+                    "name": "Wskey列表",
+                    "type": "textarea",
+                    "autoGrow": false,
+                    "rows": 20,
+                    "val": "[\n  {\n    \"wskey\": \"此处填写账号1 Wskey\"\n  },\n  {\n    \"wskey\": \"此处填写账号2 Wskey\"\n  }\n]",
+                    "placeholder": "[ {\"wskey\": \"pin=xxx;wskey=yyy;\"}  ]",
+                    "desc": "Wskey列表, 如需修改请严格按照JSON格式填写; \"cookie\"为必须, 其他为可选."
+        }
+      ],
+      "icons": [
+        "https://raw.githubusercontent.com/Orz-3/mini/master/jd.png",
+        "https://raw.githubusercontent.com/Orz-3/task/master/jd.png"
+      ]
+    },
       {
         "id": "JD_Cookies",
         "name": "京东账号",
