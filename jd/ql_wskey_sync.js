@@ -28,6 +28,8 @@ async function getScriptUrl() {
 
   
   const wskeyRes = await $.ql.select('JD_WSCK');
+  var sss = wskeyRes.data.map((item) => item.id);
+  console.log("sss:"+sss)
   //console.log("jd_wskeys:"+jd_wskeys)
   //console.log("jd_wskeys:"+JSON.stringify(wskeyRes))
   const addData = [];
