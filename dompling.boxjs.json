@@ -6,112 +6,6 @@
   "repo": "https://github.com/zmyLiuFeng/Script",
   "apps": [
     {
-      "id": "10010Ck",
-      "name": "中国联通",
-      "keys": ["@YaYa_10010.cookie"],
-      "author": "@zmyLiuFeng",
-      "icons": [
-        "https://raw.githubusercontent.com/Orz-3/mini/master/Alpha/10010.png",
-        "https://raw.githubusercontent.com/Orz-3/mini/master/Color/10010.png"
-      ]
-    },
-    {
-      "id": "jdwskey",
-      "name": "WSKEY",
-      "keys": ["WskeysJD"],
-      "author": "@zmyLiuFeng",
-            "settings": [
-        {
-                    "id": "WskeysJD",
-                    "name": "Wskey列表",
-                    "type": "textarea",
-                    "autoGrow": false,
-                    "rows": 20,
-                    "val": "[\n  {\n    \"wskey\": \"此处填写账号1 Wskey\"\n  },\n  {\n    \"wskey\": \"此处填写账号2 Wskey\"\n  }\n]",
-                    "placeholder": "[ {\"wskey\": \"pin=xxx;wskey=yyy;\"}  ]",
-                    "desc": "Wskey列表, 如需修改请严格按照JSON格式填写; \"cookie\"为必须, 其他为可选."
-        }
-      ],
-      "icons": [
-        "https://raw.githubusercontent.com/Orz-3/mini/master/jd.png",
-        "https://raw.githubusercontent.com/Orz-3/task/master/jd.png"
-      ]
-    },
-    {
-      "id": "Spotify",
-      "name": "Spotify歌词翻译",
-      "keys": ["BaiDu_APP_ID", "BaiDu_SECURITY_KEY"],
-      "author": "@zmyLiuFeng",
-      "descs_html":[
-        "<ol>注册百度翻译个人开发者: <a href=\"http://api.fanyi.baidu.com/register\">开发者注册</a></ol>",
-        "<ol>注册后如果需要认证可自行选择是否实人认证(高级版需要验证)</ol>",
-        "<ol>开通(通用翻译)API服务: <a href=\"https://fanyi-api.baidu.com/choose\">服务开通</a></ol>",
-        "<ol>appid和密钥: <a href=\"http://api.fanyi.baidu.com/manage/developer\">获取 APP_ID、SECURITY_KEY</a></ol>"
-      ],
-      "settings": [
-        {
-          "id": "BaiDu_APP_ID",
-          "name": "百度 APP_ID",
-          "val": null,
-          "type": "text",
-          "desc": "APP_ID"
-        },
-        {
-          "id": "BaiDu_SECURITY_KEY",
-          "name": "百度 SECURITY_KEY",
-          "val": null,
-          "type": "text",
-          "desc": "SECURITY_KEY"
-        }
-      ],
-      "icons": [
-        "https://open.spotifycdn.com/cdn/images/favicon.0f31d2ea.ico",
-        "https://open.spotifycdn.com/cdn/images/favicon.0f31d2ea.ico"
-      ]
-    },
-    {
-      "id": "gistBackup",
-      "name": "Gist备份",
-      "keys": ["@gist.token", "@gist.username"],
-      "author": "@zmyLiuFeng",
-      "icons": [
-        "https://raw.githubusercontent.com/Former-Years/icon/master/github-bf.png",
-        "https://raw.githubusercontent.com/Former-Years/icon/master/github-bf.png"
-      ],
-      "descs_html": [
-        "Token的获取方式:",
-        "头像菜单->\n      Settings ->\n      Developer settings ->\n      Personal access tokens ->\n      Generate new token ->\n      在里面找到 gist 勾选提交"
-      ],
-      "scripts": [
-        {
-          "name": "备份 Gist",
-          "script": "https://raw.githubusercontent.com/zmyLiuFeng/Script/master/gist/backup.js"
-        },
-        {
-          "name": "从 Gist 恢复",
-          "script": "https://raw.githubusercontent.com/zmyLiuFeng/Script/master/gist/restore.js"
-        }
-      ],
-      "settings": [
-        {
-          "id": "@gist.username",
-          "name": "用户名",
-          "val": null,
-          "type": "text",
-          "placeholder": "github 用户名",
-          "desc": "必填"
-        },
-        {
-          "id": "@gist.token",
-          "name": "Personal access tokens",
-          "val": null,
-          "type": "text",
-          "placeholder": "github personal access tokens",
-          "desc": "必填"
-        }
-      ]
-    },
-    {
       "id": "scriptable",
       "name": "桌面组件",
       "keys": ["scriptable"],
@@ -162,7 +56,7 @@
           "childScripts": [
             {
               "name": "同步到青龙",
-              "script": "https://raw.githubusercontent.com/dompling/Script/master/jd/boxjs_env_to_ql.js"
+              "script": "https://raw.githubusercontent.com/zmyLiuFeng/Script/master/jd/boxjs_env_to_ql.js"
             }
           ],
           "child": [
@@ -219,31 +113,31 @@
         }
       ],
       "icons": [
-        "https://raw.githubusercontent.com/dompling/Script/master/image/ql.png",
-        "https://raw.githubusercontent.com/dompling/Script/master/image/ql.png"
+        "https://raw.githubusercontent.com/zmyLiuFeng/Script/master/image/ql.png",
+        "https://raw.githubusercontent.com/zmyLiuFeng/Script/master/image/ql.png"
       ],
       "author": "@dompling",
-      "repo": "https://github.com/dompling/Script/blob/master/jd/ql_cookie_sync.js",
+      "repo": "https://github.com/zmyLiuFeng/Script/blob/master/jd/ql_cookie_sync.js",
       "scripts": [
         {
           "name": "青龙同步到BoxJS(京东 Ck)",
-          "script": "https://raw.githubusercontent.com/dompling/Script/master/jd/ql_sync_box.js"
+          "script": "https://raw.githubusercontent.com/zmyLiuFeng/Script/master/jd/ql_sync_box.js"
         },
         {
           "name": "BoxJS同步到青龙(京东 Ck)",
-          "script": "https://raw.githubusercontent.com/dompling/Script/master/jd/ql_cookie_sync.js"
+          "script": "https://raw.githubusercontent.com/zmyLiuFeng/Script/master/jd/ql_cookie_sync.js"
         },
         {
           "name": "BoxJS指定Key同步到青龙",
-          "script": "https://raw.githubusercontent.com/dompling/Script/master/jd/boxjs_env_to_ql.js"
+          "script": "https://raw.githubusercontent.com/zmyLiuFeng/Script/master/jd/boxjs_env_to_ql.js"
         },
         {
           "name": "备份环境变量",
-          "script": "https://raw.githubusercontent.com/dompling/Script/master/jd/ql_env_back.js"
+          "script": "https://raw.githubusercontent.com/zmyLiuFeng/Script/master/jd/ql_env_back.js"
         },
         {
           "name": "恢复备份环境变量",
-          "script": "https://raw.githubusercontent.com/dompling/Script/master/jd/ql_env_upload.js"
+          "script": "https://raw.githubusercontent.com/zmyLiuFeng/Script/master/jd/ql_env_upload.js"
         }
       ],
       "descs_html": [
@@ -303,25 +197,6 @@
           "name": "删除相关 ck",
           "script": "https://raw.githubusercontent.com/zmyLiuFeng/Script/master/jd/jd_ck_del.js"
         }
-      ]
-    },
-    {
-      "id": "ftms",
-      "name": "丰田汽车",
-      "keys": ["@ftms.headers", "@ftms.mute"],
-      "author": "@zmyLiuFeng",
-      "settings": [
-        {
-          "id": "@ftms.mute",
-          "name": "静音获取",
-          "val": false,
-          "type": "boolean",
-          "desc": "更新时，不会执行通知提示"
-        }
-      ],
-      "icons": [
-        "https://raw.githubusercontent.com/zmyLiuFeng/Scriptable/master/images/ftms.png",
-        "https://raw.githubusercontent.com/zmyLiuFeng/Scriptable/master/images/ftms.png"
       ]
     }
   ]
