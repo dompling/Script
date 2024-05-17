@@ -129,7 +129,7 @@
         },
         {
           "name": "BoxJS同步到青龙(京东 Wskey)",
-          "script": "https://raw.githubusercontent.com/zmyLiuFeng/Script/master/jd/ql__sync.js"
+          "script": "https://raw.githubusercontent.com/zmyLiuFeng/Script/master/jd/ql_wskey_sync.js"
         },
         {
           "name": "BoxJS指定Key同步到青龙",
