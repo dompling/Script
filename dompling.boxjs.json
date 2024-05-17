@@ -122,7 +122,7 @@
       "author": "@zmyLiuFeng",
       "repo": ""
     },
-    {
+   {
       "id": "ql",
       "name": "青龙同步",
       "keys": [
@@ -132,6 +132,7 @@
         "@ql.username",
         "@ql.password",
         "@ql.env",
+        "@ql.ENV_KEY",
         "@ql.mute",
         "@ql.is_pwd"
       ],
@@ -149,6 +150,41 @@
           "val": false,
           "type": "boolean",
           "desc": "同步时，优先使用密码登陆"
+        },
+        {
+          "id": "@ql.ENV_KEY",
+          "name": "环境变量KEY",
+          "val": "",
+          "type": "textarea",
+          "autoGrow": false,
+          "placeholder": "boxjs 同步到 Ql 的环境变量",
+          "primary": ["BoxJsKey"],
+          "childScripts": [
+            {
+              "name": "同步到青龙",
+              "script": "https://raw.githubusercontent.com/dompling/Script/master/jd/boxjs_env_to_ql.js"
+            }
+          ],
+          "child": [
+            {
+              "id": "BoxJsKey",
+              "name": "BoxJS缓存Key",
+              "type": "cacheKey",
+              "desc": "读取BoxJS对应Key的值"
+            },
+            {
+              "id": "qlKey",
+              "name": "青龙环境变量KEY",
+              "type": "text"
+            },
+            {
+              "id": "remark",
+              "name": "覆盖备注",
+              "type": "textarea",
+              "placeholder": "请输入覆盖备注",
+              "desc": "覆盖和青龙环境变量中备注相同的变量"
+            }
+          ]
         },
         {
           "id": "@ql.ip",
@@ -183,27 +219,31 @@
         }
       ],
       "icons": [
-        "https://raw.githubusercontent.com/zmyLiuFeng/Script/master/image/ql.png",
-        "https://raw.githubusercontent.com/zmyLiuFeng/Script/master/image/ql.png"
+        "https://raw.githubusercontent.com/dompling/Script/master/image/ql.png",
+        "https://raw.githubusercontent.com/dompling/Script/master/image/ql.png"
       ],
-      "author": "@zmyLiuFeng",
-      "repo": "https://github.com/zmyLiuFeng/Script/blob/master/jd/ql_cookie_sync.js",
+      "author": "@dompling",
+      "repo": "https://github.com/dompling/Script/blob/master/jd/ql_cookie_sync.js",
       "scripts": [
         {
           "name": "青龙同步到BoxJS(京东 Ck)",
-          "script": "https://raw.githubusercontent.com/zmyLiuFeng/Script/master/jd/ql_sync_box.js"
+          "script": "https://raw.githubusercontent.com/dompling/Script/master/jd/ql_sync_box.js"
         },
         {
           "name": "BoxJS同步到青龙(京东 Ck)",
-          "script": "https://raw.githubusercontent.com/zmyLiuFeng/Script/master/jd/ql_cookie_sync.js"
+          "script": "https://raw.githubusercontent.com/dompling/Script/master/jd/ql_cookie_sync.js"
+        },
+        {
+          "name": "BoxJS指定Key同步到青龙",
+          "script": "https://raw.githubusercontent.com/dompling/Script/master/jd/boxjs_env_to_ql.js"
         },
         {
           "name": "备份环境变量",
-          "script": "https://raw.githubusercontent.com/zmyLiuFeng/Script/master/jd/ql_env_back.js"
+          "script": "https://raw.githubusercontent.com/dompling/Script/master/jd/ql_env_back.js"
         },
         {
           "name": "恢复备份环境变量",
-          "script": "https://raw.githubusercontent.com/zmyLiuFeng/Script/master/jd/ql_env_upload.js"
+          "script": "https://raw.githubusercontent.com/dompling/Script/master/jd/ql_env_upload.js"
         }
       ],
       "descs_html": [
@@ -212,154 +252,6 @@
         "青龙 docker 频道：【<a href=\"https://t.me/qiongqiya\">电报频道</a>】",
         "应用client_id,client_secret（openapi）方式；请去 设置->应用 中添加相关参数，优先以 openapi 方式同步"
       ]
-    },
-    {
-      "id": "JD_Cookies_remark",
-      "name": "登录助手",
-      "keys": ["CookieIndex", "@jd_ck_remark.remark", "@jd_ck_remark.mute"],
-      "descs_html": [
-        "若需要方便浏览：右上角菜单->打开调试模式->调试页面地址",
-        "<a href='https://raw.githubusercontent.com/zmyLiuFeng/chavyleung-boxjs/boxjs/box/chavy.boxjs.html' target='_blank'>调试页面地址</a>"
-      ],
-      "settings": [
-        {
-          "id": "@jd_ck_remark.mute",
-          "name": "静音",
-          "val": false,
-          "type": "boolean",
-          "desc": "不会执行通知提示"
-        },
-        {
-          "id": "CookieIndex",
-          "name": "默认账号",
-          "val": 0,
-          "type": "text",
-          "autoGrow": false,
-          "rows": 2,
-          "placeholder": "cookie 下标（0）"
-        },
-        {
-          "id": "@jd_ck_remark.actions",
-          "name": "快捷跳转",
-          "val": "",
-          "type": "textarea",
-          "autoGrow": false,
-          "rows": 4,
-          "desc": "快捷跳转 (JSON 格式)",
-          "primary": ["title"],
-          "child": [
-            {
-              "id": "title",
-              "name": "标题",
-              "type": "text"
-            },
-            {
-              "id": "icon",
-              "name": "图标",
-              "type": "text"
-            },
-            {
-              "id": "url",
-              "name": "跳转地址",
-              "type": "text"
-            },
-            {
-              "id": "where",
-              "name": "显示条件",
-              "type": "text"
-            },
-            {
-              "id": "color",
-              "name": "图标背景",
-              "type": "colorpicker"
-            }
-          ]
-        },
-        {
-          "id": "@jd_ck_remark.remark",
-          "name": "CK 备注列表",
-          "val": "",
-          "type": "textarea",
-          "autoGrow": false,
-          "rows": 8,
-          "desc": "CK 备注列表 (JSON 格式)",
-          "primary": ["nickname", "status"],
-          "child": [
-            {
-              "id": "index",
-              "name": "下标",
-              "type": "text",
-              "disabled": true
-            },
-            {
-              "id": "username",
-              "name": "用户 pin",
-              "disabled": true,
-              "type": "text"
-            },
-            {
-              "id": "nickname",
-              "name": "昵称",
-              "type": "text"
-            },
-            {
-              "id": "qywxUserId",
-              "name": "企业微信通知 ID",
-              "type": "text"
-            },
-            {
-              "id": "cardId",
-              "name": "身份证",
-              "type": "text"
-            },
-            {
-              "id": "paymentCode",
-              "name": "支付密码",
-              "type": "text"
-            },
-            {
-              "id": "avatar",
-              "name": "头像",
-              "type": "text"
-            },
-            {
-              "id": "mobile",
-              "name": "手机号",
-              "type": "text"
-            },
-            {
-              "id": "remark",
-              "name": "备注",
-              "type": "text"
-            },
-            {
-              "id": "isPlusVip",
-              "name": "是否是 VIP",
-              "disabled": true,
-              "type": "text"
-            },
-            {
-              "id": "beanNum",
-              "name": "京豆数量",
-              "disabled": true,
-              "type": "text"
-            },
-            {
-              "id": "fruit",
-              "name": "农场进度",
-              "disabled": true,
-              "type": "text"
-            }
-          ]
-        }
-      ],
-      "icons": [
-        "https://raw.githubusercontent.com/Orz-3/mini/master/jd.png",
-        "https://raw.githubusercontent.com/Orz-3/task/master/jd.png"
-      ],
-      "author": "@zmyLiuFeng",
-      "repo": "https://github.com/zmyLiuFeng/Script/blob/master/jd/jd_cookie_search.js",
-      "script": "https://raw.githubusercontent.com/zmyLiuFeng/Script/master/jd/jd_cookie_search.js"
     },
     {
       "id": "JD_Cookies",
