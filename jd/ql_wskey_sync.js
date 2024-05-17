@@ -11,7 +11,7 @@ const jd_wskeys = $.read('#WskeysJD')
 
 function getPin(ck) {
   if (!ck) return '';
-  return decodeURIComponent(ck.match(/pin=(.+?);/)[1]);
+  return decodeURIComponent(ck.match(/pin=(.+?);/)[0]);
 }
 
 async function getScriptUrl() {
@@ -28,34 +28,30 @@ async function getScriptUrl() {
 
   
   const wskeyRes = await $.ql.select('JD_WSCK');
-  console.log("jd_wskeys:"+jd_wskeys)
-  console.log("jd_wskeys:"+JSON.stringify(wskeyRes))
-
-
+  //console.log("jd_wskeys:"+jd_wskeys)
+  //console.log("jd_wskeys:"+JSON.stringify(wskeyRes))
   const addData = [];
-  const wsCookie = [];
-  for (const wskey of wskeyRes) {
-    console.log("wskey:"+JSON.stringify(wskey))
-    console.log("wskey.value.pin:"+wskey.value.pin)
-    var dd = jd_wskeys.match(wskey.value.pin+";wskey=(.+?);")[0]
-    console.log("wsk:"+dd)
-  }
-  // if (addData.length) await $.ql.add(addData);
-  // if (wsCookie.length) await $.ql.add(wsCookie);
 
-  if (_ids.length > 0) {
-    const ids = _ids.map((item) => item.id);
-    console.log(
-      `过期账号：${_ids
-        .map((item) => item.remarks || getPin(item.value))
-        .join(`\n`)}`
-    );
-    await $.ql.disabled(ids);
-  }
+  for (const wskey of wskeyRes.data) {
+    //console.log("wskey:"+JSON.stringify(wskey))
+    //console.log("wskey.value:"+wskey.value)
 
-  const cookieText = jd_wskeys.map((item) => item.userName).join(`\n`);
+    var pinStr = getPin(wskey.value);
+    //console.log("pinStr.value:"+pinStr)
+    var dd = jd_wskeys.match(pinStr+"wskey=(.+?);")
+    if(dd!=null){
+      var pin = dd[0]
+//      console.log("已找到:"+pin+";"+wskey.id)
+      await $.ql.delete(wskey.id);
+      addData.push({ name: 'JD_WSCK', value: pin, remarks:wskey.remarks });
+    }
+
+  }
+  if (addData.length) await $.ql.add(addData);
+
+  const cookieText = addData.map((item) => item.remarks).join(`\n`);
   if ($.read('mute') !== 'true') {
-    return $.notify(title, '', `已同步账号： ${cookieText}`);
+    return $.notify(title, '', `已同步账号\n： ${cookieText}`);
   }
 })()
   .catch((e) => {
