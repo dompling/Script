@@ -128,6 +128,10 @@
           "script": "https://raw.githubusercontent.com/zmyLiuFeng/Script/master/jd/ql_cookie_sync.js"
         },
         {
+          "name": "BoxJS同步到青龙(京东 Wskey)",
+          "script": "https://raw.githubusercontent.com/zmyLiuFeng/Script/master/jd/ql__sync.js"
+        },
+        {
           "name": "BoxJS指定Key同步到青龙",
           "script": "https://raw.githubusercontent.com/zmyLiuFeng/Script/master/jd/boxjs_env_to_ql.js"
         },
