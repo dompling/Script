@@ -7,7 +7,7 @@ const $ = new API('ql', true);
 
 const title = '🐉 通知提示';
 
-const jd_wskeys = JSON.parse($.read('#WskeysJD') || '[]');
+const jd_wskeys = $.read('#WskeysJD')
 
 function getPin(ck) {
   if (!ck) return '';
@@ -28,15 +28,15 @@ async function getScriptUrl() {
 
   
   const wskeyRes = await $.ql.select('JD_WSCK');
-  await $.ql.delete(wskeyRes.data.map((item) => item.id));
-  $.log('清空wskey');
+  console.log("jd_wskeys:"+jd_wskeys)
+  console.log("jd_wskeys:"+JSON.stringify(wskeyRes))
+
 
   const addData = [];
   const wsCookie = [];
   for (const wskey of wskeyRes) {
-    const wsk = getPin(jd_wskeys.wskey);
-    console.log("wsk:"+wsk)
-    console.log("jd_wskeys:"+jd_wskeys)
+    var dd = JSON.stringify(jd_wskeys).match(pin+";wskey=(.+?);")[0]
+    console.log("wsk:"+dd)
   }
   // if (addData.length) await $.ql.add(addData);
   // if (wsCookie.length) await $.ql.add(wsCookie);
