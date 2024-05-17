@@ -31,6 +31,8 @@ async function getScriptUrl() {
   //console.log("jd_wskeys:"+jd_wskeys)
   //console.log("jd_wskeys:"+JSON.stringify(wskeyRes))
   const addData = [];
+  const delIds = [];
+
 
   for (const wskey of wskeyRes.data) {
     //console.log("wskey:"+JSON.stringify(wskey))
@@ -42,16 +44,17 @@ async function getScriptUrl() {
     if(dd!=null){
       var pin = dd[0]
 //      console.log("已找到:"+pin+";"+wskey.id)
-      await $.ql.delete(wskey.id);
+      delIds.push(wskey.id);
       addData.push({ name: 'JD_WSCK', value: pin, remarks:wskey.remarks });
     }
 
   }
+  if (addData.delIds) await $.ql.delete(delIds);
   if (addData.length) await $.ql.add(addData);
 
   const cookieText = addData.map((item) => item.remarks).join(`\n`);
   if ($.read('mute') !== 'true') {
-    return $.notify(title, '', `已同步账号：\n ${cookieText}`);
+    return $.notify(title, '', `已同步账号\n： ${cookieText}`);
   }
 })()
   .catch((e) => {
