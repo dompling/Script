@@ -5,17 +5,6 @@
     "icon": "https://avatars3.githubusercontent.com/u/23498579?s=460&u=1e87605e4abc4e6ecf3edd8b1d730227f54db4d4&v=4",
     "repo": "https://github.com/zmyLiuFeng/Script",
     "apps": [
-      {
-        "id": "scriptable",
-        "name": "桌面组件",
-        "keys": ["scriptable"],
-        "icons": [
-          "https://scriptablejs.gitee.io/store/favicon.ico",
-          "https://scriptablejs.gitee.io/store/favicon.ico"
-        ],
-        "author": "@zmyLiuFeng",
-        "repo": ""
-      },
      {
         "id": "ql",
         "name": "青龙同步",
