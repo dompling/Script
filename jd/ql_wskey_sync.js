@@ -1,28 +1,15 @@
 /*
 青龙 docker 每日自动同步 boxjs wskey
-40 * * * https://raw.githubusercontent.com/dompling/Script/master/jd/ql_cookie_sync.js
+40 * * * https://raw.githubusercontent.com/zmyLiuFeng/Script/master/jd/ql_wskey_sync.js
  */
 
 const $ = new API('ql', true);
 
 const title = '🐉 通知提示';
 
-const jd_cookies = JSON.parse($.read('#CookiesJD') || '[]');
+const jd_wskeys = JSON.parse($.read('#WskeysJD') || '[]');
 
-let remark = {};
-try {
-  const _remark = JSON.parse(
-    JSON.parse($.read('#jd_ck_remark') || '{}').remark || '[]'
-  );
-
-  _remark.forEach((item) => {
-    remark[item.username] = item;
-  });
-} catch (e) {
-  console.log(e);
-}
-
-function getUsername(ck) {
+function getPin(ck) {
   if (!ck) return '';
   return decodeURIComponent(ck.match(/pin=(.+?);/)[1]);
 }
@@ -39,61 +26,32 @@ async function getScriptUrl() {
   eval(ql_script);
   await $.ql.login();
 
-  const cookiesRes = await $.ql.select();
-  const ids = cookiesRes.data.map((item) => item.id);
-  await $.ql.delete(ids);
+  
   const wskeyRes = await $.ql.select('JD_WSCK');
   await $.ql.delete(wskeyRes.data.map((item) => item.id));
-  $.log('清空 cookie 和 wskey');
+  $.log('清空wskey');
 
   const addData = [];
   const wsCookie = [];
-  for (const jd_cookie of jd_cookies) {
-    const username = getUsername(jd_cookie.cookie);
-    let remarks = '';
-    if (remark[username]) {
-      remarks = remark[username].nickname;
-
-      remarks += `&${remark[username].remark}`;
-      if (remark[username].qywxUserId)
-        remarks += `&${remark[username].qywxUserId}`;
-    } else {
-      remarks = username;
-    }
-    addData.push({ name: 'JD_COOKIE', value: jd_cookie.cookie, remarks });
-    if (jd_cookie.wskey) {
-      wsCookie.push({
-        name: 'JD_WSCK',
-        remarks: remarks.split('&')[0],
-        value:
-          jd_cookie.wskey.indexOf('pt_pin') !== -1
-            ? jd_cookie.wskey
-            : `${jd_cookie.wskey}pt_pin=${encodeURI(username)};`,
-      });
-    }
+  for (const wskey of wskeyRes) {
+    const wsk = getPin(jd_wskeys.wskey);
+    console.log("wsk:"+wsk)
+    console.log("jd_wskeys:"+jd_wskeys)
   }
-  if (addData.length) await $.ql.add(addData);
-  if (wsCookie.length) await $.ql.add(wsCookie);
-
-  const _cookiesRes = await $.ql.select();
-  const _ids = [];
-  for (let index = 0; index < _cookiesRes.data.length; index++) {
-    const item = _cookiesRes.data[index];
-    const response = await TotalBean(item.value);
-    if (response.retcode !== '0') _ids.push(item);
-  }
+  // if (addData.length) await $.ql.add(addData);
+  // if (wsCookie.length) await $.ql.add(wsCookie);
 
   if (_ids.length > 0) {
     const ids = _ids.map((item) => item.id);
     console.log(
       `过期账号：${_ids
-        .map((item) => item.remarks || getUsername(item.value))
+        .map((item) => item.remarks || getPin(item.value))
         .join(`\n`)}`
     );
     await $.ql.disabled(ids);
   }
 
-  const cookieText = jd_cookies.map((item) => item.userName).join(`\n`);
+  const cookieText = jd_wskeys.map((item) => item.userName).join(`\n`);
   if ($.read('mute') !== 'true') {
     return $.notify(title, '', `已同步账号： ${cookieText}`);
   }
