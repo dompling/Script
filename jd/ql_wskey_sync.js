@@ -51,7 +51,7 @@ async function getScriptUrl() {
   // await $.ql.delete(delIds);
   const cookieText = addData.map((item) => item.remarks).join(`\n`);
   if ($.read('mute') !== 'true') {
-    return $.notify(title, '', `已同步账号：\n${cookieText}`);
+    return $.notify(title, '已同步账号如下', `${cookieText}`);
   }
 })()
   .catch((e) => {
