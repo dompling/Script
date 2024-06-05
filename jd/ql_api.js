@@ -1,8 +1,21 @@
+try {
+  $.ql_config = JSON.parse($.read("#ql"));
+} catch (e) {
+  $.ql_config = {};
+}
+$.ql_url = $.ql_config.ip;
+
+function noReady() {
+  $.ql = false;
+  $.log("请配置好相关信息");
+}
+$.log(`地址：${$.ql_url}`);
+
 $.ql = {
-  type: 'api',
+  type: "api",
   headers: {
-    'Content-Type': `application/json;charset=UTF-8`,
-    Authorization: '',
+    "Content-Type": `application/json;charset=UTF-8`,
+    Authorization: "",
   },
   disabled(ids) {
     if (!this.headers.Authorization) return;
@@ -49,7 +62,7 @@ $.ql = {
     };
     return $.http.put(opt).then((response) => JSON.parse(response.body));
   },
-  select(searchValue = 'JD_COOKIE') {
+  select(searchValue = "JD_COOKIE") {
     if (!this.headers.Authorization) return;
     const opt = {
       url: `${$.ql_url}/${this.type}/envs?searchValue=${searchValue}`,
@@ -57,8 +70,7 @@ $.ql = {
     };
     return $.http.get(opt).then((response) => JSON.parse(response.body));
   },
-  initial: () => {
-    $.ql_url = $.ql_config.ip;
+  initial: async () => {
     if ($.ql_url && !$.ql_url.match(/^(http|https)/))
       $.ql_url = `http://${$.ql_url}`;
 
@@ -71,39 +83,19 @@ $.ql = {
       username: $.ql_config.username,
       password: $.ql_config.password,
     };
-  },
-};
 
-try {
-  $.ql_config = JSON.parse($.read('#ql'));
-} catch (e) {
-  $.ql_config = {};
-}
-
-$.ql.initial();
-
-$.log(`地址：${$.ql_url}`);
-
-function noReady() {
-  $.ql = false;
-  $.log('请配置好相关信息');
-}
-
-if ($.ql_config.is_pwd === 'true') {
-  if ($.ql_account.username && $.ql_account.password) {
-    $.ql.login = async () => {
+    if ($.ql_config.is_pwd === "true") {
       const options = {
         url: `${$.ql_url}/api/user/login`,
         body: JSON.stringify($.ql_account),
         headers: {
-          'Content-Type': `application/json;charset=UTF-8`,
+          "Content-Type": `application/json;charset=UTF-8`,
         },
       };
-
       let response = await $.http.post(options);
       response = JSON.parse(response.body);
       if (response.code === 200) {
-        $.ql.type = 'api';
+        $.ql.type = "api";
         $.ql.headers.Authorization = `Bearer ${response.data.token}`;
         $.log(`登陆成功：${response.data.lastaddr}`);
         $.log(`ip:${response.data.lastip}`);
@@ -111,31 +103,25 @@ if ($.ql_config.is_pwd === 'true') {
         $.log(response);
         $.log(`登陆失败：${response.message}`);
       }
-    };
-  } else {
-    noReady();
-  }
-} else {
-  if ($.application.client_id && $.application.client_secret) {
-    $.ql.login = async () => {
+    } else {
       const options = {
         url: `${$.ql_url}/open/auth/token?client_id=${$.application.client_id}&client_secret=${$.application.client_secret}`,
         headers: {
-          'Content-Type': `application/json;charset=UTF-8`,
+          "Content-Type": `application/json;charset=UTF-8`,
         },
       };
       let response = await $.http.get(options);
       response = JSON.parse(response.body);
       if (response.code === 200) {
-        $.ql.type = 'open';
+        $.ql.type = "open";
         $.ql.headers.Authorization = `Bearer ${response.data.token}`;
         $.log(`登陆成功`);
       } else {
         $.log(response);
         $.log(`登陆失败：${response.message}`);
       }
-    };
-  } else {
-    noReady();
-  }
-}
+    }
+  },
+};
+
+await $.ql.initial();

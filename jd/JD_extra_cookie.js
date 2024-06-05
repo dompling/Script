@@ -70,7 +70,7 @@ const allConfig = [JSON.parse($.read("#ql"))];
   if ($.ql) {
     $.ql.asyncCookie = async (cookieValue, name = "JD_WSCK") => {
       try {
-        await $.ql.login();
+        
         $.info(`青龙${name}登陆同步`);
         let qlCk = await $.ql.select(name);
         if (!qlCk.data) return;
