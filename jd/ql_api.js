@@ -5,10 +5,6 @@ try {
 }
 $.ql_url = $.ql_config.ip;
 
-function noReady() {
-  $.ql = false;
-  $.log("请配置好相关信息");
-}
 $.log(`地址：${$.ql_url}`);
 
 $.ql = {
