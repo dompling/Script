@@ -17,6 +17,7 @@ async function getScriptUrl() {
 (async () => {
   const ql_script = (await getScriptUrl()) || '';
   eval(ql_script);
+  await $.ql.initial();
   
   const envs = await $.ql.select('');
   $.write(JSON.stringify(envs.data), 'env');

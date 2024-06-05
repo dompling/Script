@@ -37,7 +37,7 @@ async function getScriptUrl() {
 (async () => {
   const ql_script = (await getScriptUrl()) || "";
   eval(ql_script);
-  
+  await $.ql.initial();
 
   const cookiesRes = await $.ql.select();
   const ids = cookiesRes.data.map((item) => item.id);

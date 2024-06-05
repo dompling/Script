@@ -26,7 +26,7 @@ async function getScriptUrl() {
 
   const ql_script = (await getScriptUrl()) || '';
   eval(ql_script);
-  
+  await $.ql.initial();
 
   const response = await $.ql.select('');
   const delIds = response.data.map((item) => item.id);

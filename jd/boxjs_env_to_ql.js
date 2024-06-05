@@ -78,8 +78,8 @@ async function getScriptUrl() {
 
   const ql_script = (await getScriptUrl()) || "";
   eval(ql_script);
+  await $.ql.initial();
 
-  
   for (let index = 0; index < qlData.length; index++) {
     const element = qlData[index];
     const response = await $.ql.select(element.name);

@@ -66,7 +66,8 @@ const allConfig = [JSON.parse($.read("#ql"))];
 (async () => {
   const ql_script = (await getScriptUrl()) || "";
   eval(ql_script);
-
+  await $.ql.initial();
+  
   if ($.ql) {
     $.ql.asyncCookie = async (cookieValue, name = "JD_WSCK") => {
       try {

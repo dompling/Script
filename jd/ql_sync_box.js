@@ -31,6 +31,7 @@ async function getScriptUrl() {
 (async () => {
   const ql_script = (await getScriptUrl()) || '';
   eval(ql_script);
+  await $.ql.initial();
   
   const cookiesRes = await $.ql.select();
   const wskeyRes = await $.ql.select('JD_WSCK');
