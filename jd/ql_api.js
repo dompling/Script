@@ -119,5 +119,3 @@ $.ql = {
     }
   },
 };
-
-await $.ql.initial();
