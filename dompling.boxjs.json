@@ -683,7 +683,7 @@
         {
           "id": "@SET_TIME.TASK",
           "name": "定时列表",
-          "val": [],
+          "val": "",
           "type": "textarea",
           "desc": "添加定时任务",
           "primary": ["tag"],
@@ -701,7 +701,7 @@
         {
           "id": "@SET_TIME.SUB",
           "name": "任务订阅",
-          "val": [],
+          "val": "",
           "type": "textarea",
           "desc": "QX 定时任务配置",
           "primary": ["author"],

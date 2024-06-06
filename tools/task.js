@@ -11,7 +11,9 @@ try {
   const taskOptions = [];
   for (const url of task) {
     try {
-      const res = await $.http.get(url);
+      const result = await $.http.get(url);
+      const res = JSON.parse(result.body);
+      $.info(res.name);
       const item = dealTask(res.task);
       const options = { label: res.name, children: [] };
       cacheTask.push({ name: res.name, task: item });
@@ -19,17 +21,20 @@ try {
         options.children.push({ label: item.tag || item.url, key: item.url });
       });
       taskOptions.push(options);
-    } catch {}
+    } catch (e) {
+      $.error(e);
+    }
   }
   $.write(cacheTask, "CACHE");
   $.write(taskOptions, "TASK_OPTIONS");
+  $.info("缓存完成");
 })().finally(() => {
   $.done({});
 });
 
 function dealTask(taskList) {
   const dataSource = {};
-  taskList.map((item) => {
+  taskList.forEach((item) => {
     const rows = item.config.split(",").map((t) => t.split("="));
     let value = { url: "", cron: "", tag: "", ["img-url"]: "" };
     rows.forEach((type) => {
@@ -38,8 +43,10 @@ function dealTask(taskList) {
         value.cron = cron;
         value.url = url;
       } else {
-        const [label, val] = type;
-        cron[label.trim()] = val.trim();
+        let [label, val] = type;
+        val = val.replace(/\s*/g, "");
+        label = label.replace(/\s*/g, "");
+        value[label] = val;
       }
     });
     if (value.url && value.cron) dataSource[value.url] = value;
