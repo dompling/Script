@@ -8,34 +8,24 @@ try {
 
 (async () => {
   const cacheTask = [];
-  const taskOptions = [];
   for (const url of task) {
     try {
       const result = await $.http.get(url);
       const res = JSON.parse(result.body);
       $.info(res.name);
-      const item = dealTask(res.task);
-      const options = { label: res.name, children: [] };
+      const item = dealTask(res.task, res.name);
       cacheTask.push({ name: res.name, task: item });
-      Object.values(item).forEach((item) => {
-        options.children.push({
-          label: item.tag || item.url,
-          key: item.tag || item.url,
-        });
-      });
-      taskOptions.push(options);
     } catch (e) {
       $.error(e);
     }
   }
   $.write(cacheTask, "CACHE");
-  $.write(taskOptions, "TASK_OPTIONS");
   $.info("缓存完成");
 })().finally(() => {
   $.done({});
 });
 
-function dealTask(taskList) {
+function dealTask(taskList, name) {
   const dataSource = {};
   taskList.forEach((item) => {
     const rows = item.config.split(",").map((t) => t.split("="));
@@ -52,7 +42,7 @@ function dealTask(taskList) {
         value[label] = val;
       }
     });
-    if (value.url && value.cron) dataSource[value.url] = value;
+    if (value.url && value.cron) dataSource[`${name}_${value.tag}`] = value;
   });
   return dataSource;
 }

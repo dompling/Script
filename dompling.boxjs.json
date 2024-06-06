@@ -677,32 +677,9 @@
     {
       "id": "SET_TIME",
       "name": "定时任务",
-      "keys": [
-        "@SET_TIME.TASK",
-        "@SET_TIME.SUB",
-        "@SET_TIME.CACHE",
-        "@SET_TIME.TASK_OPTIONS"
-      ],
+      "keys": ["@SET_TIME.TASK", "@SET_TIME.SUB", "@SET_TIME.CACHE"],
       "author": "@dompling",
       "settings": [
-        {
-          "id": "@SET_TIME.TASK",
-          "name": "定时列表",
-          "val": "",
-          "type": "textarea",
-          "desc": "添加定时任务",
-          "primary": ["tag"],
-          "autoGrow": false,
-          "rows": 8,
-          "child": [
-            {
-              "id": "tag",
-              "name": "定时任务",
-              "type": "selects",
-              "items": "@SET_TIME.TASK_OPTIONS"
-            }
-          ]
-        },
         {
           "id": "@SET_TIME.SUB",
           "name": "任务订阅",
