@@ -673,6 +673,58 @@
         "https://raw.githubusercontent.com/dompling/Scriptable/master/images/ftms.png",
         "https://raw.githubusercontent.com/dompling/Scriptable/master/images/ftms.png"
       ]
+    },
+    {
+      "id": "SET_TIME",
+      "name": "定时任务",
+      "keys": ["@SET_TIME.TASK", "@SET_TIME.SUB"],
+      "author": "@dompling",
+      "settings": [
+        {
+          "id": "@SET_TIME.TASK",
+          "name": "定时列表",
+          "val": [],
+          "type": "textarea",
+          "desc": "添加定时任务",
+          "primary": ["tag"],
+          "autoGrow": false,
+          "rows": 8,
+          "child": [
+            {
+              "id": "tag",
+              "name": "定时任务",
+              "type": "selects",
+              "items": "@SET_TIME.TASK_LIST"
+            }
+          ]
+        },
+        {
+          "id": "@SET_TIME.SUB",
+          "name": "任务订阅",
+          "val": [],
+          "type": "textarea",
+          "desc": "QX 定时任务配置",
+          "primary": ["author"],
+          "autoGrow": false,
+          "rows": 8,
+          "child": [
+            {
+              "id": "author",
+              "name": "作者",
+              "type": "text"
+            },
+            {
+              "id": "url",
+              "name": "订阅链接",
+              "type": "text"
+            }
+          ]
+        }
+      ],
+      "icons": [
+        "https://raw.githubusercontent.com/dompling/Scriptable/master/images/ftms.png",
+        "https://raw.githubusercontent.com/dompling/Scriptable/master/images/ftms.png"
+      ]
     }
   ]
 }
