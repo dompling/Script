@@ -18,7 +18,10 @@ try {
       const options = { label: res.name, children: [] };
       cacheTask.push({ name: res.name, task: item });
       Object.values(item).forEach((item) => {
-        options.children.push({ label: item.tag || item.url, key: item.url });
+        options.children.push({
+          label: item.tag || item.url,
+          key: item.tag || item.url,
+        });
       });
       taskOptions.push(options);
     } catch (e) {

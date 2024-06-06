@@ -697,6 +697,12 @@
           "child": [
             {
               "id": "tag",
+              "name": "运行时间",
+              "type": "text",
+              "placeholder": "Cron 时间"
+            },
+            {
+              "id": "tag",
               "name": "定时任务",
               "type": "selects",
               "items": "@SET_TIME.TASK_OPTIONS"
