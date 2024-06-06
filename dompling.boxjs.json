@@ -677,7 +677,12 @@
     {
       "id": "SET_TIME",
       "name": "定时任务",
-      "keys": ["@SET_TIME.TASK", "@SET_TIME.SUB", "@SET_TIME.CACHE"],
+      "keys": [
+        "@SET_TIME.TASK",
+        "@SET_TIME.SUB",
+        "@SET_TIME.CACHE",
+        "@SET_TIME.TASK_OPTIONS"
+      ],
       "author": "@dompling",
       "settings": [
         {
