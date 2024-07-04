@@ -46,9 +46,10 @@ try {
   console.log(e);
 }
 
+
 function getUsername(ck) {
   if (!ck) return "";
-  return decodeURIComponent(ck.match(/pin=(.+?);/)[1]);
+  return decodeURIComponent(ck.match(/pt_pin=([^; ]+)(?=;?)/)[1]);
 }
 
 async function getScriptUrl() {
