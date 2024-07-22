@@ -46,7 +46,6 @@ try {
   console.log(e);
 }
 
-
 function getUsername(ck) {
   if (!ck) return "";
   return decodeURIComponent(ck.match(/pt_pin=([^; ]+)(?=;?)/)[1]);
@@ -62,17 +61,14 @@ async function getScriptUrl() {
 const mute = "#cks_get_mute";
 $.mute = $.read(mute);
 
-const allConfig = [JSON.parse($.read("#ql"))];
-
 (async () => {
   const ql_script = (await getScriptUrl()) || "";
   eval(ql_script);
   await $.ql.initial();
-  
+
   if ($.ql) {
     $.ql.asyncCookie = async (cookieValue, name = "JD_WSCK") => {
       try {
-        
         $.info(`青龙${name}登陆同步`);
         let qlCk = await $.ql.select(name);
         if (!qlCk.data) return;
@@ -177,12 +173,8 @@ async function GetCookie() {
       });
 
       if ($.ql) {
-        console.log(allConfig);
-        for (const item of allConfig) {
-          $.ql_config = item;
-          $.ql.initial();
-          await $.ql.asyncCookie(CookieValue, "JD_COOKIE");
-        }
+        $.ql.initial();
+        await $.ql.asyncCookie(CookieValue, "JD_COOKIE");
       }
 
       if (updateIndex !== null) {
@@ -249,11 +241,8 @@ async function GetCookie() {
       });
 
       if ($.ql) {
-        for (const item of allConfig) {
-          $.ql_config = item;
-          $.ql.initial();
-          await $.ql.asyncCookie(code);
-        }
+        $.ql.initial();
+        await $.ql.asyncCookie(code);
       }
 
       let text;
