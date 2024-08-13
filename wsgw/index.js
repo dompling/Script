@@ -1699,8 +1699,7 @@ async function sendMsg(e, o, r, s) {
       monthElecQuantity,
       lastYearElecQuantity,
       arrearsOfFees: c,
-    }),
-      await sendMsg(SCRIPTNAME, "", `户主【${r.consName_dst}】数据更新成功!`);
+    });
   }
   const o = {
     status: isQuanX() ? "HTTP/1.1 200" : 200,
