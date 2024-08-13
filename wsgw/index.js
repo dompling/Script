@@ -16,7 +16,7 @@ https://raw.githubusercontent.com/Yuheng0101/X/main/Tasks/boxjs.json
 #!desc=网上国网
 
 [Script]
-网上国网重写接口 = type=http-request, pattern=^https?:\/\/api\.wsgw-rewrite\.com\/electricity\/bill\/all, script-path=Scripts/网上国网/95598.scriptable.js, requires-body=true, max-size=-1, timeout=60
+网上国网重写接口 = type=http-request, pattern=^https?:\/\/api\.wsgw-rewrite\.com\/electricity\/bill\/all, script-path=https://raw.githubusercontent.com/dompling/Script/master/wsgw/index.js, requires-body=true, max-size=-1, timeout=60
 
 [MITM]
 hostname = %APPEND% api.wsgw-rewrite.com
