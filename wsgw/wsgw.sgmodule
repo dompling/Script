@@ -1,0 +1,10 @@
+#!name =🔴 网上国网
+#!category=通用重写
+#!desc=95598
+
+[Script]
+95598.scriptable = type=http-request, pattern=^https?:\/\/api\.wsgw-rewrite\.com\/electricity\/bill\/all, script-path=Scripts/网上国网/95598.scriptable.js, requires-body=true, max-size=-1, timeout=60
+
+[MITM]
+hostname = %APPEND% api.wsgw-rewrite.com
+
