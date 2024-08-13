@@ -13,13 +13,14 @@ https://raw.githubusercontent.com/Yuheng0101/X/main/Tasks/boxjs.json
 
 #!name =🔴 网上国网
 #!category=通用重写
-#!desc=网上国网
+#!desc=95598
 
 [Script]
-网上国网重写接口 = type=http-request, pattern=^https?:\/\/api\.wsgw-rewrite\.com\/electricity\/bill\/all, script-path=https://raw.githubusercontent.com/dompling/Script/master/wsgw/index.js, requires-body=true, max-size=-1, timeout=60
+接口重写 = type=http-request, pattern=^https?:\/\/api\.wsgw-rewrite\.com\/electricity\/bill\/all, script-path=https://raw.githubusercontent.com/dompling/Script/master/wsgw/index.js, requires-body=true, max-size=-1, timeout=60
 
 [MITM]
 hostname = %APPEND% api.wsgw-rewrite.com
+
 
 ******************************************/
 const getEnv = () =>
