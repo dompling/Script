@@ -1521,6 +1521,70 @@ async function getDayElecQuantity(e) {
     console.log("🔚 获取日用电量结束");
   }
 }
+
+
+async function getDay31ElecQuantity(e) {
+  console.log("⏳ 获取日用电量...");
+  try {
+    const o = bindInfo.powerUserList[e],
+      [r] = bizrt.userInfo,
+      s = getBeforeDate(31),
+      n = getBeforeDate(1),
+      c = {
+        url: `/api${$api.busInfoApi}`,
+        method: "post",
+        headers: { ...requestKey, token: bizrt.token, acctoken: accessToken },
+        data: {
+          params1: {
+            serviceCode: $configuration.serviceCode,
+            source: $configuration.source,
+            target: $configuration.target,
+            uscInfo: {
+              member: $configuration.uscInfo.member,
+              devciceIp: $configuration.uscInfo.devciceIp,
+              devciceId: $configuration.uscInfo.devciceId,
+              tenant: $configuration.uscInfo.tenant,
+            },
+            quInfo: { userId: r.userId },
+            token: bizrt.token,
+          },
+          params3: {
+            data: {
+              acctId: r.userId,
+              consNo: o.consNo_dst,
+              consType: "02" == o.constType ? "02" : "01",
+              endTime: n,
+              orgNo: o.orgNo,
+              queryYear: new Date().getFullYear().toString(),
+              proCode: o.proNo || o.provinceId,
+              serialNo: "",
+              srvCode: "",
+              startTime: s,
+              userName: r.nickname ? r.nickname : r.loginAccount,
+              funcCode: $configuration.getday.funcCode,
+              channelCode: $configuration.getday.channelCode,
+              clearCache: $configuration.getday.clearCache,
+              promotCode: $configuration.getday.promotCode,
+              promotType: $configuration.getday.promotType,
+            },
+            serviceCode: $configuration.getday.serviceCode,
+            source: $configuration.getday.source,
+            target: o.proNo || o.provinceId,
+          },
+          params4: "010103",
+        },
+      },
+      t = await request(c);
+    log.info("✅ 获取日用电量成功"),
+      log.debug(jsonStr(t, null, 2)),
+      (Global.dayElecQuantity31 = t);
+  } catch (e) {
+    return Promise.reject("获取日用电量失败: " + e);
+  } finally {
+    console.log("🔚 获取日用电量结束");
+  }
+}
+
 async function getMonthElecQuantity(e) {
   console.log("⏳ 获取月用电量...");
   const o = bindInfo.powerUserList[e],
@@ -1686,6 +1750,7 @@ async function sendMsg(e, o, r, s) {
   for (let o = 0; o < bindInfo.powerUserList.length; o++) {
     await getElcFee(o),
       await getDayElecQuantity(o),
+      await getDay31ElecQuantity(o),
       await getMonthElecQuantity(o),
       await getLastYearElecQuantity(o);
     const r = bindInfo.powerUserList[o];
@@ -1696,6 +1761,7 @@ async function sendMsg(e, o, r, s) {
       eleBill,
       userInfo: r,
       dayElecQuantity,
+      dayElecQuantity31,
       monthElecQuantity,
       lastYearElecQuantity,
       arrearsOfFees: c,
