@@ -360,12 +360,12 @@ const notify = (e = "", o = "", r = "", s = {}) => {
         process.exit(1);
     }
   },
-  SERVER_HOST = "https://free.yuhengy17.me",
+  SERVER_HOST = "https://api.120399.xyz",
   BASE_URL = "https://www.95598.cn",
   request = async (e) => {
     try {
       const o = {
-          url: `${SERVER_HOST}/api/encrypt`,
+          url: `${SERVER_HOST}/wsgw/encrypt`,
           headers: { "content-type": "application/json" },
           body: JSON.stringify({ yuheng: e }),
         },
@@ -389,7 +389,7 @@ const notify = (e = "", o = "", r = "", s = {}) => {
       if ("/api/oauth2/outer/c02/f02" === e.url)
         Object.assign(n.config, { headers: { encryptKey: r.encryptKey } });
       const c = {
-        url: `${SERVER_HOST}/api/decrypt`,
+        url: `${SERVER_HOST}/wsgw/decrypt`,
         headers: { "content-type": "application/json" },
         body: JSON.stringify({ yuheng: n }),
       };
@@ -434,7 +434,7 @@ const notify = (e = "", o = "", r = "", s = {}) => {
     }),
   Recoginze = async (e) => {
     const o = {
-      url: `${SERVER_HOST}/api/get_x`,
+      url: `${SERVER_HOST}/wsgw/get_x`,
       headers: { "content-type": "application/json" },
       body: JSON.stringify({ yuheng: e }),
     };
