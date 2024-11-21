@@ -5,7 +5,7 @@
  * @channel https://t.me/yqc_123/
  * @feedback https://t.me/NobyDa_Chat
  * @author 小白脸|𝐎𝐍𝐙𝟑𝐕
- * @version 1.0.5
+ * 
  * @description 借用 @Yuheng0101 大佬脚本更改，调整了接口返回的内容，增加去年的用电量
  * 
 BoxJs订阅地址:
@@ -1699,6 +1699,47 @@ try {
   return Promise.reject(`获取月用电量失败: ${e}`);
 } finally {
   console.log("🔚 获取月用电量结束");
+}
+}
+
+async function getSegmentDate(e, o) {
+console.log("⏳ 江苏地区特殊处理...");
+try {
+  let r = {
+    url: `/api${$api.segmentDate}`,
+    method: "post",
+    headers: {
+      ...requestKey,
+      token: bizrt.token,
+      acctoken: accessToken,
+    },
+    data: {
+      data: {
+        acctId: "acctid01",
+        channelCode: "SGAPP",
+        consNo: e.consNo_dst,
+        funcCode: "A10079078",
+        promotCode: "1",
+        promotType: "1",
+        provinceCode: "32101",
+        serialNo: "",
+        srvCode: "123",
+        userName: "acctid01",
+        year: o.year,
+      },
+      serviceCode: "0101798",
+      source: "app",
+      target: e.proNo,
+    },
+  };
+  const s = await request(r);
+  log.info("✅ 江苏地区特殊处理成功"), log.debug(jsonStr(s, null, 2));
+  let t = s.billList;
+  return t[t.length - 1];
+} catch (e) {
+  throw new Error(`江苏地区特殊处理失败: ${e}`);
+} finally {
+  console.log("🔚 江苏地区特殊处理结束");
 }
 }
 
