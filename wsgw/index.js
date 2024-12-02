@@ -1757,13 +1757,13 @@ async function getSegmentDate(e, o) {
   }
 }
 
-async function getStepElecQuantity(e) {
+async function getStepElecQuantity(e, months) {
   console.log("⏳ 获取阶梯用电...");
   try {
     const o = bindInfo.powerUserList[e],
       [r] = bizrt.userInfo;
     let s = new Date(),
-      t = { year: s.getFullYear(), months: s.getMonth() },
+      t = { year: s.getFullYear(), months: months || s.getMonth() },
       n = "",
       c = "",
       a = t.months;
@@ -1888,7 +1888,13 @@ function getDataSource(o) {
     await getBindInfo();
   const e = new Array(bindInfo.powerUserList.length);
   for (let o = 0; o < bindInfo.powerUserList.length; o++) {
-    await getDataSource(o);
+    try {
+      await getDataSource(o);
+    } catch (error) {
+      let months = new Date().getMonth() - 1;
+      if (months === -1) months = 11;
+      await getStepElecQuantity(o, months);
+    }
     const r = bindInfo.powerUserList[o];
     const c =
       Number(eleBill?.historyOwe || "0") > 0 ||
