@@ -1530,7 +1530,7 @@ async function getDayElecQuantity(e) {
       log.debug(jsonStr(t, null, 2)),
       (Global.dayElecQuantity = t);
   } catch (e) {
-    return Promise.reject("获取日用电量失败: " + e);
+    return console.log("获取日用电量失败: " + e);
   } finally {
     console.log("🔚 获取日用电量结束");
   }
@@ -1592,7 +1592,7 @@ async function getDay31ElecQuantity(e) {
       log.debug(jsonStr(t, null, 2)),
       (Global.dayElecQuantity31 = t);
   } catch (e) {
-    return Promise.reject("获取日用电量失败: " + e);
+    return console.log("获取日用电量失败: " + e);
   } finally {
     console.log("🔚 获取日用电量结束");
   }
@@ -1651,7 +1651,7 @@ async function getMonthElecQuantity(e) {
       log.debug(jsonStr(s, null, 2)),
       (Global.monthElecQuantity = s);
   } catch (e) {
-    return Promise.reject(`获取月用电量失败: ${e}`);
+    return console.log(`获取月用电量失败: ${e}`);
   } finally {
     console.log("🔚 获取月用电量结束");
   }
@@ -1710,7 +1710,7 @@ async function getLastYearElecQuantity(e) {
       log.debug(jsonStr(s, null, 2)),
       (Global.lastYearElecQuantity = s);
   } catch (e) {
-    return Promise.reject(`获取月用电量失败: ${e}`);
+    return console.log(`获取月用电量失败: ${e}`);
   } finally {
     console.log("🔚 获取月用电量结束");
   }
@@ -1813,9 +1813,9 @@ async function getStepElecQuantity(e, months) {
       "1" !== g.rtnCode)
     )
       return Promise.reject(g.rtnMsg);
-    Global.stepElecQuantity = g.list;
+    Global.stepElecQuantity = g.list||{};
   } catch (e) {
-    return Promise.reject(`获取阶梯用电失败: ${e}`);
+    return console.log(`获取阶梯用电失败: ${e}`);
   } finally {
     console.log("🔚 获取阶梯用电结束");
   }
