@@ -1468,8 +1468,13 @@ async function getElcFee(e) {
     (Global.eleBill = await request(s).then((e) => e.list[0])),
       log.info("✅ 查询电费成功"),
       log.debug(`🔑 电费信息: ${jsonStr(Global.eleBill, null, 2)}`);
+    if (Global.eleBill.powerUserList)
+      store.set("eleBill", jsonStr(Global.eleBill));
+    else if (store.get("eleBill"))
+      Global.eleBill = jsonParse(store.get("eleBill"));
   } catch (e) {
-    return Promise.reject(`查询电费失败: ${e}`);
+    if (store.get("eleBill")) Global.eleBill = jsonParse(store.get("eleBill"));
+    return console.log(`查询电费失败: ${e}`);
   } finally {
     console.log("🔚 查询电费结束");
   }
@@ -1529,7 +1534,13 @@ async function getDayElecQuantity(e) {
     log.info("✅ 获取日用电量成功"),
       log.debug(jsonStr(t, null, 2)),
       (Global.dayElecQuantity = t);
+    if (Global.dayElecQuantity.sevenEleList)
+      store.set("dayElecQuantity", jsonStr(Global.dayElecQuantity));
+    else if (store.get("dayElecQuantity"))
+      Global.dayElecQuantity = jsonParse(store.get("dayElecQuantity"));
   } catch (e) {
+    if (store.get("dayElecQuantity"))
+      Global.dayElecQuantity = jsonParse(store.get("dayElecQuantity"));
     return console.log("获取日用电量失败: " + e);
   } finally {
     console.log("🔚 获取日用电量结束");
@@ -1588,16 +1599,22 @@ async function getDay31ElecQuantity(e) {
         },
       },
       t = await request(c);
-    log.info("✅ 获取日用电量成功"),
+    log.info("✅ 获取32日用电量成功"),
       log.debug(jsonStr(t, null, 2)),
       (Global.dayElecQuantity31 = t);
+
+    if (Global.dayElecQuantity31.sevenEleList)
+      store.set("dayElecQuantity31", jsonStr(Global.dayElecQuantity31));
+    else if (store.get("dayElecQuantity31"))
+      Global.dayElecQuantity31 = jsonParse(store.get("dayElecQuantity31"));
   } catch (e) {
-    return console.log("获取日用电量失败: " + e);
+    if (store.get("dayElecQuantity31"))
+      Global.dayElecQuantity31 = jsonParse(store.get("dayElecQuantity31"));
+    return console.log("获取32日用电量失败: " + e);
   } finally {
-    console.log("🔚 获取日用电量结束");
+    console.log("🔚 获取32日用电量结束");
   }
 }
-
 async function getMonthElecQuantity(e) {
   console.log("⏳ 获取月用电量...");
   const o = bindInfo.powerUserList[e],
@@ -1650,7 +1667,13 @@ async function getMonthElecQuantity(e) {
     log.info("✅ 获取月用电量成功"),
       log.debug(jsonStr(s, null, 2)),
       (Global.monthElecQuantity = s);
+    if (Global.monthElecQuantity.mothEleList)
+      store.set("monthElecQuantity", jsonStr(Global.monthElecQuantity));
+    else if (store.get("monthElecQuantity"))
+      Global.monthElecQuantity = jsonParse(store.get("monthElecQuantity"));
   } catch (e) {
+    if (store.get("monthElecQuantity"))
+      Global.monthElecQuantity = jsonParse(store.get("monthElecQuantity"));
     return console.log(`获取月用电量失败: ${e}`);
   } finally {
     console.log("🔚 获取月用电量结束");
@@ -1709,7 +1732,17 @@ async function getLastYearElecQuantity(e) {
     log.info("✅ 获取去年电量成功"),
       log.debug(jsonStr(s, null, 2)),
       (Global.lastYearElecQuantity = s);
+    if (Global.lastYearElecQuantity.dataInfo)
+      store.set("lastYearElecQuantity", jsonStr(Global.lastYearElecQuantity));
+    else if (store.get("lastYearElecQuantity"))
+      Global.lastYearElecQuantity = jsonParse(
+        store.get("lastYearElecQuantity")
+      );
   } catch (e) {
+    if (store.get("lastYearElecQuantity"))
+      Global.lastYearElecQuantity = jsonParse(
+        store.get("lastYearElecQuantity")
+      );
     return console.log(`获取月用电量失败: ${e}`);
   } finally {
     console.log("🔚 获取月用电量结束");
@@ -1813,8 +1846,15 @@ async function getStepElecQuantity(e, months) {
       "1" !== g.rtnCode)
     )
       return Promise.reject(g.rtnMsg);
-    Global.stepElecQuantity = g.list||{};
+    Global.stepElecQuantity = g.list || {};
+
+    if (Global.stepElecQuantity.sevenEleList)
+      store.set("stepElecQuantity", jsonStr(Global.stepElecQuantity));
+    else if (store.get("stepElecQuantity"))
+      Global.stepElecQuantity = jsonParse(store.get("stepElecQuantity"));
   } catch (e) {
+    if (store.get("stepElecQuantity"))
+      Global.stepElecQuantity = jsonParse(store.get("stepElecQuantity"));
     return console.log(`获取阶梯用电失败: ${e}`);
   } finally {
     console.log("🔚 获取阶梯用电结束");
