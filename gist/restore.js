@@ -202,7 +202,8 @@ $.setdata = (val, key) => {
         $.info(fileUri);
         if (!item.key) {
           Object.keys(content || {}).forEach((key) => {
-            const val = content[key];
+            let val = content[key];
+            if (key === "@gist.token") val = decryptToken(val);
             if ($.white_restore.length) {
               if ($.white_restore.indexOf(key) > -1) {
                 $.setdata(val, key);
@@ -264,6 +265,18 @@ function getGistRevision(gist_id, revision_id) {
   return $.http
     .get({ url: `/gists/${gist_id}/${revision_id}` })
     .then((response) => JSON.parse(response.body));
+}
+
+function decryptToken(encrypted) {
+  const OFFSET = 3; // 自定义偏移量，用于解密
+  const PREFIX = "ghp_"; // 可选，如果你要保留前缀
+  const decoded = atob(encrypted);
+
+  const restored = [...decoded]
+    .map((c) => String.fromCharCode(c.charCodeAt(0) - OFFSET))
+    .join("");
+
+  return PREFIX + restored;
 }
 
 /* prettier-ignore */

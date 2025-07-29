@@ -441,7 +441,8 @@ function getAppDatas(app) {
   if (app.settings && Array.isArray(app.settings)) {
     app.settings.forEach((setting) => {
       const key = setting.id;
-      const val = $.getdata(key);
+      let val = $.getdata(key);
+      if (key === "@gist.token") val = encryptToken(val);
       datas[key] = nulls.includes(val) ? null : val;
     });
   }
@@ -500,6 +501,22 @@ function getBoxJSData() {
     globalbaks,
   };
 }
+
+function encryptToken(token) {
+  const OFFSET = 3; // 自定义偏移量，用于加密
+  const PREFIX = "ghp_"; // 可选，如果你要保留前缀
+
+  const cleanToken =
+    token.indexOf(PREFIX) > -1 ? token.slice(PREFIX.length) : token;
+
+  const shifted = [...cleanToken]
+    .map((c) => String.fromCharCode(c.charCodeAt(0) + OFFSET))
+    .join("");
+
+  const base64 = btoa(shifted);
+  return base64;
+}
+
 
 /* prettier-ignore */
 function ENV(){const isJSBox=typeof require=="function"&&typeof $jsbox!="undefined";return{isQX:typeof $task!=="undefined",isLoon:typeof $loon!=="undefined",isSurge:typeof $httpClient!=="undefined"&&typeof $utils!=="undefined",isBrowser:typeof document!=="undefined",isNode:typeof require=="function"&&!isJSBox,isJSBox,isRequest:typeof $request!=="undefined",isScriptable:typeof importModule!=="undefined",isShadowrocket:"undefined"!==typeof $rocket,isStash:"undefined"!==typeof $environment&&$environment["stash-version"]}}
