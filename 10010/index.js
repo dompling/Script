@@ -3,7 +3,7 @@
 获取方式：打开  中国联通 app 【官方版】-> 首页的流量查询获取 Cookie
 ===================
 [MITM]
-hostname = m.client.10010.com
+hostname = m.client.10010.com, mxx.client.10010.com
 
 【Surge脚本配置】:
 ===================
