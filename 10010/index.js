@@ -8,20 +8,19 @@ hostname = m.client.10010.com
 【Surge脚本配置】:
 ===================
 [Script]
-联通组件 = type=http-request,pattern=https:\/\/m\.client\.10010\.com\/(.*)\/smartwisdomCommon,requires-body=1,max-size=0,script-path=https://raw.githubusercontent.com/dompling/Script/master/10010/index.js,script-update-interval=0
-
+联通组件 = type=http-request,pattern=https:\/\/m(?:xx)?\.client\.10010\.com\/(?:.*\/)?smartwisdomCommon(?:New)?(?:\?.*)?$,script-path=https://raw.githubusercontent.com/dompling/Script/master/10010/index.js,requires-body=true,max-size=0,script-update-interval=0
 ===================
 【Loon脚本配置】:
 ===================
 [Script]
-http-request https:\/\/m\.client\.10010\.com\/(.*)\/smartwisdomCommon tag=联通 headers, script-path=https://raw.githubusercontent.com/dompling/Script/master/10010/index.js
+http-request https:\/\/m(?:xx)?\.client\.10010\.com\/(?:.*\/)?smartwisdomCommon(?:New)?(?:\?.*)?$ tag=联通 headers, script-path=https://raw.githubusercontent.com/dompling/Script/master/10010/index.js
 
 ===================
 【 QX  脚本配置 】 :
 ===================
 
 [rewrite_local]
-https:\/\/m\.client\.10010\.com\/(.*)\/smartwisdomCommon  url script-request-header https://raw.githubusercontent.com/dompling/Script/master/10010/index.js
+https:\/\/m(?:xx)?\.client\.10010\.com\/(?:.*\/)?smartwisdomCommon(?:New)?(?:\?.*)?$  url script-request-header https://raw.githubusercontent.com/dompling/Script/master/10010/index.js
 
  */
 
